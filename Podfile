@@ -1,22 +1,25 @@
-# Uncomment this line to define a global platform for your project
- platform :ios, ‘8.0’
 
-  #use_frameworks!
+platform :ios,’8.0’
 
-target 'Propertymanager’ do
-  # Uncomment this line if you're using Swift or would like to use dynamic frameworks
-#   use_frameworks!
+target 'Propertymanager' do
 
-  pod 'AFNetworking'
-  pod 'MJExtension'
+pod 'ReactiveCocoa', '~> 2.5'
+pod 'CocoaLumberjack', '~> 2.3.0'
+pod 'AFNetworking'
+pod 'SDCycleScrollView'
+pod 'Masonry'
+pod 'MJRefresh'
+pod 'MJExtension'
+pod 'SVProgressHUD'
+pod 'FMDB'
+pod 'SDWebImage'
+pod 'SDAutoLayout', '~> 2.1.3'
+pod 'MLLabel'
+pod 'CTAssetsPickerController'
+pod "Qiniu", "~> 7.1"
+pod 'HandyAutoLayout', '~> 1.0.0’
+pod 'UMengAnalytics-NO-IDFA'
+pod 'MBProgressHUD', '~> 1.1.0'
 
-  target 'PropertymanagerTests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
-
-  target 'PropertymanagerUITests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
 end
+
