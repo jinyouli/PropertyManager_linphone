@@ -18,7 +18,7 @@
  * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
-#import "model/NgnHistoryEvent.h"
+#import "NgnHistoryEvent.h"
 
 @interface NgnHistorySMSEvent : NgnHistoryEvent {
 	NSData* content;

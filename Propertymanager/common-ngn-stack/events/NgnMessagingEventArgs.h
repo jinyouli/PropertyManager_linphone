@@ -20,7 +20,7 @@
  */
 #import <Foundation/Foundation.h>
 
-#import "events/NgnEventArgs.h"
+#import "NgnEventArgs.h"
 
 typedef enum NgnMessagingEventTypes_e {
 	MESSAGING_EVENT_CONNECTING,

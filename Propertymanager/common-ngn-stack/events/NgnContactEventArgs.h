@@ -20,7 +20,7 @@
  */
 #import <Foundation/Foundation.h>
 
-#import "events/NgnEventArgs.h"
+#import "NgnEventArgs.h"
 
 #define kNgnContactEventArgs_Name @"NgnContactEventArgs_Name"
 

@@ -88,10 +88,6 @@
 -(void)dealloc{
 	[self stop];
 	
-	[mSipService release];
-	[mConfigurationService release];
-	[mContactService release];
-	
 	[super dealloc];
 }
 
@@ -148,13 +144,6 @@
 	
 	mStarted = FALSE;
 	return bSuccess;
-}
-
--(NgnBaseService<INgnSipService>*)getSipService{
-	if(mSipService == nil){
-		mSipService = [[NgnSipService alloc] init];
-	}
-	return mSipService;
 }
 
 -(NgnBaseService<INgnConfigurationService>*)getConfigurationService{
@@ -251,22 +240,6 @@
 	static BOOL sMediaLayerInitialized = NO;
 	
 	if (!sMediaLayerInitialized) {
-        if (tnet_startup() != 0) {
-            return NO;
-        }
-        
-        if (thttp_startup() != 0) {
-            return NO;
-        }
-        
-        if (tdav_init() != 0) {
-            return NO;
-        }
-        
-        assert(tmedia_defaults_set_profile(tmedia_profile_default) == 0);
-        assert(tmedia_defaults_set_avpf_mode(tmedia_mode_optional) == 0);
-        assert(tmedia_defaults_set_srtp_type(tmedia_srtp_type_none) == 0);
-        assert(tmedia_defaults_set_srtp_mode(tmedia_srtp_mode_none) == 0);
         assert(tmedia_defaults_set_ice_enabled(tsk_false) == 0);
         
         assert(tmedia_defaults_set_rtcpmux_enabled(tsk_true) == 0);

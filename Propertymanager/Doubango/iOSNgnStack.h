@@ -43,13 +43,6 @@
 #import "NgnContactEventArgs.h"
 #import "NgnNetworkEventArgs.h"
 
-#import "NgnRegistrationSession.h"
-#import "NgnAVSession.h"
-#import "NgnMsrpSession.h"
-#import "NgnMessagingSession.h"
-#import "NgnSubscriptionSession.h"
-#import "NgnPublicationSession.h"
-#import "NgnPresenceStatus.h"
 
 #import "NgnContact.h"
 #import "NgnPhoneNumber.h"

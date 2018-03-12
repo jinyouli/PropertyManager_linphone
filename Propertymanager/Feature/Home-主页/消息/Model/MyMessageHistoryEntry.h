@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "model/NgnHistorySMSEvent.h"
+#import "NgnHistorySMSEvent.h"
 
 @interface MyMessageHistoryEntry : NSObject
 {

@@ -20,8 +20,8 @@
  */
 #import <Foundation/Foundation.h>
 
-#import "events/NgnEventArgs.h"
-#import "media/NgnMediaType.h"
+#import "NgnEventArgs.h"
+#import "NgnMediaType.h"
 
 typedef enum NgnHistoryEventTypes_e {
 	HISTORY_EVENT_ITEM_ADDED,

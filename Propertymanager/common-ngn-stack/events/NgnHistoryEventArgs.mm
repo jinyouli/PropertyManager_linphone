@@ -41,8 +41,5 @@
 	return [self initWithEventId: 0 andEventType: _eventType];
 }
 
--(void)dealloc{
-	[super dealloc];
-}
 
 @end
