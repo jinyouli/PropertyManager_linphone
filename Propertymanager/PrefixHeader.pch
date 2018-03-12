@@ -16,7 +16,6 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import <linphone/linphonecore.h>
 
 #import "SYLinphoneManager.h"
 #import "Common.h"
