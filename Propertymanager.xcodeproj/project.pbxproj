@@ -10,7 +10,6 @@
 		4D96CFA21BA302A5153720E6 /* libPods-PropertymanagerUITests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0CB93DCBADD7BBA7294C575A /* libPods-PropertymanagerUITests.a */; };
 		5FA7CF48E28AF1A917EE0238 /* libPods-PropertymanagerTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B3A550862CD93BBDB5428C42 /* libPods-PropertymanagerTests.a */; };
 		C2E5387AE950075353C1F37D /* libPods-Propertymanager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB131ACD7EA2FA8110920B88 /* libPods-Propertymanager.a */; };
-		E9A3CAF820526ADD00832455 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A3CAF720526ADD00832455 /* AppDelegate.m */; };
 		E9A3CAFB20526ADD00832455 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A3CAFA20526ADD00832455 /* ViewController.m */; };
 		E9A3CB0020526ADD00832455 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9A3CAFF20526ADD00832455 /* Assets.xcassets */; };
 		E9A3CB0320526ADD00832455 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9A3CB0120526ADD00832455 /* LaunchScreen.storyboard */; };
@@ -384,8 +383,6 @@
 		E0984BFBCCAF4AF19A3C63B9 /* Pods-PropertymanagerUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PropertymanagerUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-PropertymanagerUITests/Pods-PropertymanagerUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		E13A543CADA746DD194A3021 /* Pods-PropertymanagerUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PropertymanagerUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-PropertymanagerUITests/Pods-PropertymanagerUITests.release.xcconfig"; sourceTree = "<group>"; };
 		E9A3CAF320526ADD00832455 /* Propertymanager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Propertymanager.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		E9A3CAF620526ADD00832455 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
-		E9A3CAF720526ADD00832455 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		E9A3CAF920526ADD00832455 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		E9A3CAFA20526ADD00832455 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		E9A3CAFF20526ADD00832455 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -1012,8 +1009,6 @@
 				E9B7FBED20565EAD00789520 /* Application */,
 				E9A3CDCC2052733900832455 /* Common */,
 				E9A3CB2820526C2C00832455 /* Vendor */,
-				E9A3CAF620526ADD00832455 /* AppDelegate.h */,
-				E9A3CAF720526ADD00832455 /* AppDelegate.m */,
 				E9A3CAF920526ADD00832455 /* ViewController.h */,
 				E9A3CAFA20526ADD00832455 /* ViewController.m */,
 				E9CB82C7205288C100C92CE5 /* MonitorViewController.h */,
@@ -2986,7 +2981,6 @@
 				E9B7FD2A20565EBA00789520 /* DNDViewController.mm in Sources */,
 				E9B7FDEF20565EDC00789520 /* IQNSArray+Sort.m in Sources */,
 				E9B7FD2920565EBA00789520 /* Nei_IPModel.m in Sources */,
-				E9A3CAF820526ADD00832455 /* AppDelegate.m in Sources */,
 				E9B7FD0820565EBA00789520 /* ComplainReplyDataModel.mm in Sources */,
 				E9B7FD2320565EBA00789520 /* PhoneHistTableViewController.mm in Sources */,
 				E9B7FD2D20565EBA00789520 /* SettingViewController.mm in Sources */,
