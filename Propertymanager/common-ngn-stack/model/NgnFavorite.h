@@ -23,8 +23,8 @@
 #elif TARGET_OS_MAC
 #endif
 
-#import "media/NgnMediaType.h"
-#import "model/NgnContact.h"
+#import "NgnMediaType.h"
+#import "NgnContact.h"
 
 typedef struct FavoriteMediaEntry_s {
 	NSString* description;

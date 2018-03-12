@@ -22,8 +22,8 @@
 #import <Foundation/Foundation.h>
 #import <AddressBook/AddressBook.h>
 
-#import "utils/NgnPredicate.h"
-#import "model/NgnPhoneNumber.h"
+#import "NgnPredicate.h"
+#import "NgnPhoneNumber.h"
 
 
 typedef NSMutableArray NgnContactMutableArray;

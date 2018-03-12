@@ -22,7 +22,6 @@
 
 #import "services/impl/NgnBaseService.h"
 
-#import "services/INgnSipService.h"
 #import "services/INgnConfigurationService.h"
 #import "services/INgnContactService.h"
 #import "services/INgnHttpClientService.h"

@@ -18,7 +18,7 @@
  * 59 Temple Place - Suite 330, Boston, MA  02111-1307, USA.
  *
  */
-#import "media/NgnMediaType.h"
+#import "NgnMediaType.h"
 
 typedef	NSMutableArray NgnHistoryEventMutableArray;
 typedef NSArray	NgnHistoryEventArray;

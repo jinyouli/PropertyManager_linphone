@@ -3,7 +3,6 @@ platform :ios,’8.0’
 
 target 'Propertymanager' do
 
-pod 'ReactiveCocoa', '~> 2.5'
 pod 'CocoaLumberjack', '~> 2.3.0'
 pod 'AFNetworking'
 pod 'SDCycleScrollView'

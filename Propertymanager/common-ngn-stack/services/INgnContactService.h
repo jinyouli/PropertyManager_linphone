@@ -21,7 +21,7 @@
 #import <Foundation/Foundation.h>
 
 #import "INgnBaseService.h"
-#import "model/NgnContact.h"
+#import "NgnContact.h"
 
 @protocol INgnContactService <INgnBaseService>
 -(void) load:(BOOL) asyn;

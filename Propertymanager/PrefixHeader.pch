@@ -97,7 +97,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 // 第三方工具类
 #import "UIView+HandyAutoLayout.h"
-#import <ReactiveCocoa/ReactiveCocoa.h>
 #import "Routable.h"
 #import <CocoaLumberjack/DDLog.h>
 #import <CocoaLumberjack/CocoaLumberjack.h>

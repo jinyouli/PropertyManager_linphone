@@ -20,7 +20,7 @@
  */
 #import <Foundation/Foundation.h>
 
-#import <services/INgnBaseService.h>
+#import "INgnBaseService.h"
 
 @interface NgnBaseService : NSObject<INgnBaseService> {
 	

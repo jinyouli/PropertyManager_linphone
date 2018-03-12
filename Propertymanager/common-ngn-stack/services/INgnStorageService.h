@@ -23,7 +23,7 @@
 #import "INgnBaseService.h"
 
 #import <sqlite3.h>
-#import "model/NgnFavorite.h"
+#import "NgnFavorite.h"
 
 @protocol INgnStorageService <INgnBaseService>
 

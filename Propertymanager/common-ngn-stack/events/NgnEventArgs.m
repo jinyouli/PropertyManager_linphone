@@ -43,9 +43,5 @@
 	return [mExtras objectForKey:key];
 }
 
--(void)dealloc{
-	[mExtras release];
-	[super dealloc];
-}
 
 @end

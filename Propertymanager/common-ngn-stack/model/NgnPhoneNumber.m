@@ -29,8 +29,8 @@
 
 -(NgnPhoneNumber*) initWithNumber:(NSString*)number_ andDescription:(NSString*)desciption_ andType:(NgnPhoneNumberType_t)type_{
 	if((self = [super init])){
-		self->number = [number_ retain];
-		self->description = [desciption_ retain];
+		self->number = number_;
+		self->description = desciption_;
 		self->type = type_;
 	}
 	return self;
@@ -44,13 +44,6 @@
 	return (self->type == NgnPhoneNumberType_Email);
 }
 
--(void)dealloc{
-	[self->number release];
-	[self->description release];
-	
-	[self->opaque release];
-	
-	[super dealloc];
-}
+
 
 @end

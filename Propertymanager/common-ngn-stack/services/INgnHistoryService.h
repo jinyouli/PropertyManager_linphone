@@ -20,9 +20,9 @@
  */
 #import <Foundation/Foundation.h>
 
-#import "services/INgnBaseService.h"
-#import "model/NgnHistoryEvent.h"
-#import "media/NgnMediaType.h"
+#import "INgnBaseService.h"
+#import "NgnHistoryEvent.h"
+#import "NgnMediaType.h"
 
 @protocol INgnHistoryService <INgnBaseService>
 

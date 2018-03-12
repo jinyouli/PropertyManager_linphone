@@ -17,7 +17,6 @@
 		E9A3CDCB205272D500832455 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A3CDC9205272D400832455 /* Common.m */; };
 		E9A3CDEF2052743700832455 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A3CDEE2052743700832455 /* MBProgressHUD.m */; };
 		E9A3CDF22052746200832455 /* iToast.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A3CDF12052746200832455 /* iToast.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
-		E9B700002056603300789520 /* NgnSubscriptionSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FFB72056603300789520 /* NgnSubscriptionSession.mm */; };
 		E9B700012056603300789520 /* dtmf-0.wav in Resources */ = {isa = PBXBuildFile; fileRef = E9B7FFB92056603300789520 /* dtmf-0.wav */; };
 		E9B700022056603300789520 /* dtmf-1.wav in Resources */ = {isa = PBXBuildFile; fileRef = E9B7FFBA2056603300789520 /* dtmf-1.wav */; };
 		E9B700032056603300789520 /* dtmf-2.wav in Resources */ = {isa = PBXBuildFile; fileRef = E9B7FFBB2056603300789520 /* dtmf-2.wav */; };
@@ -40,6 +39,17 @@
 		E9B700142056603300789520 /* NgnStringUtils.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FFD32056603300789520 /* NgnStringUtils.m */; };
 		E9B700152056603300789520 /* NgnUriUtils.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FFD52056603300789520 /* NgnUriUtils.mm */; };
 		E9B700162056603300789520 /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FFD72056603300789520 /* NSDate+Utilities.m */; };
+		E9B700332056640100789520 /* libSocialQQ.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B7001B2056640000789520 /* libSocialQQ.a */; };
+		E9B700342056640100789520 /* libSocialSina.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B7001E2056640000789520 /* libSocialSina.a */; };
+		E9B700352056640200789520 /* libSocialWeChat.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B700212056640000789520 /* libSocialWeChat.a */; };
+		E9B700362056640200789520 /* UMSocialCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B700242056640000789520 /* UMSocialCore.framework */; };
+		E9B700372056640200789520 /* UMSocialNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B700252056640000789520 /* UMSocialNetwork.framework */; };
+		E9B700382056640200789520 /* UMSocialSDKPromptResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E9B700262056640000789520 /* UMSocialSDKPromptResources.bundle */; };
+		E9B700392056640200789520 /* libUMSocialLog.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B700282056640000789520 /* libUMSocialLog.a */; };
+		E9B7003A2056640200789520 /* UMSocialSDKResources.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E9B7002A2056640000789520 /* UMSocialSDKResources.bundle */; };
+		E9B7003B2056640200789520 /* UShareUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B7002B2056640000789520 /* UShareUI.framework */; };
+		E9B7003C2056640200789520 /* iOSVideoProducer.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7002D2056640000789520 /* iOSVideoProducer.mm */; };
+		E9B7003D2056640200789520 /* iOSGLView.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7002E2056640100789520 /* iOSGLView.mm */; };
 		E9B7FBEA20565D8500789520 /* libAFNetworking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B7FBE520565D8500789520 /* libAFNetworking.a */; };
 		E9B7FBEC20565DBE00789520 /* liblibYLBLib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E9B7FBEB20565DBE00789520 /* liblibYLBLib.a */; };
 		E9B7FC0020565EAD00789520 /* AppDelegate+Notification.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FBEF20565EAD00789520 /* AppDelegate+Notification.mm */; };
@@ -351,9 +361,9 @@
 		E9B7FFDD2056603300789520 /* NgnMessagingEventArgs.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FF5E2056603300789520 /* NgnMessagingEventArgs.m */; };
 		E9B7FFDE2056603300789520 /* NgnNetworkEventArgs.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FF602056603300789520 /* NgnNetworkEventArgs.mm */; };
 		E9B7FFDF2056603300789520 /* NgnPublicationEventArgs.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FF622056603300789520 /* NgnPublicationEventArgs.m */; };
-		E9B7FFE02056603300789520 /* NgnRegistrationEventArgs.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FF642056603300789520 /* NgnRegistrationEventArgs.m */; };
+		E9B7FFE02056603300789520 /* NgnRegistrationEventArgs.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FF642056603300789520 /* NgnRegistrationEventArgs.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E9B7FFE12056603300789520 /* NgnStackEventArgs.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FF662056603300789520 /* NgnStackEventArgs.m */; };
-		E9B7FFE22056603300789520 /* NgnSubscriptionEventArgs.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FF682056603300789520 /* NgnSubscriptionEventArgs.m */; };
+		E9B7FFE22056603300789520 /* NgnSubscriptionEventArgs.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FF682056603300789520 /* NgnSubscriptionEventArgs.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		E9B7FFE32056603300789520 /* NgnCamera.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FF6B2056603300789520 /* NgnCamera.mm */; };
 		E9B7FFE42056603300789520 /* NgnVideoConsumer.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FF702056603300789520 /* NgnVideoConsumer.mm */; };
 		E9B7FFE52056603300789520 /* NgnContact.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FF742056603300789520 /* NgnContact.m */; };
@@ -374,15 +384,6 @@
 		E9B7FFF42056603300789520 /* NgnStorageService.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FF952056603300789520 /* NgnStorageService.mm */; };
 		E9B7FFF52056603300789520 /* NgnBaseService.m in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FF9F2056603300789520 /* NgnBaseService.m */; };
 		E9B7FFF62056603300789520 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = E9B7FFA12056603300789520 /* Settings.bundle */; };
-		E9B7FFF72056603300789520 /* NgnAVSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FFA42056603300789520 /* NgnAVSession.mm */; };
-		E9B7FFF82056603300789520 /* NgnInviteSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FFA62056603300789520 /* NgnInviteSession.mm */; };
-		E9B7FFF92056603300789520 /* NgnMessagingSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FFA82056603300789520 /* NgnMessagingSession.mm */; };
-		E9B7FFFA2056603300789520 /* NgnMsrpSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FFAA2056603300789520 /* NgnMsrpSession.mm */; };
-		E9B7FFFB2056603300789520 /* NgnPublicationSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FFAD2056603300789520 /* NgnPublicationSession.mm */; };
-		E9B7FFFC2056603300789520 /* NgnRegistrationSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FFAF2056603300789520 /* NgnRegistrationSession.mm */; };
-		E9B7FFFD2056603300789520 /* NgnSipPreferences.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FFB12056603300789520 /* NgnSipPreferences.mm */; };
-		E9B7FFFE2056603300789520 /* NgnSipSession.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FFB32056603300789520 /* NgnSipSession.mm */; };
-		E9B7FFFF2056603300789520 /* NgnSipStack.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FFB52056603300789520 /* NgnSipStack.mm */; };
 		E9CB828E205278C400C92CE5 /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9CB828D205278C400C92CE5 /* LocalAuthentication.framework */; };
 		E9CB8290205278CE00C92CE5 /* UserNotifications.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9CB828F205278CE00C92CE5 /* UserNotifications.framework */; };
 		E9CB8292205278DF00C92CE5 /* VideoToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9CB8291205278DF00C92CE5 /* VideoToolbox.framework */; };
@@ -459,6 +460,25 @@
 		E9A3CDEE2052743700832455 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		E9A3CDF02052746100832455 /* iToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iToast.h; sourceTree = "<group>"; };
 		E9A3CDF12052746200832455 /* iToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iToast.m; sourceTree = "<group>"; };
+		E9B7001B2056640000789520 /* libSocialQQ.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialQQ.a; sourceTree = "<group>"; };
+		E9B7001C2056640000789520 /* UMSocialQQHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialQQHandler.h; sourceTree = "<group>"; };
+		E9B7001E2056640000789520 /* libSocialSina.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialSina.a; sourceTree = "<group>"; };
+		E9B7001F2056640000789520 /* UMSocialSinaHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialSinaHandler.h; sourceTree = "<group>"; };
+		E9B700212056640000789520 /* libSocialWeChat.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libSocialWeChat.a; sourceTree = "<group>"; };
+		E9B700222056640000789520 /* UMSocialWechatHandler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UMSocialWechatHandler.h; sourceTree = "<group>"; };
+		E9B700242056640000789520 /* UMSocialCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMSocialCore.framework; sourceTree = "<group>"; };
+		E9B700252056640000789520 /* UMSocialNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UMSocialNetwork.framework; sourceTree = "<group>"; };
+		E9B700262056640000789520 /* UMSocialSDKPromptResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSocialSDKPromptResources.bundle; sourceTree = "<group>"; };
+		E9B700282056640000789520 /* libUMSocialLog.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libUMSocialLog.a; sourceTree = "<group>"; };
+		E9B7002A2056640000789520 /* UMSocialSDKResources.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = UMSocialSDKResources.bundle; sourceTree = "<group>"; };
+		E9B7002B2056640000789520 /* UShareUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = UShareUI.framework; sourceTree = "<group>"; };
+		E9B7002C2056640000789520 /* iOSNgnPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSNgnPrivate.h; sourceTree = "<group>"; };
+		E9B7002D2056640000789520 /* iOSVideoProducer.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSVideoProducer.mm; sourceTree = "<group>"; };
+		E9B7002E2056640100789520 /* iOSGLView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = iOSGLView.mm; sourceTree = "<group>"; };
+		E9B7002F2056640100789520 /* iOSGLView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSGLView.h; sourceTree = "<group>"; };
+		E9B700302056640100789520 /* iOSNgnConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSNgnConfig.h; sourceTree = "<group>"; };
+		E9B700312056640100789520 /* iOSNgnStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSNgnStack.h; sourceTree = "<group>"; };
+		E9B700322056640100789520 /* iOSVideoProducer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iOSVideoProducer.h; sourceTree = "<group>"; };
 		E9B7FBE520565D8500789520 /* libAFNetworking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libAFNetworking.a; sourceTree = "<group>"; };
 		E9B7FBE620565D8500789520 /* SYLinphoneDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYLinphoneDelegate.h; sourceTree = "<group>"; };
 		E9B7FBE720565D8500789520 /* SYLinphoneManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYLinphoneManager.h; sourceTree = "<group>"; };
@@ -995,32 +1015,10 @@
 		E9B7FF992056603300789520 /* INgnHistoryService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INgnHistoryService.h; sourceTree = "<group>"; };
 		E9B7FF9A2056603300789520 /* INgnHttpClientService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INgnHttpClientService.h; sourceTree = "<group>"; };
 		E9B7FF9B2056603300789520 /* INgnNetworkService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INgnNetworkService.h; sourceTree = "<group>"; };
-		E9B7FF9C2056603300789520 /* INgnSipService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INgnSipService.h; sourceTree = "<group>"; };
 		E9B7FF9D2056603300789520 /* INgnSoundService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INgnSoundService.h; sourceTree = "<group>"; };
 		E9B7FF9E2056603300789520 /* INgnStorageService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = INgnStorageService.h; sourceTree = "<group>"; };
 		E9B7FF9F2056603300789520 /* NgnBaseService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NgnBaseService.m; sourceTree = "<group>"; };
 		E9B7FFA12056603300789520 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
-		E9B7FFA32056603300789520 /* NgnAVSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NgnAVSession.h; sourceTree = "<group>"; };
-		E9B7FFA42056603300789520 /* NgnAVSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NgnAVSession.mm; sourceTree = "<group>"; };
-		E9B7FFA52056603300789520 /* NgnInviteSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NgnInviteSession.h; sourceTree = "<group>"; };
-		E9B7FFA62056603300789520 /* NgnInviteSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NgnInviteSession.mm; sourceTree = "<group>"; };
-		E9B7FFA72056603300789520 /* NgnMessagingSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NgnMessagingSession.h; sourceTree = "<group>"; };
-		E9B7FFA82056603300789520 /* NgnMessagingSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NgnMessagingSession.mm; sourceTree = "<group>"; };
-		E9B7FFA92056603300789520 /* NgnMsrpSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NgnMsrpSession.h; sourceTree = "<group>"; };
-		E9B7FFAA2056603300789520 /* NgnMsrpSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NgnMsrpSession.mm; sourceTree = "<group>"; };
-		E9B7FFAB2056603300789520 /* NgnPresenceStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NgnPresenceStatus.h; sourceTree = "<group>"; };
-		E9B7FFAC2056603300789520 /* NgnPublicationSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NgnPublicationSession.h; sourceTree = "<group>"; };
-		E9B7FFAD2056603300789520 /* NgnPublicationSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NgnPublicationSession.mm; sourceTree = "<group>"; };
-		E9B7FFAE2056603300789520 /* NgnRegistrationSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NgnRegistrationSession.h; sourceTree = "<group>"; };
-		E9B7FFAF2056603300789520 /* NgnRegistrationSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NgnRegistrationSession.mm; sourceTree = "<group>"; };
-		E9B7FFB02056603300789520 /* NgnSipPreferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NgnSipPreferences.h; sourceTree = "<group>"; };
-		E9B7FFB12056603300789520 /* NgnSipPreferences.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NgnSipPreferences.mm; sourceTree = "<group>"; };
-		E9B7FFB22056603300789520 /* NgnSipSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NgnSipSession.h; sourceTree = "<group>"; };
-		E9B7FFB32056603300789520 /* NgnSipSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NgnSipSession.mm; sourceTree = "<group>"; };
-		E9B7FFB42056603300789520 /* NgnSipStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NgnSipStack.h; sourceTree = "<group>"; };
-		E9B7FFB52056603300789520 /* NgnSipStack.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NgnSipStack.mm; sourceTree = "<group>"; };
-		E9B7FFB62056603300789520 /* NgnSubscriptionSession.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NgnSubscriptionSession.h; sourceTree = "<group>"; };
-		E9B7FFB72056603300789520 /* NgnSubscriptionSession.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = NgnSubscriptionSession.mm; sourceTree = "<group>"; };
 		E9B7FFB92056603300789520 /* dtmf-0.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "dtmf-0.wav"; sourceTree = "<group>"; };
 		E9B7FFBA2056603300789520 /* dtmf-1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "dtmf-1.wav"; sourceTree = "<group>"; };
 		E9B7FFBB2056603300789520 /* dtmf-2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = "dtmf-2.wav"; sourceTree = "<group>"; };
@@ -1093,15 +1091,19 @@
 				E9CB82BC20527ACB00C92CE5 /* libiconv.tbd in Frameworks */,
 				E9CB82BE20527AD400C92CE5 /* libsqlite3.tbd in Frameworks */,
 				E9B7FDFD20565EDC00789520 /* iflyMSC.framework in Frameworks */,
+				E9B7003B2056640200789520 /* UShareUI.framework in Frameworks */,
 				E9CB82C420527AF100C92CE5 /* libresolv.tbd in Frameworks */,
 				E9CB82C620527B4500C92CE5 /* libxml2.tbd in Frameworks */,
+				E9B700332056640100789520 /* libSocialQQ.a in Frameworks */,
 				E9CB82C220527AE700C92CE5 /* libstdc++.6.tbd in Frameworks */,
 				E9CB82C020527ADE00C92CE5 /* libc++.tbd in Frameworks */,
 				E9CB82BA20527AC100C92CE5 /* libz.tbd in Frameworks */,
 				E9CB82B8205279AF00C92CE5 /* AudioToolbox.framework in Frameworks */,
 				E9CB82B6205279A600C92CE5 /* UIKit.framework in Frameworks */,
+				E9B700342056640100789520 /* libSocialSina.a in Frameworks */,
 				E9B7FBEC20565DBE00789520 /* liblibYLBLib.a in Frameworks */,
 				E9CB82B42052799C00C92CE5 /* QuartzCore.framework in Frameworks */,
+				E9B700372056640200789520 /* UMSocialNetwork.framework in Frameworks */,
 				E9CB82B22052799200C92CE5 /* OpenGLES.framework in Frameworks */,
 				E9CB82B02052798700C92CE5 /* MessageUI.framework in Frameworks */,
 				E9CB82AE2052797B00C92CE5 /* MediaPlayer.framework in Frameworks */,
@@ -1110,16 +1112,19 @@
 				E9CB82A82052795800C92CE5 /* AddressBookUI.framework in Frameworks */,
 				E9CB82A62052795100C92CE5 /* AddressBook.framework in Frameworks */,
 				E9CB82A42052794000C92CE5 /* CFNetwork.framework in Frameworks */,
+				E9B700362056640200789520 /* UMSocialCore.framework in Frameworks */,
 				E9CB82A22052793800C92CE5 /* AssetsLibrary.framework in Frameworks */,
 				E9CB82A02052793000C92CE5 /* AVFoundation.framework in Frameworks */,
 				E9CB829E2052792500C92CE5 /* CoreAudio.framework in Frameworks */,
 				E9CB829C2052791A00C92CE5 /* CoreMedia.framework in Frameworks */,
 				E9CB829A2052791100C92CE5 /* CoreTelephony.framework in Frameworks */,
+				E9B700392056640200789520 /* libUMSocialLog.a in Frameworks */,
 				E9CB82982052790800C92CE5 /* CoreVideo.framework in Frameworks */,
 				E9CB82962052790000C92CE5 /* Foundation.framework in Frameworks */,
 				E9CB8294205278EA00C92CE5 /* CoreLocation.framework in Frameworks */,
 				E9CB8292205278DF00C92CE5 /* VideoToolbox.framework in Frameworks */,
 				E9CB8290205278CE00C92CE5 /* UserNotifications.framework in Frameworks */,
+				E9B700352056640200789520 /* libSocialWeChat.a in Frameworks */,
 				E9B7FBEA20565D8500789520 /* libAFNetworking.a in Frameworks */,
 				E9CB828E205278C400C92CE5 /* LocalAuthentication.framework in Frameworks */,
 				E9B7FDFC20565EDC00789520 /* libGeTuiSdk-1.4.2.a in Frameworks */,
@@ -1178,6 +1183,7 @@
 		E9A3CAF520526ADD00832455 /* Propertymanager */ = {
 			isa = PBXGroup;
 			children = (
+				E9B70017205663EA00789520 /* Doubango */,
 				E9B7FF512056603300789520 /* common-ngn-stack */,
 				E9B7FE0C20565EEF00789520 /* Resources */,
 				E9B7FD3720565EC700789520 /* Utility */,
@@ -1251,6 +1257,96 @@
 				E9A3CDEE2052743700832455 /* MBProgressHUD.m */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		E9B70017205663EA00789520 /* Doubango */ = {
+			isa = PBXGroup;
+			children = (
+				E9B7002F2056640100789520 /* iOSGLView.h */,
+				E9B7002E2056640100789520 /* iOSGLView.mm */,
+				E9B700302056640100789520 /* iOSNgnConfig.h */,
+				E9B7002C2056640000789520 /* iOSNgnPrivate.h */,
+				E9B700312056640100789520 /* iOSNgnStack.h */,
+				E9B700322056640100789520 /* iOSVideoProducer.h */,
+				E9B7002D2056640000789520 /* iOSVideoProducer.mm */,
+				E9B700182056640000789520 /* UMSocial */,
+			);
+			path = Doubango;
+			sourceTree = "<group>";
+		};
+		E9B700182056640000789520 /* UMSocial */ = {
+			isa = PBXGroup;
+			children = (
+				E9B700192056640000789520 /* SocialLibraries */,
+				E9B700232056640000789520 /* UMSocialSDK */,
+				E9B700272056640000789520 /* UMSocialSDKPlugin */,
+				E9B700292056640000789520 /* UMSocialUI */,
+			);
+			path = UMSocial;
+			sourceTree = "<group>";
+		};
+		E9B700192056640000789520 /* SocialLibraries */ = {
+			isa = PBXGroup;
+			children = (
+				E9B7001A2056640000789520 /* QQ */,
+				E9B7001D2056640000789520 /* Sina */,
+				E9B700202056640000789520 /* WeChat */,
+			);
+			path = SocialLibraries;
+			sourceTree = "<group>";
+		};
+		E9B7001A2056640000789520 /* QQ */ = {
+			isa = PBXGroup;
+			children = (
+				E9B7001B2056640000789520 /* libSocialQQ.a */,
+				E9B7001C2056640000789520 /* UMSocialQQHandler.h */,
+			);
+			path = QQ;
+			sourceTree = "<group>";
+		};
+		E9B7001D2056640000789520 /* Sina */ = {
+			isa = PBXGroup;
+			children = (
+				E9B7001E2056640000789520 /* libSocialSina.a */,
+				E9B7001F2056640000789520 /* UMSocialSinaHandler.h */,
+			);
+			path = Sina;
+			sourceTree = "<group>";
+		};
+		E9B700202056640000789520 /* WeChat */ = {
+			isa = PBXGroup;
+			children = (
+				E9B700212056640000789520 /* libSocialWeChat.a */,
+				E9B700222056640000789520 /* UMSocialWechatHandler.h */,
+			);
+			path = WeChat;
+			sourceTree = "<group>";
+		};
+		E9B700232056640000789520 /* UMSocialSDK */ = {
+			isa = PBXGroup;
+			children = (
+				E9B700242056640000789520 /* UMSocialCore.framework */,
+				E9B700252056640000789520 /* UMSocialNetwork.framework */,
+				E9B700262056640000789520 /* UMSocialSDKPromptResources.bundle */,
+			);
+			path = UMSocialSDK;
+			sourceTree = "<group>";
+		};
+		E9B700272056640000789520 /* UMSocialSDKPlugin */ = {
+			isa = PBXGroup;
+			children = (
+				E9B700282056640000789520 /* libUMSocialLog.a */,
+			);
+			path = UMSocialSDKPlugin;
+			sourceTree = "<group>";
+		};
+		E9B700292056640000789520 /* UMSocialUI */ = {
+			isa = PBXGroup;
+			children = (
+				E9B7002A2056640000789520 /* UMSocialSDKResources.bundle */,
+				E9B7002B2056640000789520 /* UShareUI.framework */,
+			);
+			path = UMSocialUI;
 			sourceTree = "<group>";
 		};
 		E9B7FBE420565D8500789520 /* LinPhoneManage */ = {
@@ -2543,7 +2639,6 @@
 				E9B7FF822056603300789520 /* NgnEngine.mm */,
 				E9B7FF832056603300789520 /* services */,
 				E9B7FFA02056603300789520 /* settings */,
-				E9B7FFA22056603300789520 /* sip */,
 				E9B7FFB82056603300789520 /* sound */,
 				E9B7FFC82056603300789520 /* storage */,
 				E9B7FFCB2056603300789520 /* utils */,
@@ -2626,7 +2721,6 @@
 				E9B7FF992056603300789520 /* INgnHistoryService.h */,
 				E9B7FF9A2056603300789520 /* INgnHttpClientService.h */,
 				E9B7FF9B2056603300789520 /* INgnNetworkService.h */,
-				E9B7FF9C2056603300789520 /* INgnSipService.h */,
 				E9B7FF9D2056603300789520 /* INgnSoundService.h */,
 				E9B7FF9E2056603300789520 /* INgnStorageService.h */,
 				E9B7FF9F2056603300789520 /* NgnBaseService.m */,
@@ -2664,34 +2758,6 @@
 				E9B7FFA12056603300789520 /* Settings.bundle */,
 			);
 			path = settings;
-			sourceTree = "<group>";
-		};
-		E9B7FFA22056603300789520 /* sip */ = {
-			isa = PBXGroup;
-			children = (
-				E9B7FFA32056603300789520 /* NgnAVSession.h */,
-				E9B7FFA42056603300789520 /* NgnAVSession.mm */,
-				E9B7FFA52056603300789520 /* NgnInviteSession.h */,
-				E9B7FFA62056603300789520 /* NgnInviteSession.mm */,
-				E9B7FFA72056603300789520 /* NgnMessagingSession.h */,
-				E9B7FFA82056603300789520 /* NgnMessagingSession.mm */,
-				E9B7FFA92056603300789520 /* NgnMsrpSession.h */,
-				E9B7FFAA2056603300789520 /* NgnMsrpSession.mm */,
-				E9B7FFAB2056603300789520 /* NgnPresenceStatus.h */,
-				E9B7FFAC2056603300789520 /* NgnPublicationSession.h */,
-				E9B7FFAD2056603300789520 /* NgnPublicationSession.mm */,
-				E9B7FFAE2056603300789520 /* NgnRegistrationSession.h */,
-				E9B7FFAF2056603300789520 /* NgnRegistrationSession.mm */,
-				E9B7FFB02056603300789520 /* NgnSipPreferences.h */,
-				E9B7FFB12056603300789520 /* NgnSipPreferences.mm */,
-				E9B7FFB22056603300789520 /* NgnSipSession.h */,
-				E9B7FFB32056603300789520 /* NgnSipSession.mm */,
-				E9B7FFB42056603300789520 /* NgnSipStack.h */,
-				E9B7FFB52056603300789520 /* NgnSipStack.mm */,
-				E9B7FFB62056603300789520 /* NgnSubscriptionSession.h */,
-				E9B7FFB72056603300789520 /* NgnSubscriptionSession.mm */,
-			);
-			path = sip;
 			sourceTree = "<group>";
 		};
 		E9B7FFB82056603300789520 /* sound */ = {
@@ -2923,6 +2989,7 @@
 				E9B7FF2F20565EF100789520 /* Lock1.png in Resources */,
 				E9B7FF3B20565EF100789520 /* dtmf-2.wav in Resources */,
 				E9B700102056603300789520 /* NgnDataBase.db in Resources */,
+				E9B700382056640200789520 /* UMSocialSDKPromptResources.bundle in Resources */,
 				E9B7FEF820565EF000789520 /* 1.png in Resources */,
 				E9B7FEF620565EF000789520 /* ylb_LockImage4.png in Resources */,
 				E9B7FED420565EF000789520 /* logo80.png in Resources */,
@@ -3018,6 +3085,7 @@
 				E9B7FF2D20565EF100789520 /* entrance_mute_off.png in Resources */,
 				E9B7FF1020565EF000789520 /* changeAudio@1x.png in Resources */,
 				E9B7FF3E20565EF100789520 /* dtmf-5.wav in Resources */,
+				E9B7003A2056640200789520 /* UMSocialSDKResources.bundle in Resources */,
 				E9B7FF1920565EF100789520 /* home_sip_on@1x.png in Resources */,
 				E9B7FEE720565EF000789520 /* up.png in Resources */,
 				E9B7FEBE20565EF000789520 /* home_my.png in Resources */,
@@ -3144,7 +3212,6 @@
 				E9B7FD8720565EC700789520 /* SYSipSendMessage.mm in Sources */,
 				E9B7FD1420565EBA00789520 /* MoreHistroyCommandViewController.m in Sources */,
 				E9B7FCF920565EBA00789520 /* SystemTableViewCell.mm in Sources */,
-				E9B7FFF92056603300789520 /* NgnMessagingSession.mm in Sources */,
 				E9B7FD1520565EBA00789520 /* SendOrderCauseViewController.mm in Sources */,
 				E9B7FD1620565EBA00789520 /* SendOrderViewController.mm in Sources */,
 				E9B7FD8020565EC700789520 /* UIViewController+SYUtils.m in Sources */,
@@ -3239,7 +3306,6 @@
 				E9B7FD1A20565EBA00789520 /* EntranceView.mm in Sources */,
 				E9B7FD2020565EBA00789520 /* BaseContactTableViewController.mm in Sources */,
 				E9B7FD2B20565EBA00789520 /* NewsNoticeSettingViewController.m in Sources */,
-				E9B7FFF72056603300789520 /* NgnAVSession.mm in Sources */,
 				E9B7FC0820565EAD00789520 /* SYCommon.m in Sources */,
 				E9B7FF3720565EF100789520 /* PMConst.mm in Sources */,
 				E9B7FD1020565EBA00789520 /* ProcessingTableViewController.mm in Sources */,
@@ -3247,8 +3313,6 @@
 				E9B7FD9220565EC700789520 /* DontDisturbManager.m in Sources */,
 				E9B7FD8420565EC700789520 /* PMTools.mm in Sources */,
 				E9B7FDF320565EDC00789520 /* IQUIWindow+Hierarchy.m in Sources */,
-				E9B700002056603300789520 /* NgnSubscriptionSession.mm in Sources */,
-				E9B7FFFC2056603300789520 /* NgnRegistrationSession.mm in Sources */,
 				E9B7FDF120565EDC00789520 /* IQUIView+Hierarchy.m in Sources */,
 				E9CB82CC20528BC800C92CE5 /* SYLockListModel.m in Sources */,
 				E9B7FCE420565EBA00789520 /* BaseTableViewController.m in Sources */,
@@ -3262,7 +3326,6 @@
 				E9B700132056603300789520 /* NgnNotificationCenter.m in Sources */,
 				E9B7FFDE2056603300789520 /* NgnNetworkEventArgs.mm in Sources */,
 				E9B7FD9120565EC700789520 /* SYQiniuUpload.m in Sources */,
-				E9B7FFFD2056603300789520 /* NgnSipPreferences.mm in Sources */,
 				E9B7FE0820565EDC00789520 /* TZPhotoPreviewCell.m in Sources */,
 				E9B7FD0920565EBA00789520 /* ComplainHeaderFrame.mm in Sources */,
 				E9B7FE0720565EDC00789520 /* TZPhotoPickerController.m in Sources */,
@@ -3274,16 +3337,13 @@
 				E9B7FD9420565EC700789520 /* WJYAlertInputTextView.m in Sources */,
 				E9B7FD0A20565EBA00789520 /* ComplainReplyFrame.mm in Sources */,
 				E9A3CDF22052746200832455 /* iToast.m in Sources */,
-				E9B7FFFF2056603300789520 /* NgnSipStack.mm in Sources */,
 				E9B7FD8E20565EC700789520 /* TextViewCustom.mm in Sources */,
 				E9B7FCE720565EBA00789520 /* MyRootViewController.mm in Sources */,
 				E9B7FF4E20565F0B00789520 /* ZYTextField.m in Sources */,
 				E9B7FD3420565EBA00789520 /* AudioCallViewController.mm in Sources */,
 				E9B7FDF520565EDC00789520 /* IQKeyboardReturnKeyHandler.m in Sources */,
 				E9A3CB0620526ADD00832455 /* main.m in Sources */,
-				E9B7FFF82056603300789520 /* NgnInviteSession.mm in Sources */,
 				E9B7FC0220565EAD00789520 /* AppDelegate+SipBackground.mm in Sources */,
-				E9B7FFFA2056603300789520 /* NgnMsrpSession.mm in Sources */,
 				E9B700122056603300789520 /* NgnDateTimeUtils.mm in Sources */,
 				E9B7FFDF2056603300789520 /* NgnPublicationEventArgs.m in Sources */,
 				E9B7FFF02056603300789520 /* NgnHttpClientService.mm in Sources */,
@@ -3322,9 +3382,9 @@
 				E9B7FD9920565EC700789520 /* SystemAudio.m in Sources */,
 				E9B7FD0E20565EBA00789520 /* UntreatedTableViewController.mm in Sources */,
 				E9B7FD1F20565EBA00789520 /* ContactModel.mm in Sources */,
-				E9B7FFFE2056603300789520 /* NgnSipSession.mm in Sources */,
 				E9B7FFE92056603300789520 /* NgnHistoryEvent.mm in Sources */,
-				E9B7FFFB2056603300789520 /* NgnPublicationSession.mm in Sources */,
+				E9B7003C2056640200789520 /* iOSVideoProducer.mm in Sources */,
+				E9B7003D2056640200789520 /* iOSGLView.mm in Sources */,
 				E9B7FD1D20565EBA00789520 /* SliderScroView.mm in Sources */,
 				E9B7FE0420565EDC00789520 /* TZImageManager.m in Sources */,
 				E9B7FD2F20565EBA00789520 /* AboutMyAppViewController.mm in Sources */,
@@ -3506,6 +3566,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Propertymanager/Vendor/XunFeilib",
+					"$(PROJECT_DIR)/Propertymanager/Doubango/UMSocial/UMSocialSDK",
+					"$(PROJECT_DIR)/Propertymanager/Doubango/UMSocial/UMSocialUI",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Propertymanager/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/Propertymanager/Vendor/liblinphone-sdk/apple-darwin/include";
@@ -3518,6 +3580,10 @@
 					"$(PROJECT_DIR)/Propertymanager/Vendor/liblinphone-sdk/apple-darwin/include",
 					"$(PROJECT_DIR)/Propertymanager/Vendor/LinPhoneManage",
 					"$(PROJECT_DIR)/Propertymanager/Vendor/GtSdkLib",
+					"$(PROJECT_DIR)/Propertymanager/Doubango/UMSocial/SocialLibraries/QQ",
+					"$(PROJECT_DIR)/Propertymanager/Doubango/UMSocial/SocialLibraries/Sina",
+					"$(PROJECT_DIR)/Propertymanager/Doubango/UMSocial/SocialLibraries/WeChat",
+					"$(PROJECT_DIR)/Propertymanager/Doubango/UMSocial/UMSocialSDKPlugin",
 				);
 				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_BUNDLE_IDENTIFIER = LiJinyou.Propertymanager;
@@ -3536,6 +3602,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/Propertymanager/Vendor/XunFeilib",
+					"$(PROJECT_DIR)/Propertymanager/Doubango/UMSocial/UMSocialSDK",
+					"$(PROJECT_DIR)/Propertymanager/Doubango/UMSocial/UMSocialUI",
 				);
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Propertymanager/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/Propertymanager/Vendor/liblinphone-sdk/apple-darwin/include";
@@ -3548,6 +3616,10 @@
 					"$(PROJECT_DIR)/Propertymanager/Vendor/liblinphone-sdk/apple-darwin/include",
 					"$(PROJECT_DIR)/Propertymanager/Vendor/LinPhoneManage",
 					"$(PROJECT_DIR)/Propertymanager/Vendor/GtSdkLib",
+					"$(PROJECT_DIR)/Propertymanager/Doubango/UMSocial/SocialLibraries/QQ",
+					"$(PROJECT_DIR)/Propertymanager/Doubango/UMSocial/SocialLibraries/Sina",
+					"$(PROJECT_DIR)/Propertymanager/Doubango/UMSocial/SocialLibraries/WeChat",
+					"$(PROJECT_DIR)/Propertymanager/Doubango/UMSocial/UMSocialSDKPlugin",
 				);
 				OTHER_LDFLAGS = "-Objc";
 				PRODUCT_BUNDLE_IDENTIFIER = LiJinyou.Propertymanager;

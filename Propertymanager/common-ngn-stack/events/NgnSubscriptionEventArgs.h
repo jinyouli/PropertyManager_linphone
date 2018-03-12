@@ -20,8 +20,8 @@
  */
 #import <Foundation/Foundation.h>
 
-#import "events/NgnEventArgs.h"
-#import "media/NgnEventPackageType.h"
+#import "NgnEventArgs.h"
+#import "NgnEventPackageType.h"
 
 #define kNgnSubscriptionEventArgs_Name @"NgnSubscriptionEventArgs_Name"
 
