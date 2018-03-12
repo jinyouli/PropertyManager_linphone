@@ -252,7 +252,7 @@ static id _SYLinphoneDelegate =nil; //代理对象，用于回调
  @param video    视频显示区域  当传nil过来时，拨打电话，电话通了之后，再传vidwo显示视频
  */
 - (void)call:(NSString *)address displayName:(NSString*)displayName transfer:(BOOL)transfer Video:(UIView *)video{
-
+    
     if (video) {
         linphone_core_set_native_video_window_id(LC, (__bridge void *)(video));
     }

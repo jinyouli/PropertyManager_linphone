@@ -9,7 +9,7 @@
 #import "MonitorViewController.h"
 
 @interface MonitorViewController ()
-@property (nonatomic,strong) UIView *monitorView;
+@property (nonatomic,retain) UIView *monitorView;
 @end
 
 @implementation MonitorViewController
@@ -17,11 +17,21 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    self.monitorView = [[UIView alloc] initWithFrame:CGRectMake(10, 50, 200, 200)];
-    self.monitorView.backgroundColor = [UIColor blueColor];
-    [self.view addSubview:self.monitorView];
+    NSLog(@"1");
+    self.view.backgroundColor = [UIColor whiteColor];
     
-    [[SYLinphoneManager instance] call:self.model.sip_number displayName:@"测试" transfer:NO Video:self.monitorView];
+    UIView *myView = [[UIView alloc] initWithFrame:CGRectMake(10, 100, 300, 200)];
+    myView.backgroundColor = [UIColor blackColor];
+    [self.view addSubview:myView];
+    
+    NSLog(@"数据==%@",self.model.sip_number);
+    [[SYLinphoneManager instance] call:self.model.sip_number displayName:@"13632550150" transfer:NO Video:myView];
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[SYLinphoneManager instance] hangUpCall];
 }
 
 - (instancetype)initWithCall:(SYLinphoneCall *)call GuardInfo:(SYLockListModel *)model InComingCall:(BOOL)isInComingCall{
@@ -31,6 +41,7 @@
         self.model = model;
         self.isInComingCall = isInComingCall;
     }
+    NSLog(@"2");
     return self;
 }
 
