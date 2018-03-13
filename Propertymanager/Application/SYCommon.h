@@ -12,4 +12,10 @@
 
 + (void)addAlertWithTitle:(NSString*)string;
 + (void)showAlert:(NSString *)msg;
+
++ (id)load:(NSString *)service;
++ (void)save:(NSString *)service data:(id)data;
+
+//md5 加密字符串
++ (NSString *) md5:(NSString *)str;
 @end

@@ -108,7 +108,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #import "UIButton+WebCache.h"
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
-//#import "MD5Util.h"
 #import "IQKeyboardManager.h"
 //#import "WJYAlertView.h"
 
@@ -116,7 +115,6 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #import "PMConst.h"
 #import "DefaultsMacros.h"
 #import "UtilsMacros.h"
-
 
 
 #ifdef DEBUG

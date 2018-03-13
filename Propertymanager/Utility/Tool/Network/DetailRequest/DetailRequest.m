@@ -63,180 +63,178 @@ static bool isSecondLogin = NO;
 }
 
 #pragma mark - 登陆(自动登录)
-+(void)loginBtnClickWithPhone:(NSString *)phone password:(NSString *)password isFirstLogin:(BOOL)ret
-{}
++(void)loginBtnClickWithPhone:(NSString *)phone password:(NSString *)password isFirstLogin:(BOOL)ret{
 
-//#pragma mark - 登陆(自动登录)
-//+(void)loginBtnClickWithPhone:(NSString *)phone password:(NSString *)password isFirstLogin:(BOOL)ret{
+    if (ret) {
+
+        //[SVProgressHUD showWithStatus:@"正在登陆" maskType:SVProgressHUDMaskTypeNone];
+        //[SVProgressHUD showWithStatus:@"正在登陆"];
+    }
 //
-//    if (ret) {
-//
-//        //[SVProgressHUD showWithStatus:@"正在登陆" maskType:SVProgressHUDMaskTypeNone];
-//        //[SVProgressHUD showWithStatus:@"正在登陆"];
+//    if ([PMTools isNullOrEmpty:userLoginUsername]) {
+//        NSLog(@"物业的userLoginUsername为空");
+//        return;
 //    }
-//
-//    //检查是否有网络
-//    if ([PMTools connectedToNetwork]) {
-//
-//        NSDate *date = [NSDate date];
-//        NSTimeInterval firstTime = (long)[date timeIntervalSince1970];
-//        NSDictionary * headerDic1 = @{@"uuid":[PMTools getUUID],
-//                                      @"username":phone};
-//        NSDictionary * paradict1 = @{@"username":phone,
-//                                     @"tick":[NSNumber numberWithInteger:firstTime]};
-//
-//        NSString * url = MyUrl(SYLoginURL);
-//
-//        NSLog(@"调用接口==%@,%@,%@",url,headerDic1,paradict1);
-//
-//        [PMRequest postRequestURL:url withHeaderDic:headerDic1 parameters:paradict1 withBlock:^(NSDictionary *dict) {
-//            SYLog(@"登录① ==== %@",dict);
-//
-//
-//            if ([dict[@"code"] intValue] == 0) {
-//
-//                NSString *random = dict[@"result"][@"random_num"];
-//                NSString *timeStr = [NSString stringWithFormat:@"%d", (int)firstTime];
-//
-////                NSString *MD5Str = [random stringByAppendingFormat:@"%@%@", timeStr, [MD5Util md5:password]];
-////
-////                NSLog(@"错误密码1==%@",password);
-////                NSDictionary * paradict2 = @{@"username":phone,
-////                                             @"tick":[NSNumber numberWithInteger:firstTime],
-////                                             @"password":[MD5Util md5:MD5Str],
-////                                             @"client_type":@"4",
-////                                             @"client_id": [PMTools isNullOrEmpty:clientID]?@"":clientID};
-//
-//                NSLog(@"错误密码2==%@",paradict2);
-//
-//                [PMRequest postRequestURL:url withHeaderDic:headerDic1 parameters:paradict2 withBlock:^(NSDictionary *dict) {
-//                   // [SVProgressHUD dismiss];
-//
-//
-//                NSString *msgError = [dict[@"msg"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
-//
-//                    SYLog(@"登录② ====%@",dict);
-//                    SYLog(@"错误==%@",msgError);
-//
-//                    if ([dict[@"code"] intValue] == 0) {
-//
-//
-//                        //检查更新时使用 0表示显示检查更新 1表示不显示
-//                        NSString * isCheak = dict[@"result"][@"tenementIsShow"];
-//                        if (![PMTools isNullOrEmpty:isCheak]) {
-//                            if ([isCheak integerValue] == 0) {
-//                                isCheak = @"0";
-//                            }
-//                            else{
-//                                isCheak = @"1";
-//                            }
-//                        }
-//                        else{
-//                            isCheak = @"1";
-//                        }
-//                        [[NSUserDefaults standardUserDefaults] setObject:isCheak forKey:@"tenementIsShow"];
-//
-//
-//
-//                        //token(根视图有用到)
-//                        [[NSUserDefaults standardUserDefaults] setObject:dict[@"result"][@"token"] forKey:@"token"];
-//
-//
-//                       // [[NSUserDefaults standardUserDefaults] setObject:@"123" forKey:@"token"];
-//
-//                        [[NSUserDefaults standardUserDefaults] synchronize];
-//
-//                        if (ret) {
-//                            //username
-//                            [[NSUserDefaults standardUserDefaults] setObject:phone forKey:@"loginUsername"];
-//                            [[NSUserDefaults standardUserDefaults] synchronize];
-//
-//                            //密码保存
-//                            [[NSUserDefaults standardUserDefaults] setObject:password forKey:@"password"];
-//                            [[NSUserDefaults standardUserDefaults] synchronize];
-//                        }
-//
-//                        //用户单例
-//                        UserManager *userManager = [UserManager userManagerWithDict:dict[@"result"]];
-//                        [UserManagerTool saveUserManager:userManager];
-//
-//
-//                        //设置一下勿扰模式
-//                        [[DontDisturbManager shareManager] getDisturbStatusWithUsername:phone];
-//
-//                        [PMSipTools sipRegister];
-//                        //[[NgnEngine sharedInstance].soundService setSpeakerEnabled:YES];
-//
-//
-//                        // 开启重新获取token
-//                        [PMTokenTools getTokenByOldToken];
-//
-//                        if (ret) {
-//                            //切换根视图
-//                            [[AppDelegate sharedInstance] setmanagerRootVC];
-//                        }
-//
-//                    }
-//                    else{
-//
-//                        // 如果code ： 8  并且包含密码两个字 就是密码错误,身份验证失败
-//                        // code : 3 是身份验证失败 （token失效）
-//                        NSString * str = dict[@"msg"];
-//
-//
-//                        BOOL isContain = NO;
-//                        if([str rangeOfString:@"密码"].location != NSNotFound)//_roaldSearchText
-//                        {
-//                            isContain = YES;
-//                        }
-//
-//                        if ([dict[@"code"] integerValue] == 3 && isContain) {
-//                            [DetailRequest loginBtnClickWithPhone:userLoginUsername password:userPassword isFirstLogin:NO];
-//                        }
-//                        else if ([dict[@"code"] integerValue] == 8 && isContain) {
-//
-//                            if (!ret) {
-//
-//                                //[SYCommon showAlert:str];
-//                                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"token"];
-//                                //切换根视图
-//                                //[[AppDelegate sharedInstance] setmanagerRootVC];
-//                            }
-//                            else{
-//                                //[SVProgressHUD showErrorWithStatus:str];
-//                                [SYCommon showAlert:str];
-//                            }
-//                        }
-//                    }
-//
-//                } andFailure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//                    NSLog(@"错误的东西2==%@",error);
-//                }];
-//            }
-//            else{
-//                //[SVProgressHUD showErrorWithStatus:dict[@"msg"]];
-//                [SYCommon showAlert:dict[@"msg"]];
-//
-//                if ([dict[@"code"] integerValue] == 2002) {
-//
-//                    if (!ret) {
-//                        //退回登录页面
-//                        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"token"];
-//                        //切换根视图
-//                        [[AppDelegate sharedInstance] setmanagerRootVC];
-//                    }
-//                }
-//            }
-//
-//        } andFailure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
-//            NSLog(@"错误的东西1==%@",error);
-//
-//        }];
-//    }else{
-//
-//        [[NSNotificationCenter defaultCenter] postNotificationName:@"hideHub" object:nil];
-//    }
-//}
+    
+    if (!phone) {
+        return;
+    }
+
+    //检查是否有网络
+    if ([PMTools connectedToNetwork]) {
+
+        NSDate *date = [NSDate date];
+        NSTimeInterval firstTime = (long)[date timeIntervalSince1970];
+        
+        NSDictionary * headerDic1 = @{@"uuid":[PMTools getUUID],
+                                      @"username":phone};
+        NSDictionary * paradict1 = @{@"username":phone,
+                                     @"tick":[NSNumber numberWithInteger:firstTime]};
+
+        NSString * url = MyUrl(SYLoginURL);
+
+        NSLog(@"调用接口==%@,%@,%@",url,headerDic1,paradict1);
+
+        [PMRequest postRequestURL:url withHeaderDic:headerDic1 parameters:paradict1 withBlock:^(NSDictionary *dict) {
+            SYLog(@"登录① ==== %@",dict);
+
+
+            if ([dict[@"code"] intValue] == 0) {
+
+                NSString *random = dict[@"result"][@"random_num"];
+                NSString *timeStr = [NSString stringWithFormat:@"%d", (int)firstTime];
+
+                NSString *MD5Str = [random stringByAppendingFormat:@"%@%@", timeStr, [SYCommon md5:password]];
+
+                NSDictionary * paradict2 = @{@"username":phone,
+                                             @"tick":[NSNumber numberWithInteger:firstTime],
+                                             @"password":[SYCommon md5:MD5Str],
+                                             @"client_type":@"4",
+                                             @"client_id": [PMTools isNullOrEmpty:clientID]?@"":clientID};
+
+                [PMRequest postRequestURL:url withHeaderDic:headerDic1 parameters:paradict2 withBlock:^(NSDictionary *dict) {
+                   // [SVProgressHUD dismiss];
+
+
+                NSString *msgError = [dict[@"msg"] stringByReplacingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+                    SYLog(@"登录② ====%@",dict);
+                    SYLog(@"错误==%@",msgError);
+
+                    if ([dict[@"code"] intValue] == 0) {
+
+
+                        //检查更新时使用 0表示显示检查更新 1表示不显示
+                        NSString * isCheak = dict[@"result"][@"tenementIsShow"];
+                        if (![PMTools isNullOrEmpty:isCheak]) {
+                            if ([isCheak integerValue] == 0) {
+                                isCheak = @"0";
+                            }
+                            else{
+                                isCheak = @"1";
+                            }
+                        }
+                        else{
+                            isCheak = @"1";
+                        }
+                        [[NSUserDefaults standardUserDefaults] setObject:isCheak forKey:@"tenementIsShow"];
+
+                        //token(根视图有用到)
+                        [[NSUserDefaults standardUserDefaults] setObject:dict[@"result"][@"token"] forKey:@"token"];
+
+                        [[NSUserDefaults standardUserDefaults] synchronize];
+
+                        if (ret) {
+                            //username
+                            [[NSUserDefaults standardUserDefaults] setObject:phone forKey:@"loginUsername"];
+                            [[NSUserDefaults standardUserDefaults] synchronize];
+
+                            //密码保存
+                            [[NSUserDefaults standardUserDefaults] setObject:password forKey:@"password"];
+                            [[NSUserDefaults standardUserDefaults] synchronize];
+                        }
+
+                        //用户单例
+                        UserManager *userManager = [UserManager userManagerWithDict:dict[@"result"]];
+                        [UserManagerTool saveUserManager:userManager];
+
+
+                        //设置一下勿扰模式
+                        [[DontDisturbManager shareManager] getDisturbStatusWithUsername:phone];
+
+                        [PMSipTools sipRegister];
+                        //[[NgnEngine sharedInstance].soundService setSpeakerEnabled:YES];
+
+
+                        // 开启重新获取token
+                        [PMTokenTools getTokenByOldToken];
+
+                        if (ret) {
+                            //切换根视图
+                            [[AppDelegate sharedInstance] setmanagerRootVC];
+                        }
+
+                    }
+                    else{
+
+                        // 如果code ： 8  并且包含密码两个字 就是密码错误,身份验证失败
+                        // code : 3 是身份验证失败 （token失效）
+                        NSString * str = dict[@"msg"];
+
+
+                        BOOL isContain = NO;
+                        if([str rangeOfString:@"密码"].location != NSNotFound)//_roaldSearchText
+                        {
+                            isContain = YES;
+                        }
+
+                        if ([dict[@"code"] integerValue] == 3 && isContain) {
+                            [DetailRequest loginBtnClickWithPhone:userLoginUsername password:userPassword isFirstLogin:NO];
+                        }
+                        else if ([dict[@"code"] integerValue] == 8 && isContain) {
+
+                            if (!ret) {
+
+                                //[SYCommon showAlert:str];
+                                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"token"];
+                                //切换根视图
+                                //[[AppDelegate sharedInstance] setmanagerRootVC];
+                            }
+                            else{
+                                //[SVProgressHUD showErrorWithStatus:str];
+                                [SYCommon showAlert:str];
+                            }
+                        }
+                    }
+
+                } andFailure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+                    NSLog(@"错误的东西2==%@",error);
+                }];
+            }
+            else{
+                //[SVProgressHUD showErrorWithStatus:dict[@"msg"]];
+                [SYCommon showAlert:dict[@"msg"]];
+
+                if ([dict[@"code"] integerValue] == 2002) {
+
+                    if (!ret) {
+                        //退回登录页面
+                        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"token"];
+                        //切换根视图
+                        [[AppDelegate sharedInstance] setmanagerRootVC];
+                    }
+                }
+            }
+
+        } andFailure:^(NSURLSessionDataTask * _Nullable task, NSError * _Nonnull error) {
+            NSLog(@"错误的东西1==%@",error);
+
+        }];
+    }else{
+
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"hideHub" object:nil];
+    }
+}
 
 
 

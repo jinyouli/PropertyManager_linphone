@@ -110,13 +110,13 @@
     [self didFinishLaunchingWithOptions];
     [self setupUM];
     
-    //[self getDeviceInfo];
+   // [self getDeviceInfo];
     
    // [MyUserDefaults setObject:@"api.sayee.cn:28084" forKey:@"firLocalhost"];
 //    [MyUserDefaults setObject:@"gdsayee.cn:22014" forKey:@"scoendLocalhost"];
     
     
-   // [DetailRequest loginBtnClickWithPhone:userLoginUsername password:userPassword isFirstLogin:NO];
+    [DetailRequest loginBtnClickWithPhone:userLoginUsername password:userPassword isFirstLogin:NO];
     return YES;
 }
 
