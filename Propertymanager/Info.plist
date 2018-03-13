@@ -4,6 +4,8 @@
 <dict>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
+	<key>CFBundleDisplayName</key>
+	<string>赛翼物业宝</string>
 	<key>CFBundleExecutable</key>
 	<string>$(EXECUTABLE_NAME)</string>
 	<key>CFBundleIdentifier</key>
@@ -15,23 +17,27 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.6</string>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>1.0.6.10</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>UILaunchStoryboardName</key>
-	<string>LaunchScreen</string>
-	<key>NSMicrophoneUsageDescription</key>
-	<string>麦克风</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>蓝牙</string>
-	<key>NSContactsUsageDescription</key>
-	<string>通讯录</string>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>相册</string>
 	<key>NSCameraUsageDescription</key>
 	<string>摄像头</string>
+	<key>NSContactsUsageDescription</key>
+	<string>通讯录</string>
+	<key>NSMicrophoneUsageDescription</key>
+	<string>麦克风</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>相册</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
+	<key>UILaunchStoryboardName</key>
+	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>

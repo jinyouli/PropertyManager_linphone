@@ -32,7 +32,7 @@
     [SYLinphoneManager instance].nExpires = 120;
     [SYLinphoneManager instance].ipv6Enabled = NO;
     [SYLinphoneManager instance].videoEnable = YES;
-    [[SYLinphoneManager instance] setDelegate:self];
+   // [[SYLinphoneManager instance] setDelegate:self];
     
 }
 

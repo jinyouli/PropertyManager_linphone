@@ -278,28 +278,28 @@ static BOOL kEnableEarlyIMS = TRUE;
             //以服务器版本为基准，判断本地版本位数小于服务器版本时，直接返回（并且判断为新版本，比如服务器1.5.1 本地为1.5）
             if(i > (localArray.count -1)){
                 //有新版本，提示！
-//                [self showUpdateView:versionStr withViewController:viewController];
-//                [WJYAlertView showTwoButtonsWithTitle:@"更新通知" Message:@"有新的版本更新，是否前往更新？" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"更新" Click:^{
-//                    NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/cn/app/you-lin-bang/id1138808109?mt=8"];
-//                    [[UIApplication sharedApplication]openURL:url];
-//                } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"关闭" Click:^{
-//
-//                }];
+                //[self showUpdateView:versionStr withViewController:viewController];
+                [WJYAlertView showTwoButtonsWithTitle:@"更新通知" Message:@"有新的版本更新，是否前往更新？" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"更新" Click:^{
+                    NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/cn/app/you-lin-bang/id1138808109?mt=8"];
+                    [[UIApplication sharedApplication]openURL:url];
+                } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"关闭" Click:^{
+
+                }];
                 break;
             }
             
             //有新版本，服务器版本对应数字大于本地
-//            if ( [serverArray[i] intValue] > [localArray[i] intValue]) {
-//                //有新版本，提示！
-////                [self showUpdateView:versionStr withViewController:viewController];
-//                [WJYAlertView showTwoButtonsWithTitle:@"更新通知" Message:@"有新的版本更新，是否前往更新？" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"更新" Click:^{
-//                    NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/cn/app/you-lin-bang/id1138808109?mt=8"];
-//                    [[UIApplication sharedApplication]openURL:url];
-//                } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"关闭" Click:^{
-//
-//                }];
-//                break;
-//            }
+            if ( [serverArray[i] intValue] > [localArray[i] intValue]) {
+                //有新版本，提示！
+//                [self showUpdateView:versionStr withViewController:viewController];
+                [WJYAlertView showTwoButtonsWithTitle:@"更新通知" Message:@"有新的版本更新，是否前往更新？" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"更新" Click:^{
+                    NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/cn/app/you-lin-bang/id1138808109?mt=8"];
+                    [[UIApplication sharedApplication]openURL:url];
+                } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"关闭" Click:^{
+
+                }];
+                break;
+            }
         }
 
     }

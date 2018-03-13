@@ -109,14 +109,17 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
 #import "IQKeyboardManager.h"
-//#import "WJYAlertView.h"
+#import "WJYAlertView.h"
+#import "GeTuiSdk.h"
+#import <CoreGraphics/CoreGraphics.h>
+#import <CoreGraphics/CGBase.h>
 
 //头文件
 #import "PMConst.h"
 #import "DefaultsMacros.h"
 #import "UtilsMacros.h"
 
-
+ #import <UIKit/UIKit.h>
 #ifdef DEBUG
 static const DDLogLevel ddLogLevel = LOG_LEVEL_VERBOSE;
 #else

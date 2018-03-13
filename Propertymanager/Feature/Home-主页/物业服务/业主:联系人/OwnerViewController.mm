@@ -295,19 +295,19 @@
     }
     
     [self.view endEditing:YES];
-//    [WJYAlertView showTwoButtonsWithTitle:@"提示" Message:content ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
-//        
-//        if (self.type == 0) {
-//            [self showMessageView:@[self.contactModel.fusername] title:@"" body:@""];
-//        }
-//        else{
-//            [PMTools callPhoneNumber:self.contactModel.fusername inView:self.view];
-//        }
-//        
-//        
-//    } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"取消" Click:^{
-//        
-//    }];
+    [WJYAlertView showTwoButtonsWithTitle:@"提示" Message:content ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
+        
+        if (self.type == 0) {
+            [self showMessageView:@[self.contactModel.fusername] title:@"" body:@""];
+        }
+        else{
+            [PMTools callPhoneNumber:self.contactModel.fusername inView:self.view];
+        }
+        
+        
+    } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"取消" Click:^{
+        
+    }];
 }
 
 

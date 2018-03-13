@@ -338,62 +338,62 @@
         title = @"确认完成吗？";
     }
     
-//    [WJYAlertView showTwoButtonsWithTitle:@"提示" Message:title ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
-//
-//        self.isRequest ++;
-//        if (self.isRequest == 1) {
-//            if (btn.tag == 1001) {
-//                //提醒派单人转单记录
-//                //保存工单相关信息记录
-//                [self backLastVCWithType:@"3"];
-//
-//            }
-//            else{
-//                //完成
-//                if ([self checkNetWork]) {
-//
-//                    // 状态改变
-//                    UserManager * user = [UserManagerTool userManager];
-//                    NSString * url = MyUrl(SYUpdate_order_status);
-//                    SYLog(@"完成工单状态Url ==== %@",url);
-//
-//                    NSDictionary * paraDic = @{@"do_type":@"3",@"repairs_id":self.repairs_id,@"worker_id":user.worker_id};
-//                    //[SVProgressHUD showWithStatus:@"保存记录中"];
-//                    [self.hub showAnimated:YES];
-//
-//                    [DetailRequest SYUpdate_order_statusWithParms:paraDic SuccessBlock:^{
-//                        //保存工单相关信息记录
-//                        //[SVProgressHUD dismiss];
-//                        [self.hub hideAnimated:YES];
-//                        if ([PMTools isNullOrEmpty:self.descriptionTextView.textView.text] && [AppDelegate sharedInstance].photosSelectedViewController.selectedPhotos.count == 0) {
-//                            //没有内容可以上传
-//                            //[SVProgressHUD showSuccessWithStatus:@"完成成功"];
-//                            [SYCommon addAlertWithTitle:@"完成成功"];
-//                            //返回上一页
-//                            [self backMyLastVC:@"5"];
-//                        }
-//                        else{
-//                            //[SVProgressHUD showWithStatus:@"上传评论中"];
-//                            [self.hub showAnimated:YES];
-//                            [self backLastVCWithType:@"5"];
-//                        }
-//
-//                    } FailureBlock:^{
-//                        //[SVProgressHUD dismiss];
-//                        [self.hub hideAnimated:YES];
-//                        self.isRequest = 0;
-//                    }];
-//
-//                }
-//
-//            }
-//
-//        }
-//
-//
-//    } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"取消" Click:^{
-//
-//    }];
+    [WJYAlertView showTwoButtonsWithTitle:@"提示" Message:title ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
+
+        self.isRequest ++;
+        if (self.isRequest == 1) {
+            if (btn.tag == 1001) {
+                //提醒派单人转单记录
+                //保存工单相关信息记录
+                [self backLastVCWithType:@"3"];
+
+            }
+            else{
+                //完成
+                if ([self checkNetWork]) {
+
+                    // 状态改变
+                    UserManager * user = [UserManagerTool userManager];
+                    NSString * url = MyUrl(SYUpdate_order_status);
+                    SYLog(@"完成工单状态Url ==== %@",url);
+
+                    NSDictionary * paraDic = @{@"do_type":@"3",@"repairs_id":self.repairs_id,@"worker_id":user.worker_id};
+                    //[SVProgressHUD showWithStatus:@"保存记录中"];
+                    [self.hub showAnimated:YES];
+
+                    [DetailRequest SYUpdate_order_statusWithParms:paraDic SuccessBlock:^{
+                        //保存工单相关信息记录
+                        //[SVProgressHUD dismiss];
+                        [self.hub hideAnimated:YES];
+                        if ([PMTools isNullOrEmpty:self.descriptionTextView.textView.text] && [AppDelegate sharedInstance].photosSelectedViewController.selectedPhotos.count == 0) {
+                            //没有内容可以上传
+                            //[SVProgressHUD showSuccessWithStatus:@"完成成功"];
+                            [SYCommon addAlertWithTitle:@"完成成功"];
+                            //返回上一页
+                            [self backMyLastVC:@"5"];
+                        }
+                        else{
+                            //[SVProgressHUD showWithStatus:@"上传评论中"];
+                            [self.hub showAnimated:YES];
+                            [self backLastVCWithType:@"5"];
+                        }
+
+                    } FailureBlock:^{
+                        //[SVProgressHUD dismiss];
+                        [self.hub hideAnimated:YES];
+                        self.isRequest = 0;
+                    }];
+
+                }
+
+            }
+
+        }
+
+
+    } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"取消" Click:^{
+
+    }];
     
 }
 

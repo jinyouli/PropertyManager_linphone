@@ -8,6 +8,12 @@
 
 /* Begin PBXBuildFile section */
 		C2E5387AE950075353C1F37D /* libPods-Propertymanager.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB131ACD7EA2FA8110920B88 /* libPods-Propertymanager.a */; };
+		E990928C20577BA600CBE5F5 /* libGeTuiSdk-1.4.2.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E990928B20577BA600CBE5F5 /* libGeTuiSdk-1.4.2.a */; };
+		E990928E20577DF600CBE5F5 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E990928D20577DF500CBE5F5 /* JavaScriptCore.framework */; };
+		E990929120577FF600CBE5F5 /* WJYAlertView.m in Sources */ = {isa = PBXBuildFile; fileRef = E990928F20577FF600CBE5F5 /* WJYAlertView.m */; };
+		E99092952057843400CBE5F5 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99092942057843400CBE5F5 /* Security.framework */; };
+		E99092972057871F00CBE5F5 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99092962057871F00CBE5F5 /* SystemConfiguration.framework */; };
+		E99092992057883400CBE5F5 /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E99092982057883400CBE5F5 /* Accelerate.framework */; };
 		E9A3CAFB20526ADD00832455 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A3CAFA20526ADD00832455 /* ViewController.m */; };
 		E9A3CB0020526ADD00832455 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E9A3CAFF20526ADD00832455 /* Assets.xcassets */; };
 		E9A3CB0320526ADD00832455 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E9A3CB0120526ADD00832455 /* LaunchScreen.storyboard */; };
@@ -334,7 +340,7 @@
 		E9CB82B02052798700C92CE5 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9CB82AF2052798700C92CE5 /* MessageUI.framework */; };
 		E9CB82B22052799200C92CE5 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9CB82B12052799200C92CE5 /* OpenGLES.framework */; };
 		E9CB82B42052799C00C92CE5 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9CB82B32052799C00C92CE5 /* QuartzCore.framework */; };
-		E9CB82B6205279A600C92CE5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9CB82B5205279A600C92CE5 /* UIKit.framework */; };
+		E9CB82B6205279A600C92CE5 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9CB82B5205279A600C92CE5 /* UIKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		E9CB82B8205279AF00C92CE5 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E9CB82B7205279AF00C92CE5 /* AudioToolbox.framework */; };
 		E9CB82BA20527AC100C92CE5 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E9CB82B920527AC100C92CE5 /* libz.tbd */; };
 		E9CB82BC20527ACB00C92CE5 /* libiconv.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = E9CB82BB20527ACB00C92CE5 /* libiconv.tbd */; };
@@ -371,6 +377,14 @@
 		B3A550862CD93BBDB5428C42 /* libPods-PropertymanagerTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-PropertymanagerTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		BB79CBEC778BF00C59515C44 /* Pods-Propertymanager.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Propertymanager.release.xcconfig"; path = "Pods/Target Support Files/Pods-Propertymanager/Pods-Propertymanager.release.xcconfig"; sourceTree = "<group>"; };
 		E99092772057748A00CBE5F5 /* Propertymanager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Propertymanager.entitlements; sourceTree = "<group>"; };
+		E990928A20577BA600CBE5F5 /* GeTuiSdk.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GeTuiSdk.h; sourceTree = "<group>"; };
+		E990928B20577BA600CBE5F5 /* libGeTuiSdk-1.4.2.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libGeTuiSdk-1.4.2.a"; sourceTree = "<group>"; };
+		E990928D20577DF500CBE5F5 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		E990928F20577FF600CBE5F5 /* WJYAlertView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WJYAlertView.m; sourceTree = "<group>"; };
+		E990929020577FF600CBE5F5 /* WJYAlertView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WJYAlertView.h; sourceTree = "<group>"; };
+		E99092942057843400CBE5F5 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		E99092962057871F00CBE5F5 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		E99092982057883400CBE5F5 /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		E9A3CAF320526ADD00832455 /* Propertymanager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Propertymanager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E9A3CAF920526ADD00832455 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		E9A3CAFA20526ADD00832455 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
@@ -887,6 +901,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E9CB82B42052799C00C92CE5 /* QuartzCore.framework in Frameworks */,
+				E99092992057883400CBE5F5 /* Accelerate.framework in Frameworks */,
+				E9CB82B22052799200C92CE5 /* OpenGLES.framework in Frameworks */,
+				E9CB829C2052791A00C92CE5 /* CoreMedia.framework in Frameworks */,
+				E9CB82982052790800C92CE5 /* CoreVideo.framework in Frameworks */,
+				E99092972057871F00CBE5F5 /* SystemConfiguration.framework in Frameworks */,
+				E9CB82AC2052796B00C92CE5 /* CoreGraphics.framework in Frameworks */,
+				E9CB82B8205279AF00C92CE5 /* AudioToolbox.framework in Frameworks */,
+				E9CB82A42052794000C92CE5 /* CFNetwork.framework in Frameworks */,
+				E99092952057843400CBE5F5 /* Security.framework in Frameworks */,
+				E990928E20577DF600CBE5F5 /* JavaScriptCore.framework in Frameworks */,
 				E9CB82AA2052796000C92CE5 /* MobileCoreServices.framework in Frameworks */,
 				E9CB82BC20527ACB00C92CE5 /* libiconv.tbd in Frameworks */,
 				E9CB82BE20527AD400C92CE5 /* libsqlite3.tbd in Frameworks */,
@@ -896,23 +921,17 @@
 				E9CB82C220527AE700C92CE5 /* libstdc++.6.tbd in Frameworks */,
 				E9CB82C020527ADE00C92CE5 /* libc++.tbd in Frameworks */,
 				E9CB82BA20527AC100C92CE5 /* libz.tbd in Frameworks */,
-				E9CB82B8205279AF00C92CE5 /* AudioToolbox.framework in Frameworks */,
+				E990928C20577BA600CBE5F5 /* libGeTuiSdk-1.4.2.a in Frameworks */,
 				E9CB82B6205279A600C92CE5 /* UIKit.framework in Frameworks */,
 				E9B7FBEC20565DBE00789520 /* liblibYLBLib.a in Frameworks */,
-				E9CB82B42052799C00C92CE5 /* QuartzCore.framework in Frameworks */,
-				E9CB82B22052799200C92CE5 /* OpenGLES.framework in Frameworks */,
 				E9CB82B02052798700C92CE5 /* MessageUI.framework in Frameworks */,
 				E9CB82AE2052797B00C92CE5 /* MediaPlayer.framework in Frameworks */,
-				E9CB82AC2052796B00C92CE5 /* CoreGraphics.framework in Frameworks */,
 				E9CB82A82052795800C92CE5 /* AddressBookUI.framework in Frameworks */,
 				E9CB82A62052795100C92CE5 /* AddressBook.framework in Frameworks */,
-				E9CB82A42052794000C92CE5 /* CFNetwork.framework in Frameworks */,
 				E9CB82A22052793800C92CE5 /* AssetsLibrary.framework in Frameworks */,
 				E9CB82A02052793000C92CE5 /* AVFoundation.framework in Frameworks */,
 				E9CB829E2052792500C92CE5 /* CoreAudio.framework in Frameworks */,
-				E9CB829C2052791A00C92CE5 /* CoreMedia.framework in Frameworks */,
 				E9CB829A2052791100C92CE5 /* CoreTelephony.framework in Frameworks */,
-				E9CB82982052790800C92CE5 /* CoreVideo.framework in Frameworks */,
 				E9CB82962052790000C92CE5 /* Foundation.framework in Frameworks */,
 				E9CB8294205278EA00C92CE5 /* CoreLocation.framework in Frameworks */,
 				E9CB8292205278DF00C92CE5 /* VideoToolbox.framework in Frameworks */,
@@ -947,6 +966,15 @@
 				BB79CBEC778BF00C59515C44 /* Pods-Propertymanager.release.xcconfig */,
 			);
 			name = Pods;
+			sourceTree = "<group>";
+		};
+		E990928920577BA600CBE5F5 /* GtSdkLib */ = {
+			isa = PBXGroup;
+			children = (
+				E990928A20577BA600CBE5F5 /* GeTuiSdk.h */,
+				E990928B20577BA600CBE5F5 /* libGeTuiSdk-1.4.2.a */,
+			);
+			path = GtSdkLib;
 			sourceTree = "<group>";
 		};
 		E9A3CAEA20526ADD00832455 = {
@@ -1017,6 +1045,7 @@
 		E9A3CB2820526C2C00832455 /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				E990928920577BA600CBE5F5 /* GtSdkLib */,
 				E9B7FD9A20565ED800789520 /* FGallery */,
 				E9B7FDA420565ED900789520 /* IQKeyBoardManager */,
 				E9B7FDD220565EDC00789520 /* md5 */,
@@ -1837,6 +1866,8 @@
 		E9B7FD6D20565EC700789520 /* 弹窗 */ = {
 			isa = PBXGroup;
 			children = (
+				E990929020577FF600CBE5F5 /* WJYAlertView.h */,
+				E990928F20577FF600CBE5F5 /* WJYAlertView.m */,
 				E9B7FD6E20565EC700789520 /* UIPlaceHolderTextView.h */,
 				E9B7FD6F20565EC700789520 /* UIPlaceHolderTextView.m */,
 				E9B7FD7020565EC700789520 /* WJYAlertInputTextView.h */,
@@ -2313,6 +2344,10 @@
 		E9CB828C205278C400C92CE5 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E99092982057883400CBE5F5 /* Accelerate.framework */,
+				E99092962057871F00CBE5F5 /* SystemConfiguration.framework */,
+				E99092942057843400CBE5F5 /* Security.framework */,
+				E990928D20577DF500CBE5F5 /* JavaScriptCore.framework */,
 				E9CB82C520527B4500C92CE5 /* libxml2.tbd */,
 				E9CB82C320527AF100C92CE5 /* libresolv.tbd */,
 				E9CB82C120527AE700C92CE5 /* libstdc++.6.tbd */,
@@ -2421,7 +2456,13 @@
 						CreatedOnToolsVersion = 9.2;
 						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Keychain = {
+								enabled = 1;
+							};
+							com.apple.Push = {
 								enabled = 1;
 							};
 						};
@@ -2765,6 +2806,7 @@
 				E9B7FD1C20565EBA00789520 /* SearchLockViewController.mm in Sources */,
 				E9B7FCFA20565EBA00789520 /* PropertyManageViewController.mm in Sources */,
 				E9B7FCFF20565EBA00789520 /* PlotWebViewController.m in Sources */,
+				E990929120577FF600CBE5F5 /* WJYAlertView.m in Sources */,
 				E9B7FD0420565EBA00789520 /* IATConfig.m in Sources */,
 				E9B7FCF520565EBA00789520 /* PropertyModel.mm in Sources */,
 				E9B7FD8820565EC700789520 /* PMTokenTools.m in Sources */,
@@ -3015,6 +3057,7 @@
 					"$(PROJECT_DIR)/Propertymanager/Doubango/UMSocial/UMSocialSDK",
 					"$(PROJECT_DIR)/Propertymanager/Doubango/UMSocial/UMSocialUI",
 				);
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Propertymanager/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/Propertymanager/Vendor/liblinphone-sdk/apple-darwin/include";
 				INFOPLIST_FILE = Propertymanager/Info.plist;
@@ -3053,7 +3096,7 @@
 					"-l\"PureLayout\"",
 					"-l\"Masonry\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = LiJinyou.Propertymanager;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gdsayee.PropertyManage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -3074,6 +3117,7 @@
 					"$(PROJECT_DIR)/Propertymanager/Doubango/UMSocial/UMSocialSDK",
 					"$(PROJECT_DIR)/Propertymanager/Doubango/UMSocial/UMSocialUI",
 				);
+				GCC_INPUT_FILETYPE = sourcecode.cpp.objcpp;
 				GCC_PREFIX_HEADER = "$(SRCROOT)/Propertymanager/PrefixHeader.pch";
 				HEADER_SEARCH_PATHS = "$(SRCROOT)/Propertymanager/Vendor/liblinphone-sdk/apple-darwin/include";
 				INFOPLIST_FILE = Propertymanager/Info.plist;
@@ -3112,7 +3156,7 @@
 					"-l\"PureLayout\"",
 					"-l\"Masonry\"",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = LiJinyou.Propertymanager;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gdsayee.PropertyManage;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

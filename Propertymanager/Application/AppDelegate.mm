@@ -9,7 +9,7 @@
 #import "AppDelegate.h"
 
 #import "Reachability.h"  //网络监听
-//#import "GeTuiSdk.h"
+#import "GeTuiSdk.h"
 #import "iflyMSC/IFlySpeechUtility.h" //讯飞
 #import "Definition.h"
 
@@ -63,7 +63,7 @@
 
 #define USHARE_DEMO_APPKEY @"57690fd167e58eeedf00206b"
 
-@interface AppDelegate ()//<GeTuiSdkDelegate>
+@interface AppDelegate ()<GeTuiSdkDelegate>
 
 @end
 
@@ -116,7 +116,7 @@
 //    [MyUserDefaults setObject:@"gdsayee.cn:22014" forKey:@"scoendLocalhost"];
     
     
-    [DetailRequest loginBtnClickWithPhone:userLoginUsername password:userPassword isFirstLogin:NO];
+    //[DetailRequest loginBtnClickWithPhone:userLoginUsername password:userPassword isFirstLogin:NO];
     return YES;
 }
 
@@ -156,19 +156,19 @@
 
 #pragma mark - 注册个推
 -(void)regiestGeTui{
-//
-//    [GeTuiSdk runBackgroundEnable:YES]; // 是否允许APP后台运行
-//
-//    [GeTuiSdk resetBadge];
-//
-//    SYLog(@"注册个推");
-//    [GeTuiSdk startSdkWithAppId:kGtAppId appKey:kGtAppKey appSecret:kGtAppSecret delegate:self];
-//
-//
-//    [self registerRemoteNotification];
-//
-//
-//    [GeTuiSdk setPushModeForOff:NO];
+
+    [GeTuiSdk runBackgroundEnable:YES]; // 是否允许APP后台运行
+
+    [GeTuiSdk resetBadge];
+
+    SYLog(@"注册个推");
+    [GeTuiSdk startSdkWithAppId:kGtAppId appKey:kGtAppKey appSecret:kGtAppSecret delegate:self];
+
+
+    [self registerRemoteNotification];
+
+
+    [GeTuiSdk setPushModeForOff:NO];
     
 }
 

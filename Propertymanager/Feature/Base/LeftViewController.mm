@@ -169,19 +169,19 @@
     else{
         //退出登录
         [self.view endEditing:YES];
-//        [WJYAlertView showTwoButtonsWithTitle:@"提示" Message:@"确认要退出登录吗？" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
-//            
-//            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"token"];
-//            [PMSipTools sipUnRegister];
-//            [UserManager cancelManage];
-//            [UserManagerTool saveUserManager:[UserManager manager]];
-//            [GeTuiSdk setPushModeForOff:YES];
-//            [[AppDelegate sharedInstance] setmanagerRootVC];
-//
-//            
-//        } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"取消" Click:^{
-//            
-//        }];
+        [WJYAlertView showTwoButtonsWithTitle:@"提示" Message:@"确认要退出登录吗？" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
+            
+            [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"token"];
+            [PMSipTools sipUnRegister];
+            [UserManager cancelManage];
+            [UserManagerTool saveUserManager:[UserManager manager]];
+            [GeTuiSdk setPushModeForOff:YES];
+            [[AppDelegate sharedInstance] setmanagerRootVC];
+
+            
+        } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"取消" Click:^{
+            
+        }];
         
         
     }

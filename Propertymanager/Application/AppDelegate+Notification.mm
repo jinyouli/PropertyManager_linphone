@@ -314,16 +314,16 @@
         
         if ([userInfo[@"cnt"][@"username"] isEqualToString:userLoginUsername]) {
             NSLog(@"个推 下线 --- %@",SYUSERLOGIN);
-//            [WJYAlertView showOneButtonWithTitle:@"提示信息" Message:@"您的账号已在别处登录，请重新登录！" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
-//
-//                /**下线*/
-//                [PMSipTools sipUnRegister];
-//                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"token"];
-//                [UserManager cancelManage];
-//                [UserManagerTool saveUserManager:[UserManager manager]];
-//                [self setmanagerRootVC];
-//
-//            }];
+            [WJYAlertView showOneButtonWithTitle:@"提示信息" Message:@"您的账号已在别处登录，请重新登录！" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
+
+                /**下线*/
+                [PMSipTools sipUnRegister];
+                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"token"];
+                [UserManager cancelManage];
+                [UserManagerTool saveUserManager:[UserManager manager]];
+                [self setmanagerRootVC];
+
+            }];
         }
     }
     else{
@@ -450,14 +450,14 @@
         return;
     }
     
-//    [WJYAlertView showOneButtonWithTitle:@"提示信息" Message:@"您的账号已在别处登录，请重新登录！" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
-//        /**下线*/
-//        [PMSipTools sipUnRegister];
-//        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"token"];
-//        [UserManager cancelManage];
-//        [UserManagerTool saveUserManager:[UserManager manager]];
-//        [self setmanagerRootVC];
-//    }];
+    [WJYAlertView showOneButtonWithTitle:@"提示信息" Message:@"您的账号已在别处登录，请重新登录！" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
+        /**下线*/
+        [PMSipTools sipUnRegister];
+        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"token"];
+        [UserManager cancelManage];
+        [UserManagerTool saveUserManager:[UserManager manager]];
+        [self setmanagerRootVC];
+    }];
     
 }
 
