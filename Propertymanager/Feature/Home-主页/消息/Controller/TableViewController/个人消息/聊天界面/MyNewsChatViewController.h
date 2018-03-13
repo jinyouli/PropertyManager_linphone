@@ -7,7 +7,7 @@
 //
 
 #import "BaseViewController.h"
-#import "iOSNgnStack.h"
+//#import "iOSNgnStack.h"
 @interface MyNewsChatViewController : BaseViewController<UITableViewDelegate,UITableViewDataSource, UITextViewDelegate>
 {
     UITableView *tableView;
@@ -15,7 +15,7 @@
     UIView *viewFooter;
     
     NSMutableArray* messages;
-    NgnContact* contact;
+    //NgnContact* contact;
     NSString* remoteParty;
     NSString* remotePartyUri;
 }
@@ -31,6 +31,6 @@
 /** 对方impi*/
 @property(nonatomic,retain) NSString *remoteParty;
 
--(void)setRemoteParty:(NSString *)remoteParty andContact:(NgnContact*)contact;
+//(void)setRemoteParty:(NSString *)remoteParty andContact:(NgnContact*)contact;
 
 @end

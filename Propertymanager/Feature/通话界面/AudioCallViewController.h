@@ -21,9 +21,11 @@
 
 #import "CallViewController.h"
 #import "PSTAlertController.h"
+
+
 @interface AudioCallViewController : CallViewController {
 //@private
-	NgnAVSession* audioSession;
+	//NgnAVSession* audioSession;
     BOOL isOnLine;
 }
 

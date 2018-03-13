@@ -24,7 +24,7 @@
 @interface VideoCallViewController : CallViewController {
 
 	
-	NgnAVSession* videoSession;
+	//NgnAVSession* videoSession;
 	BOOL sendingVideo;
     
     BOOL isOnLine;
@@ -37,7 +37,7 @@
 @property (strong, nonatomic) UIImageView *bgImageView;
 @property (strong, nonatomic) UIView* viewLocalVideo;
 
-@property (strong, nonatomic) iOSGLView * glViewVideoRemote;
+//@property (strong, nonatomic) iOSGLView * glViewVideoRemote;
 
 
 @property (strong, nonatomic) UIView* viewTop;

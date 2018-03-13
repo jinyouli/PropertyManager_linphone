@@ -9,7 +9,7 @@
 #import "PhoneHistTableViewController.h"
 #import "ContactModel.h"
 #import "RecentTableViewCell.h"
-#import "SQLiteManager.h"
+//#import "SQLiteManager.h"
 
 @interface PhoneHistTableViewController (Private)
 
@@ -22,44 +22,34 @@
 @implementation PhoneHistTableViewController(Private)
 
 -(void) refreshData{
-    @synchronized(mEvents){
-        [mEvents removeAllObjects];
-        NSArray* events = [[[mHistoryService events] allValues] sortedArrayUsingSelector:@selector(compareHistoryEventByDateASC:)];
-        for (NgnHistoryEvent* event in events) {
-            
-//            if (!event) {
+//    @synchronized(mEvents){
+//        [mEvents removeAllObjects];
+//        NSArray* events = [[[mHistoryService events] allValues] sortedArrayUsingSelector:@selector(compareHistoryEventByDateASC:)];
+//        for (NgnHistoryEvent* event in events) {
+//            
+//            if(!event || !(event.mediaType & MediaType_AudioVideo) || !(event.status & mStatusFilter)){
 //                continue;
 //            }
-//            if (!(event.mediaType & MediaType_AudioVideo)) {
-//                continue;
+//            [mEvents addObject:event];
+//            
+//            // 去联系人数据库中获取
+//        }
+//        //结束刷新
+//        [self endRefresh];
+//        if (mEvents.count == 0) {
+//            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isFirstGet"]) {
+////                [SVProgressHUD showErrorWithStatus:@"没有数据"];
 //            }
-//            if (!(event.status & mStatusFilter)) {
-//                continue;
+//            else{
+//                [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"isFirstGet"];
 //            }
-            
-            if(!event || !(event.mediaType & MediaType_AudioVideo) || !(event.status & mStatusFilter)){
-                continue;
-            }
-            [mEvents addObject:event];
-            
-            // 去联系人数据库中获取
-        }
-        //结束刷新
-        [self endRefresh];
-        if (mEvents.count == 0) {
-            if (![[NSUserDefaults standardUserDefaults] boolForKey:@"isFirstGet"]) {
-//                [SVProgressHUD showErrorWithStatus:@"没有数据"];
-            }
-            else{
-                [[NSUserDefaults standardUserDefaults]setBool:NO forKey:@"isFirstGet"];
-            }
-        }
-        else{
-            [self.tableView reloadData];
-        }
-        
-        SYLog(@"通话记录 ==== %@",mEvents);
-    }
+//        }
+//        else{
+//            [self.tableView reloadData];
+//        }
+//        
+//        SYLog(@"通话记录 ==== %@",mEvents);
+//    }
 }
 
 -(void) refreshDataAndReload{
@@ -81,53 +71,53 @@
 }
 
 -(void) onHistoryEvent:(NSNotification*)notification{
-    NgnHistoryEventArgs* eargs = [notification object];
-    
-    //[[NgnEngine sharedInstance].historyService start];
-    
-    switch (eargs.eventType) {
-        case HISTORY_EVENT_ITEM_ADDED:
-        {
-            if((eargs.mediaType & MediaType_AudioVideo)){
-                NgnHistoryEvent* event = [[mHistoryService events] objectForKey: [NSNumber numberWithLongLong: eargs.eventId]];
-                if(event){
-                    [mEvents insertObject:event atIndex:0];
-                    [self.tableView reloadData];
-                   // [[NgnEngine sharedInstance].historyService addEvent:event];
-                }
-            }
-            break;
-        }
-            
-        case HISTORY_EVENT_ITEM_MOVED:
-        case HISTORY_EVENT_ITEM_UPDATED:
-        {
-            [self.tableView reloadData];
-            break;
-        }
-            
-        case HISTORY_EVENT_ITEM_REMOVED:
-        {
-            if((eargs.mediaType & MediaType_AudioVideo)){
-                for (NgnHistoryEvent* event in mEvents) {
-                    if(event.id == eargs.eventId){
-                        [mEvents removeObject: event];
-                        [self.tableView reloadData];
-                        break;
-                    }
-                }
-            }
-            break;
-        }
-            
-        case HISTORY_EVENT_RESET:
-             [[NgnEngine sharedInstance].historyService deleteEventWithId:eargs.eventId];
-        default:
-        {
-            [self refreshDataAndReload];
-            break;
-        }
-    }
+//    NgnHistoryEventArgs* eargs = [notification object];
+//
+//    //[[NgnEngine sharedInstance].historyService start];
+//
+//    switch (eargs.eventType) {
+//        case HISTORY_EVENT_ITEM_ADDED:
+//        {
+//            if((eargs.mediaType & MediaType_AudioVideo)){
+//                NgnHistoryEvent* event = [[mHistoryService events] objectForKey: [NSNumber numberWithLongLong: eargs.eventId]];
+//                if(event){
+//                    [mEvents insertObject:event atIndex:0];
+//                    [self.tableView reloadData];
+//                   // [[NgnEngine sharedInstance].historyService addEvent:event];
+//                }
+//            }
+//            break;
+//        }
+//
+//        case HISTORY_EVENT_ITEM_MOVED:
+//        case HISTORY_EVENT_ITEM_UPDATED:
+//        {
+//            [self.tableView reloadData];
+//            break;
+//        }
+//
+//        case HISTORY_EVENT_ITEM_REMOVED:
+//        {
+//            if((eargs.mediaType & MediaType_AudioVideo)){
+//                for (NgnHistoryEvent* event in mEvents) {
+//                    if(event.id == eargs.eventId){
+//                        [mEvents removeObject: event];
+//                        [self.tableView reloadData];
+//                        break;
+//                    }
+//                }
+//            }
+//            break;
+//        }
+//
+//        case HISTORY_EVENT_RESET:
+//             [[NgnEngine sharedInstance].historyService deleteEventWithId:eargs.eventId];
+//        default:
+//        {
+//            [self refreshDataAndReload];
+//            break;
+//        }
+//    }
 }
 @end
 
@@ -141,7 +131,7 @@
 
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
-    [self cheakDataCount:mEvents];
+   // [self cheakDataCount:mEvents];
     
     //[self getDataFromDB];
 }
@@ -153,28 +143,28 @@
     self.secDataArr = [NSMutableArray array];
     self.dataAToZArr = [NSMutableArray array];
     
-    if(!mEvents){
-        mEvents = [[NgnHistoryEventMutableArray alloc] init];
-    }
-    mStatusFilter = HistoryEventStatus_All;
-    
-    // get contact service instance
-    mContactService = [NgnEngine sharedInstance].contactService;
-    mHistoryService = [NgnEngine sharedInstance].historyService;
-
-    [mContactService load:YES];
-    [mHistoryService load];
-    // refresh data
-    [self refreshData];
-    
-    [self cheakDataCount:mEvents];
-    
-    self.navigationItem.title = @"History";
-    self.tableView.delegate = self;
-    self.tableView.dataSource = self;
-    
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(onHistoryEvent:) name:kNgnHistoryEventArgs_Name object:nil];
+//    if(!mEvents){
+//        mEvents = [[NgnHistoryEventMutableArray alloc] init];
+//    }
+//    mStatusFilter = HistoryEventStatus_All;
+//
+//    // get contact service instance
+//    mContactService = [NgnEngine sharedInstance].contactService;
+//    mHistoryService = [NgnEngine sharedInstance].historyService;
+//
+//    [mContactService load:YES];
+//    [mHistoryService load];
+//    // refresh data
+//    [self refreshData];
+//
+//    [self cheakDataCount:mEvents];
+//
+//    self.navigationItem.title = @"History";
+//    self.tableView.delegate = self;
+//    self.tableView.dataSource = self;
+//
+//    [[NSNotificationCenter defaultCenter]
+//     addObserver:self selector:@selector(onHistoryEvent:) name:kNgnHistoryEventArgs_Name object:nil];
     
     [self getPersonList];
     [self getAToZList];
@@ -284,9 +274,10 @@
 //
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    @synchronized(mEvents){
-        return [mEvents count];
-    }
+//    @synchronized(mEvents){
+//        return [mEvents count];
+//    }
+    return  1.0;
 }
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString * identify = @"RecentCell";
@@ -298,44 +289,44 @@
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
     
-    @synchronized(mEvents){
-        NgnHistoryEvent* event;
-        if (indexPath.row >= mEvents.count) {
-            event = [mEvents lastObject];
-        }
-        else{
-            event = [mEvents objectAtIndex: indexPath.row];
-        }
-        
-        [cell setEvent:event];
-        
-//        ContactModel * model = [PMSipTools gainContactModelFromSipNum:event.remoteParty];
-//        if (model) {
-//            [cell setContactModel:model];
+//    @synchronized(mEvents){
+//        NgnHistoryEvent* event;
+//        if (indexPath.row >= mEvents.count) {
+//            event = [mEvents lastObject];
 //        }
-        
-        BOOL isHasName = NO;
-        for (int i=0; i<self.secDataArr.count; i++) {
-            ContactModel * personModel = (ContactModel *)[self.secDataArr objectAtIndex:i];
-            
-            if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:event.remoteParty]) {
-                //cell.nameLabel.text = personModel.fworkername;
-                [cell setContactModel:personModel];
-                isHasName = YES;
-            }
-        }
-        
-        if (!isHasName) {
-            for (int i=0; i<self.dataAToZArr.count; i++) {
-                ContactModel * personModel = (ContactModel *)[self.dataAToZArr objectAtIndex:i];
-                
-                if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:event.remoteParty]) {
-                    [cell setContactModel:personModel];
-                    isHasName = YES;
-                }
-            }
-        }
-    }
+//        else{
+//            event = [mEvents objectAtIndex: indexPath.row];
+//        }
+//        
+//        [cell setEvent:event];
+//        
+////        ContactModel * model = [PMSipTools gainContactModelFromSipNum:event.remoteParty];
+////        if (model) {
+////            [cell setContactModel:model];
+////        }
+//        
+//        BOOL isHasName = NO;
+//        for (int i=0; i<self.secDataArr.count; i++) {
+//            ContactModel * personModel = (ContactModel *)[self.secDataArr objectAtIndex:i];
+//            
+//            if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:event.remoteParty]) {
+//                //cell.nameLabel.text = personModel.fworkername;
+//                [cell setContactModel:personModel];
+//                isHasName = YES;
+//            }
+//        }
+//        
+//        if (!isHasName) {
+//            for (int i=0; i<self.dataAToZArr.count; i++) {
+//                ContactModel * personModel = (ContactModel *)[self.dataAToZArr objectAtIndex:i];
+//                
+//                if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:event.remoteParty]) {
+//                    [cell setContactModel:personModel];
+//                    isHasName = YES;
+//                }
+//            }
+//        }
+//    }
     return cell;
 }
 
@@ -348,46 +339,46 @@
 
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    @synchronized(mEvents){
-        NgnHistoryEvent* event = [mEvents objectAtIndex: indexPath.row];
-        if (event) {
-            //通过sip去数据库获取一个联系人
-            //获取到联系人 跳转到联系人详情页
-            
-            NSLog(@"号码==%@",event.remoteParty);
-            ContactModel * model = [PMSipTools gainContactModelFromSipNum:event.remoteParty];
-            if (model) {
-               
-                [[Routable sharedRouter] open:OWNER_VIEWCONTROLLER animated:YES extraParams:@{@"isOwner":@(NO),@"contactModel":model}];
-            }
-            else{
-                
-                BOOL hasModel = NO;
-                for (int i=0; i<self.secDataArr.count; i++) {
-                    ContactModel * personModel = (ContactModel *)[self.secDataArr objectAtIndex:i];
-                    
-                    if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:[NSString stringWithFormat:@"%@",event.remoteParty]]) {
-                        hasModel = YES;
-                        [[Routable sharedRouter] open:OWNER_VIEWCONTROLLER animated:YES extraParams:@{@"isOwner":@(NO),@"contactModel":personModel}];
-                    }
-                }
-                
-                if (!hasModel) {
-                    for (int i=0; i<self.dataAToZArr.count; i++) {
-                        ContactModel * personModel = (ContactModel *)[self.dataAToZArr objectAtIndex:i];
-                        
-                        if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:[NSString stringWithFormat:@"%@",event.remoteParty]]) {
-                            hasModel = YES;
-                            [[Routable sharedRouter] open:OWNER_VIEWCONTROLLER animated:YES extraParams:@{@"isOwner":@(NO),@"contactModel":personModel}];
-                        }
-                    }
-                }
-                
-                if (!hasModel) {
-                    [SVProgressHUD showErrorWithStatus:@"未查询到该联系人相关信息"];
-                }
-            }
-        }
-    }
+//    @synchronized(mEvents){
+//        NgnHistoryEvent* event = [mEvents objectAtIndex: indexPath.row];
+//        if (event) {
+//            //通过sip去数据库获取一个联系人
+//            //获取到联系人 跳转到联系人详情页
+//            
+//            NSLog(@"号码==%@",event.remoteParty);
+//            ContactModel * model = [PMSipTools gainContactModelFromSipNum:event.remoteParty];
+//            if (model) {
+//               
+//                [[Routable sharedRouter] open:OWNER_VIEWCONTROLLER animated:YES extraParams:@{@"isOwner":@(NO),@"contactModel":model}];
+//            }
+//            else{
+//                
+//                BOOL hasModel = NO;
+//                for (int i=0; i<self.secDataArr.count; i++) {
+//                    ContactModel * personModel = (ContactModel *)[self.secDataArr objectAtIndex:i];
+//                    
+//                    if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:[NSString stringWithFormat:@"%@",event.remoteParty]]) {
+//                        hasModel = YES;
+//                        [[Routable sharedRouter] open:OWNER_VIEWCONTROLLER animated:YES extraParams:@{@"isOwner":@(NO),@"contactModel":personModel}];
+//                    }
+//                }
+//                
+//                if (!hasModel) {
+//                    for (int i=0; i<self.dataAToZArr.count; i++) {
+//                        ContactModel * personModel = (ContactModel *)[self.dataAToZArr objectAtIndex:i];
+//                        
+//                        if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:[NSString stringWithFormat:@"%@",event.remoteParty]]) {
+//                            hasModel = YES;
+//                            [[Routable sharedRouter] open:OWNER_VIEWCONTROLLER animated:YES extraParams:@{@"isOwner":@(NO),@"contactModel":personModel}];
+//                        }
+//                    }
+//                }
+//                
+//                if (!hasModel) {
+//                    [SVProgressHUD showErrorWithStatus:@"未查询到该联系人相关信息"];
+//                }
+//            }
+//        }
+//    }
 }
 @end

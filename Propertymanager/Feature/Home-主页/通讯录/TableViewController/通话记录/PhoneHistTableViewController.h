@@ -7,14 +7,13 @@
 //
 
 #import "BaseContactTableViewController.h"
-#import "iOSNgnStack.h"
 @interface PhoneHistTableViewController : BaseContactTableViewController<UIActionSheetDelegate> {
 
-    NgnHistoryEventMutableArray* mEvents;
-    HistoryEventStatus_t mStatusFilter;
-    
-    NgnBaseService<INgnContactService>* mContactService;
-    NgnBaseService<INgnHistoryService>* mHistoryService;
+//    NgnHistoryEventMutableArray* mEvents;
+//    HistoryEventStatus_t mStatusFilter;
+//
+//    NgnBaseService<INgnContactService>* mContactService;
+//    NgnBaseService<INgnHistoryService>* mHistoryService;
     
     MyFMDataBase * database;
     

@@ -10,7 +10,7 @@
 #import "NewsViewController.h"
 #import "PropertyManageViewController.h"
 #import "AddressBookViewController.h"
-#import "iOSNgnStack.h"
+//#import "iOSNgnStack.h"
 
 #import "NotificationBtn.h"
 

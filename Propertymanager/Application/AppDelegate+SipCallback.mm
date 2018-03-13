@@ -20,15 +20,16 @@
 //== Network events == //
 -(void) onNetworkEvent:(NSNotification*)notification {
     
-    NgnNetworkEventArgs *eargs = [notification object];
+//    NgnNetworkEventArgs *eargs = [notification object];
+//
+//    switch (eargs.eventType) {
+//        case NETWORK_EVENT_STATE_CHANGED:
+//        default:
+//        {
+//            NgnNSLog(kTAG,@"NetworkEvent reachable=%@ networkType=%i",
+//                     [NgnEngine sharedInstance].networkService.reachable ? @"YES" : @"NO", [NgnEngine sharedInstance].networkService.networkType);
     
-    switch (eargs.eventType) {
-        case NETWORK_EVENT_STATE_CHANGED:
-        default:
-        {
-            NgnNSLog(kTAG,@"NetworkEvent reachable=%@ networkType=%i",
-                     [NgnEngine sharedInstance].networkService.reachable ? @"YES" : @"NO", [NgnEngine sharedInstance].networkService.networkType);
-            
+            /*
             if([NgnEngine sharedInstance].networkService.reachable){
                 BOOL onMobileNework = ([NgnEngine sharedInstance].networkService.networkType & NetworkType_WWAN);
                 
@@ -57,31 +58,33 @@
                     [[NgnEngine sharedInstance].sipService stopStackSynchronously];
                 }
             }
+             */
             
-            break;
-        }
-    }
+//            break;
+//        }
+//    }
 }
 
 //== Native Contact events == //
 -(void) onNativeContactEvent:(NSNotification*)notification {
-    NgnContactEventArgs *eargs = [notification object];
-    
-    switch (eargs.eventType) {
-        case CONTACT_RESET_ALL:
-        default:
-        {
-            if([UIApplication sharedApplication].applicationState != UIApplicationStateActive){
-                self->nativeABChangedWhileInBackground = YES;
-            }
-            // otherwise addAll will be called when the client registers
-            break;
-        }
-    }
+//    NgnContactEventArgs *eargs = [notification object];
+//
+//    switch (eargs.eventType) {
+//        case CONTACT_RESET_ALL:
+//        default:
+//        {
+//            if([UIApplication sharedApplication].applicationState != UIApplicationStateActive){
+//                self->nativeABChangedWhileInBackground = YES;
+//            }
+//            // otherwise addAll will be called when the client registers
+//            break;
+//        }
+//    }
 }
 
 -(void) onStackEvent:(NSNotification*)notification {
-    NgnStackEventArgs * eargs = [notification object];
+   // NgnStackEventArgs * eargs = [notification object];
+    /*
     switch (eargs.eventType) {
         case STACK_STATE_STARTING:
         {
@@ -102,14 +105,15 @@
         default:
             break;
     }
+     */
 }
 
 //== REGISTER events == //
 -(void) onRegistrationEvent:(NSNotification*)notification {
     SYFunc
-    SYLog(@"appdelegate ---- 注册事件 ----  %@",[[NgnEngine sharedInstance].sipService isRegistered]?@"YES":@"NO");
     
     // gets the new registration state
+    /*
     ConnectionState_t registrationState = [[NgnEngine sharedInstance].sipService getRegistrationState];
     switch (registrationState) {
         case CONN_STATE_NONE:
@@ -127,52 +131,53 @@
         default:
             break;
     }
+     */
     
-    NgnRegistrationEventArgs* eargs = [notification object];
-    switch (eargs.eventType) {
-        case REGISTRATION_NOK:
-            //注册失败
-            break;
-        case UNREGISTRATION_OK:
-            //未注册 （掉线)
-            if ([self checkNetWork]) {
-                self.sipRegCount ++;
-                if (self.sipRegCount <= 3) {
-                    [PMSipTools sipRegister];
-                }else{
-                    
-                }
-            }
-            else{
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    if ([self checkNetWork]) {
-                        self.sipRegCount ++;
-                        if (self.sipRegCount <= 3) {
-                            [PMSipTools sipRegister];
-                        }else{
-                            
-                        }
-                    }
-                });
-            }
-            
-            
-            
-            break;
-        case REGISTRATION_OK:
-            //已注册
-            self.sipRegCount = 0;
-            break;
-        case REGISTRATION_INPROGRESS:
-            //正在注册
-            break;
-        case UNREGISTRATION_INPROGRESS:
-            //正在注销
-            break;
-        case UNREGISTRATION_NOK:
-            //未注销失败
-            break;
-    }
+//    NgnRegistrationEventArgs* eargs = [notification object];
+//    switch (eargs.eventType) {
+//        case REGISTRATION_NOK:
+//            //注册失败
+//            break;
+//        case UNREGISTRATION_OK:
+//            //未注册 （掉线)
+//            if ([self checkNetWork]) {
+//                self.sipRegCount ++;
+//                if (self.sipRegCount <= 3) {
+//                    [PMSipTools sipRegister];
+//                }else{
+//
+//                }
+//            }
+//            else{
+//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                    if ([self checkNetWork]) {
+//                        self.sipRegCount ++;
+//                        if (self.sipRegCount <= 3) {
+//                            [PMSipTools sipRegister];
+//                        }else{
+//
+//                        }
+//                    }
+//                });
+//            }
+//
+//
+//
+//            break;
+//        case REGISTRATION_OK:
+//            //已注册
+//            self.sipRegCount = 0;
+//            break;
+//        case REGISTRATION_INPROGRESS:
+//            //正在注册
+//            break;
+//        case UNREGISTRATION_INPROGRESS:
+//            //正在注销
+//            break;
+//        case UNREGISTRATION_NOK:
+//            //未注销失败
+//            break;
+//    }
     
 }
 
@@ -187,121 +192,121 @@
 
 //== PagerMode IM (MESSAGE) events == //
 -(void) onMessagingEvent:(NSNotification*)notification {
-    NgnMessagingEventArgs* eargs = [notification object];
+//    NgnMessagingEventArgs* eargs = [notification object];
+//
+//    switch (eargs.eventType) {
+//        case MESSAGING_EVENT_CONNECTING:
+//        case MESSAGING_EVENT_CONNECTED:
+//        case MESSAGING_EVENT_TERMINATING:
+//        case MESSAGING_EVENT_TERMINATED:
+//        case MESSAGING_EVENT_FAILURE:
+//        case MESSAGING_EVENT_SUCCESS:
+//        case MESSAGING_EVENT_OUTGOING:
+//        default:
+//        {
+//            break;
+//        }
+//
+//        case MESSAGING_EVENT_INCOMING:
+//        {
+//            if(eargs.payload){
+//
+//                NSString* contentType = [eargs getExtraWithKey: kExtraMessagingEventArgsContentType];
+//                NSString* userName = [eargs getExtraWithKey: kExtraMessagingEventArgsFromUserName];
+//
+//                NSData *content = eargs.payload;
     
-    switch (eargs.eventType) {
-        case MESSAGING_EVENT_CONNECTING:
-        case MESSAGING_EVENT_CONNECTED:
-        case MESSAGING_EVENT_TERMINATING:
-        case MESSAGING_EVENT_TERMINATED:
-        case MESSAGING_EVENT_FAILURE:
-        case MESSAGING_EVENT_SUCCESS:
-        case MESSAGING_EVENT_OUTGOING:
-        default:
-        {
-            break;
-        }
-            
-        case MESSAGING_EVENT_INCOMING:
-        {
-            if(eargs.payload){
-                
-                NSString* contentType = [eargs getExtraWithKey: kExtraMessagingEventArgsContentType];
-                NSString* userName = [eargs getExtraWithKey: kExtraMessagingEventArgsFromUserName];
-                
-                NSData *content = eargs.payload;
-                
                 // message/cpim content
-                if(contentType && [[contentType lowercaseString] hasPrefix:@"message/cpim"]){
-                    MediaContent *_content = MediaContent::parse([eargs.payload bytes], [eargs.payload length], [NgnStringUtils toCString:@"message/cpim"]);
-                    if(_content){
-                        unsigned _clen = dynamic_cast<MediaContentCPIM*>(_content)->getPayloadLength();
-                        const void* _cptr = dynamic_cast<MediaContentCPIM*>(_content)->getPayloadPtr();
-                        if(_clen && _cptr){
-                            const char* _contentTransferEncoding = dynamic_cast<MediaContentCPIM*>(_content)->getHeaderValue("content-transfer-encoding");
-                            
-                            if(tsk_striequals(_contentTransferEncoding, "base64")){
-                                char *_ascii = tsk_null;
-                                int ret = tsk_base64_decode((const uint8_t*)_cptr, _clen, &_ascii);
-                                if((ret > 0) && _ascii){
-                                    content = [NSData dataWithBytes:_ascii length:ret];
-                                }
-                                else {
-                                    TSK_DEBUG_ERROR("tsk_base64_decode() failed with error code equal to %d", ret);
-                                }
-                                
-                                TSK_FREE(_ascii);
-                            }
-                            else {
-                                content = [NSData dataWithBytes:_cptr length:_clen];
-                            }
-                        }
-                        delete _content;
-                    }
-                }
-               
-                NSString * showStr = [[NSString alloc]initWithData:content encoding:NSUTF8StringEncoding];
-                NgnHistorySMSEvent *smsEvent = [NgnHistoryEvent createSMSEventWithStatus:HistoryEventStatus_Incoming andRemoteParty:userName andContent:content];
-               
-                if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
-                    
-                    UILocalNotification* localNotif = [[UILocalNotification alloc] init];
-                    ContactModel * model= [PMSipTools gainContactModelFromSipNum:userName];
-                    if (![PMTools isNullOrEmpty:model.fworkername]) {
-                        localNotif.alertBody = [NSString stringWithFormat:@"%@: %@", model.fworkername, showStr];
-                    }
-                    else{
-                        localNotif.alertBody = [NSString stringWithFormat:@"%@: %@", userName, showStr];
-                    }
-                    
-                    //                        NSLog(@"content === %@",content);
-                    localNotif.soundName = UILocalNotificationDefaultSoundName;
-                    localNotif.applicationIconBadgeNumber = ++[UIApplication sharedApplication].applicationIconBadgeNumber;
-                    localNotif.repeatInterval = 0;
-                    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                              kNotifKey_IncomingMsg, kNotifKey,
-                                              userName, @"userName",
-                                              content,@"content",
-                                              nil];
-                    localNotif.userInfo = userInfo;
-                    [[UIApplication sharedApplication]  presentLocalNotificationNow:localNotif];
-                }
-                
-                BOOL AllSoundOpenBool = [[NSUserDefaults standardUserDefaults] boolForKey:AllSoundOpen];
-                BOOL OrdersSoundOpenBool = [[NSUserDefaults standardUserDefaults] boolForKey:OrdersSoundOpen];
-                
-                BOOL AllShakeOpenBool = [[NSUserDefaults standardUserDefaults] boolForKey:AllShakeOpen];
-                BOOL OrdersShakeOpenBool = [[NSUserDefaults standardUserDefaults] boolForKey:OrdersShakeOpen];
-                
-                BOOL isSoundOpen = AllSoundOpenBool && OrdersSoundOpenBool;
-                BOOL isShakeOpen = AllShakeOpenBool && OrdersShakeOpenBool;
-                if (isSoundOpen && isShakeOpen) {
-                    SystemAudio *audio = [[SystemAudio alloc] init];
-                    [audio playShakeAndSound];
-                }
-                else if (isSoundOpen && !isShakeOpen){
-                    
-                    SystemAudio *audio = [[SystemAudio alloc] init];
-                    [audio playSound];
-                    
-                }
-                else if (!isSoundOpen && isShakeOpen){
-                    
-                    SystemAudio *audio = [[SystemAudio alloc] init];
-                    [audio playShake];
-                    
-                }
-                
-        
-                [[NgnEngine sharedInstance].historyService addEvent:smsEvent];
-                
-                
-                
-                
-            }
-            break;
-        }
-    }
+//                if(contentType && [[contentType lowercaseString] hasPrefix:@"message/cpim"]){
+//                    MediaContent *_content = MediaContent::parse([eargs.payload bytes], [eargs.payload length], [NgnStringUtils toCString:@"message/cpim"]);
+//                    if(_content){
+//                        unsigned _clen = dynamic_cast<MediaContentCPIM*>(_content)->getPayloadLength();
+//                        const void* _cptr = dynamic_cast<MediaContentCPIM*>(_content)->getPayloadPtr();
+//                        if(_clen && _cptr){
+//                            const char* _contentTransferEncoding = dynamic_cast<MediaContentCPIM*>(_content)->getHeaderValue("content-transfer-encoding");
+//
+//                            if(tsk_striequals(_contentTransferEncoding, "base64")){
+//                                char *_ascii = tsk_null;
+//                                int ret = tsk_base64_decode((const uint8_t*)_cptr, _clen, &_ascii);
+//                                if((ret > 0) && _ascii){
+//                                    content = [NSData dataWithBytes:_ascii length:ret];
+//                                }
+//                                else {
+//                                    TSK_DEBUG_ERROR("tsk_base64_decode() failed with error code equal to %d", ret);
+//                                }
+//
+//                                TSK_FREE(_ascii);
+//                            }
+//                            else {
+//                                content = [NSData dataWithBytes:_cptr length:_clen];
+//                            }
+//                        }
+//                        delete _content;
+//                    }
+//                }
+//
+//                NSString * showStr = [[NSString alloc]initWithData:content encoding:NSUTF8StringEncoding];
+//                NgnHistorySMSEvent *smsEvent = [NgnHistoryEvent createSMSEventWithStatus:HistoryEventStatus_Incoming andRemoteParty:userName andContent:content];
+//
+//                if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground) {
+//
+//                    UILocalNotification* localNotif = [[UILocalNotification alloc] init];
+//                    ContactModel * model= [PMSipTools gainContactModelFromSipNum:userName];
+//                    if (![PMTools isNullOrEmpty:model.fworkername]) {
+//                        localNotif.alertBody = [NSString stringWithFormat:@"%@: %@", model.fworkername, showStr];
+//                    }
+//                    else{
+//                        localNotif.alertBody = [NSString stringWithFormat:@"%@: %@", userName, showStr];
+//                    }
+//
+//                    //                        NSLog(@"content === %@",content);
+//                    localNotif.soundName = UILocalNotificationDefaultSoundName;
+//                    localNotif.applicationIconBadgeNumber = ++[UIApplication sharedApplication].applicationIconBadgeNumber;
+//                    localNotif.repeatInterval = 0;
+//                    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                              kNotifKey_IncomingMsg, kNotifKey,
+//                                              userName, @"userName",
+//                                              content,@"content",
+//                                              nil];
+//                    localNotif.userInfo = userInfo;
+//                    [[UIApplication sharedApplication]  presentLocalNotificationNow:localNotif];
+//                }
+//
+//                BOOL AllSoundOpenBool = [[NSUserDefaults standardUserDefaults] boolForKey:AllSoundOpen];
+//                BOOL OrdersSoundOpenBool = [[NSUserDefaults standardUserDefaults] boolForKey:OrdersSoundOpen];
+//
+//                BOOL AllShakeOpenBool = [[NSUserDefaults standardUserDefaults] boolForKey:AllShakeOpen];
+//                BOOL OrdersShakeOpenBool = [[NSUserDefaults standardUserDefaults] boolForKey:OrdersShakeOpen];
+//
+//                BOOL isSoundOpen = AllSoundOpenBool && OrdersSoundOpenBool;
+//                BOOL isShakeOpen = AllShakeOpenBool && OrdersShakeOpenBool;
+//                if (isSoundOpen && isShakeOpen) {
+//                    SystemAudio *audio = [[SystemAudio alloc] init];
+//                    [audio playShakeAndSound];
+//                }
+//                else if (isSoundOpen && !isShakeOpen){
+//
+//                    SystemAudio *audio = [[SystemAudio alloc] init];
+//                    [audio playSound];
+//
+//                }
+//                else if (!isSoundOpen && isShakeOpen){
+//
+//                    SystemAudio *audio = [[SystemAudio alloc] init];
+//                    [audio playShake];
+//
+//                }
+//
+//
+//               // [[NgnEngine sharedInstance].historyService addEvent:smsEvent];
+//
+//
+//
+//
+//            }
+//            break;
+//        }
+//    }
 }
 
 
@@ -309,97 +314,97 @@
 //== INVITE (audio/video, file transfer, chat, ...) events == //
 -(void) onInviteEvent:(NSNotification*)notification {
     
-    NgnInviteEventArgs* eargs = [notification object];
+    //NgnInviteEventArgs* eargs = [notification object];
     
-    switch (eargs.eventType) {
-        case INVITE_EVENT_INCOMING:
-        {
-            NgnAVSession* incomingSession = [NgnAVSession getSessionWithId: eargs.sessionId];
-            if (incomingSession && [UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
-                UILocalNotification* localNotif = [[UILocalNotification alloc] init];
-                if (localNotif){
-                    bool _isVideoCall = isVideoType(incomingSession.mediaType);
-                    NSString *remoteParty = incomingSession.historyEvent ? incomingSession.historyEvent.remotePartyDisplayName : [incomingSession getRemotePartyUri];
-                    
-                    NSString *stringAlert = [NSString stringWithFormat:@"语音来电 \n %@", remoteParty];
-                    if (_isVideoCall)
-                        stringAlert = [NSString stringWithFormat:@"视频邀请 \n %@", remoteParty];
-                    
-                    localNotif.alertBody = stringAlert;
-                    localNotif.soundName = UILocalNotificationDefaultSoundName;
-                    localNotif.applicationIconBadgeNumber = ++[UIApplication sharedApplication].applicationIconBadgeNumber;
-                    localNotif.repeatInterval = 0;
-                    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-                                              kNotifKey_IncomingCall, kNotifKey,
-                                              [NSNumber numberWithLong:incomingSession.id], kNotifIncomingCall_SessionId,
-                                              nil];
-                    localNotif.userInfo = userInfo;
-                    [[UIApplication sharedApplication]  presentLocalNotificationNow:localNotif];
-                }
-            }
-            else if(incomingSession){
-                
-                [CallViewController receiveIncomingCall:incomingSession];
-            }
-            
-            break;
-        }
-            
-        case INVITE_EVENT_MEDIA_UPDATED:
-        {
-            NgnAVSession* session = [NgnAVSession getSessionWithId:eargs.sessionId];
-            if (session) {
-                
-                UIViewController * currentVC = [UIViewController currentViewController];
-                BOOL hasVideo = isVideoType(session.mediaType);
-                BOOL hasAudio = isAudioType(session.mediaType);
-                
-                if (![NSStringFromClass([MyRootViewController class]) isEqualToString:NSStringFromClass([[AppDelegate sharedInstance].window.rootViewController class])]) {
-                    NSLog(@"根页面不是 MyRootViewController");
-                    return;
-                }
-                
-                BOOL isDoor = [NSStringFromClass([LookEntranceVedioViewController class]) isEqualToString:NSStringFromClass([currentVC class])];
-                BOOL isAudio = [NSStringFromClass([AudioCallViewController class]) isEqualToString:NSStringFromClass([currentVC class])];
-                BOOL isVideo = [NSStringFromClass([VideoCallViewController class]) isEqualToString:NSStringFromClass([currentVC class])];
-                
-                BOOL openNewCallView = (hasVideo && !isVideo) || (hasVideo && !isDoor) || ((hasAudio && !hasVideo) && !isAudio);
-                if (openNewCallView) {
-                    // Dismiss previous and display(present) the new one
-                    // animation must be NO because we are calling dismiss then present
-                    MyRootViewController * root = (MyRootViewController *)[AppDelegate sharedInstance].window.rootViewController;
-                    UINavigationController * nav = root.midViewController;
-                    [nav popViewControllerAnimated:NO];
-                    if (session.connectionState == CONN_STATE_CONNECTING || session.connectionState == CONN_STATE_CONNECTED) {
-                        [CallViewController displayCall:session];
-                    }
-                }
-        
-                [NgnAVSession releaseSession:&session];
-            }
-            break;
-        }
-            
-        case INVITE_EVENT_TERMINATED:
-        case INVITE_EVENT_TERMWAIT:
-        {
-            if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
-                // call terminated while in background
-                // if the application goes to background while in call then the keepAwake mechanism was not started
-                if([NgnEngine sharedInstance].sipService.registered && ![NgnAVSession hasActiveSession]){
-                    if([[NgnEngine sharedInstance].configurationService getBoolWithKey:NETWORK_USE_KEEPAWAKE]){
-                        [[NgnEngine sharedInstance] startKeepAwake];
-                    }
-                }
-            }
-            break;
-        }
-            
-        default:
-        {
-            break;
-        }
-    }
+//    switch (eargs.eventType) {
+//        case INVITE_EVENT_INCOMING:
+//        {
+//            NgnAVSession* incomingSession = [NgnAVSession getSessionWithId: eargs.sessionId];
+//            if (incomingSession && [UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
+//                UILocalNotification* localNotif = [[UILocalNotification alloc] init];
+//                if (localNotif){
+//                    bool _isVideoCall = isVideoType(incomingSession.mediaType);
+//                    NSString *remoteParty = incomingSession.historyEvent ? incomingSession.historyEvent.remotePartyDisplayName : [incomingSession getRemotePartyUri];
+//
+//                    NSString *stringAlert = [NSString stringWithFormat:@"语音来电 \n %@", remoteParty];
+//                    if (_isVideoCall)
+//                        stringAlert = [NSString stringWithFormat:@"视频邀请 \n %@", remoteParty];
+//
+//                    localNotif.alertBody = stringAlert;
+//                    localNotif.soundName = UILocalNotificationDefaultSoundName;
+//                    localNotif.applicationIconBadgeNumber = ++[UIApplication sharedApplication].applicationIconBadgeNumber;
+//                    localNotif.repeatInterval = 0;
+//                    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+//                                              kNotifKey_IncomingCall, kNotifKey,
+//                                              [NSNumber numberWithLong:incomingSession.id], kNotifIncomingCall_SessionId,
+//                                              nil];
+//                    localNotif.userInfo = userInfo;
+//                    [[UIApplication sharedApplication]  presentLocalNotificationNow:localNotif];
+//                }
+//            }
+//            else if(incomingSession){
+//
+//                [CallViewController receiveIncomingCall:incomingSession];
+//            }
+//
+//            break;
+//        }
+//
+//        case INVITE_EVENT_MEDIA_UPDATED:
+//        {
+//            NgnAVSession* session = [NgnAVSession getSessionWithId:eargs.sessionId];
+//            if (session) {
+//
+//                UIViewController * currentVC = [UIViewController currentViewController];
+//                BOOL hasVideo = isVideoType(session.mediaType);
+//                BOOL hasAudio = isAudioType(session.mediaType);
+//
+//                if (![NSStringFromClass([MyRootViewController class]) isEqualToString:NSStringFromClass([[AppDelegate sharedInstance].window.rootViewController class])]) {
+//                    NSLog(@"根页面不是 MyRootViewController");
+//                    return;
+//                }
+//
+//                BOOL isDoor = [NSStringFromClass([LookEntranceVedioViewController class]) isEqualToString:NSStringFromClass([currentVC class])];
+//                BOOL isAudio = [NSStringFromClass([AudioCallViewController class]) isEqualToString:NSStringFromClass([currentVC class])];
+//                BOOL isVideo = [NSStringFromClass([VideoCallViewController class]) isEqualToString:NSStringFromClass([currentVC class])];
+//
+//                BOOL openNewCallView = (hasVideo && !isVideo) || (hasVideo && !isDoor) || ((hasAudio && !hasVideo) && !isAudio);
+//                if (openNewCallView) {
+//                    // Dismiss previous and display(present) the new one
+//                    // animation must be NO because we are calling dismiss then present
+//                    MyRootViewController * root = (MyRootViewController *)[AppDelegate sharedInstance].window.rootViewController;
+//                    UINavigationController * nav = root.midViewController;
+//                    [nav popViewControllerAnimated:NO];
+//                    if (session.connectionState == CONN_STATE_CONNECTING || session.connectionState == CONN_STATE_CONNECTED) {
+//                        [CallViewController displayCall:session];
+//                    }
+//                }
+//
+//                [NgnAVSession releaseSession:&session];
+//            }
+//            break;
+//        }
+    
+//        case INVITE_EVENT_TERMINATED:
+//        case INVITE_EVENT_TERMWAIT:
+//        {
+//            if ([UIApplication sharedApplication].applicationState ==  UIApplicationStateBackground) {
+//                // call terminated while in background
+//                // if the application goes to background while in call then the keepAwake mechanism was not started
+//                if([NgnEngine sharedInstance].sipService.registered && ![NgnAVSession hasActiveSession]){
+//                    if([[NgnEngine sharedInstance].configurationService getBoolWithKey:NETWORK_USE_KEEPAWAKE]){
+//                        [[NgnEngine sharedInstance] startKeepAwake];
+//                    }
+//                }
+//            }
+//            break;
+//        }
+//
+//        default:
+//        {
+//            break;
+//        }
+//    }
 }
 
 

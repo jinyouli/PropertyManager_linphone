@@ -7,9 +7,9 @@
 //
 
 #import "AppDelegate+SipBackground.h"
-#import "MediaContent.h"
-#import "MediaSessionMgr.h"
-#import "tsk_base64.h"
+//#import "MediaContent.h"
+//#import "MediaSessionMgr.h"
+//#import "tsk_base64.h"
 
 @implementation AppDelegate (SipBackground)
 
@@ -36,48 +36,48 @@ static dispatch_block_t sExpirationHandler = nil;
 #pragma mark - idoubs相关
 -(void)registNotification{
     
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(onNetworkEvent:) name:kNgnNetworkEventArgs_Name object:nil];
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(onNativeContactEvent:) name:kNgnContactEventArgs_Name object:nil];
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(onStackEvent:) name:kNgnStackEventArgs_Name object:nil];
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(onRegistrationEvent:) name:kNgnRegistrationEventArgs_Name object:nil];
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(onInviteEvent:) name:kNgnInviteEventArgs_Name object:nil];
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(onMessagingEvent:) name:kNgnMessagingEventArgs_Name object:nil];
+//    [[NSNotificationCenter defaultCenter]
+//     addObserver:self selector:@selector(onNetworkEvent:) name:kNgnNetworkEventArgs_Name object:nil];
+//    [[NSNotificationCenter defaultCenter]
+//     addObserver:self selector:@selector(onNativeContactEvent:) name:kNgnContactEventArgs_Name object:nil];
+//    [[NSNotificationCenter defaultCenter]
+//     addObserver:self selector:@selector(onStackEvent:) name:kNgnStackEventArgs_Name object:nil];
+//    [[NSNotificationCenter defaultCenter]
+//     addObserver:self selector:@selector(onRegistrationEvent:) name:kNgnRegistrationEventArgs_Name object:nil];
+//    [[NSNotificationCenter defaultCenter]
+//     addObserver:self selector:@selector(onInviteEvent:) name:kNgnInviteEventArgs_Name object:nil];
+//    [[NSNotificationCenter defaultCenter]
+//     addObserver:self selector:@selector(onMessagingEvent:) name:kNgnMessagingEventArgs_Name object:nil];
 }
 
 #pragma mark AudioSessionListner for iOS 6.0+
 
 - (void) onAudioSessionInteruptionEvent:(NSNotification*)notif {
-    const NSInteger iType = [[[notif userInfo] valueForKey:AVAudioSessionInterruptionTypeKey] intValue];
-    NgnNSLog(kTAG, @"onAudioSessionInteruptionEvent:%d", (int)iType);
-    switch (iType) {
-        case AVAudioSessionInterruptionTypeBegan:
-        {
-            //            [self setAudioInterrupt:YES];
-            break;
-        }
-        case AVAudioSessionInterruptionTypeEnded:
-        {
-            //            [self setAudioInterrupt:NO];
-            break;
-        }
-    }
+//    const NSInteger iType = [[[notif userInfo] valueForKey:AVAudioSessionInterruptionTypeKey] intValue];
+//    NgnNSLog(kTAG, @"onAudioSessionInteruptionEvent:%d", (int)iType);
+//    switch (iType) {
+//        case AVAudioSessionInterruptionTypeBegan:
+//        {
+//            //            [self setAudioInterrupt:YES];
+//            break;
+//        }
+//        case AVAudioSessionInterruptionTypeEnded:
+//        {
+//            //            [self setAudioInterrupt:NO];
+//            break;
+//        }
+//    }
 }
 
 #pragma mark AudioSessionListner for iOS 6.0-
 
 - (void)beginInterruption {
-    NgnNSLog(kTAG, @"beginInterruption");
+    //NgnNSLog(kTAG, @"beginInterruption");
     //    [self setAudioInterrupt:YES];
 }
 
 - (void)endInterruption {
-    NgnNSLog(kTAG, @"endInterruption");
+   // NgnNSLog(kTAG, @"endInterruption");
     //    [self setAudioInterrupt:NO];
 }
 
@@ -96,8 +96,8 @@ static dispatch_block_t sExpirationHandler = nil;
 -(void)didFinishLaunchingWithOptions{
     // 按home键 app挂在后台后设置程序的长连接
     if ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 6.0) {
-        [[NSNotificationCenter defaultCenter]
-         addObserver:self selector:@selector(onAudioSessionInteruptionEvent:) name:AVAudioSessionInterruptionNotification object:[AVAudioSession sharedInstance]];
+//        [[NSNotificationCenter defaultCenter]
+//         addObserver:self selector:@selector(onAudioSessionInteruptionEvent:) name:AVAudioSessionInterruptionNotification object:[AVAudioSession sharedInstance]];
     }
 #if __IPHONE_OS_VERSION_MIN_REQUIRED < 6000
     else {
@@ -114,22 +114,22 @@ static dispatch_block_t sExpirationHandler = nil;
         if (![PMSipTools sipIsRegister]) {
         
             [PMSipTools sipRegister];
-            [[NgnEngine sharedInstance].soundService setSpeakerEnabled:YES];
+           // [[NgnEngine sharedInstance].soundService setSpeakerEnabled:YES];
         }
         
         multitaskingSupported = [[UIDevice currentDevice] respondsToSelector:@selector(isMultitaskingSupported)] && [[UIDevice currentDevice] isMultitaskingSupported];
         sBackgroundTask = UIBackgroundTaskInvalid;
         sExpirationHandler = ^{
             NSLog(@"777777777777777777777777");
-            NgnNSLog(kTAG, @"Background task completed");
-            // keep awake
-            if([PMSipTools sipIsRegister]){
-                NSLog(@"88888888888888888888888");
-                if([[NgnEngine sharedInstance].configurationService getBoolWithKey:NETWORK_USE_KEEPAWAKE]){
-                    NSLog(@"999999999999999999999999");
-                    [[NgnEngine sharedInstance] startKeepAwake];
-                }
-            }
+//            NgnNSLog(kTAG, @"Background task completed");
+//            // keep awake
+//            if([PMSipTools sipIsRegister]){
+//                NSLog(@"88888888888888888888888");
+//                if([[NgnEngine sharedInstance].configurationService getBoolWithKey:NETWORK_USE_KEEPAWAKE]){
+//                    NSLog(@"999999999999999999999999");
+//                    [[NgnEngine sharedInstance] startKeepAwake];
+//                }
+//            }
             [[UIApplication sharedApplication] endBackgroundTask:sBackgroundTask];
             sBackgroundTask = UIBackgroundTaskInvalid;
             
@@ -139,11 +139,11 @@ static dispatch_block_t sExpirationHandler = nil;
         };
         
         if(multitaskingSupported){
-            NgnNSLog(kTAG, @"Multitasking IS supported");
+           // NgnNSLog(kTAG, @"Multitasking IS supported");
         }
         
         // Set media parameters if you want
-        MediaSessionMgr::defaultsSetAudioGain(0, 0);
+       // MediaSessionMgr::defaultsSetAudioGain(0, 0);
         
         
     }
@@ -177,42 +177,42 @@ static dispatch_block_t sExpirationHandler = nil;
 -(void)applicationDidEnterBackground{
     
     // 进入后台
-    if (![PMTools isNullOrEmpty:userToken]) {
-     
-        NgnEngine *engine = [NgnEngine sharedInstance];
-        
-        // application.idleTimerDisabled = YES;
-#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 40000
-        if(multitaskingSupported){
-            ConnectionState_t registrationState = [engine.sipService getRegistrationState];
-            if(registrationState == CONN_STATE_CONNECTING || registrationState == CONN_STATE_CONNECTED){
-                NSLog(@"11111111111111111111111111");
-                NgnNSLog(kTAG, @"applicationDidEnterBackground (Registered or Registering)");
-                //if(registrationState == CONN_STATE_CONNECTING){
-                // request for 10min to complete the work (registration, computation ...)
-                sBackgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:sExpirationHandler];
-                //}
-                
-                if(registrationState == CONN_STATE_CONNECTED){
-                    NSLog(@"222222222222222222222222222222222222");
-                    if([engine.configurationService getBoolWithKey:NETWORK_USE_KEEPAWAKE]){
-                        NSLog(@"33333333333333333333333333");
-                        if(![NgnAVSession hasActiveSession]){
-                            NSLog(@"4444444444444444444");
-                            [engine startKeepAwake];
-                        }
-                    }
-                }
-                
-                [[UIApplication sharedApplication] setKeepAliveTimeout:600 handler: ^{             //设置长连接10分钟
-                    NSLog(@"55555555555555555555");
-                    NgnNSLog(kTAG, @"applicationDidEnterBackground:: setKeepAliveTimeout:handler^");
-                }];
-                NSLog(@"66666666666666666666666");
-            }
-        }
-#endif /* __IPHONE_OS_VERSION_MIN_REQUIRED */
-    }
+//    if (![PMTools isNullOrEmpty:userToken]) {
+//
+//        NgnEngine *engine = [NgnEngine sharedInstance];
+//
+//        // application.idleTimerDisabled = YES;
+//#if __IPHONE_OS_VERSION_MIN_REQUIRED >= 40000
+//        if(multitaskingSupported){
+//            ConnectionState_t registrationState = [engine.sipService getRegistrationState];
+//            if(registrationState == CONN_STATE_CONNECTING || registrationState == CONN_STATE_CONNECTED){
+//                NSLog(@"11111111111111111111111111");
+//                NgnNSLog(kTAG, @"applicationDidEnterBackground (Registered or Registering)");
+//                //if(registrationState == CONN_STATE_CONNECTING){
+//                // request for 10min to complete the work (registration, computation ...)
+//                sBackgroundTask = [[UIApplication sharedApplication] beginBackgroundTaskWithExpirationHandler:sExpirationHandler];
+//                //}
+//
+//                if(registrationState == CONN_STATE_CONNECTED){
+//                    NSLog(@"222222222222222222222222222222222222");
+//                    if([engine.configurationService getBoolWithKey:NETWORK_USE_KEEPAWAKE]){
+//                        NSLog(@"33333333333333333333333333");
+//                        if(![NgnAVSession hasActiveSession]){
+//                            NSLog(@"4444444444444444444");
+//                            [engine startKeepAwake];
+//                        }
+//                    }
+//                }
+//
+//                [[UIApplication sharedApplication] setKeepAliveTimeout:600 handler: ^{             //设置长连接10分钟
+//                    NSLog(@"55555555555555555555");
+//                    NgnNSLog(kTAG, @"applicationDidEnterBackground:: setKeepAliveTimeout:handler^");
+//                }];
+//                NSLog(@"66666666666666666666666");
+//            }
+//        }
+//#endif /* __IPHONE_OS_VERSION_MIN_REQUIRED */
+//    }
     
     
 }
@@ -223,10 +223,10 @@ static dispatch_block_t sExpirationHandler = nil;
     
     if (![PMTools isNullOrEmpty:userToken]) {
         
-        NgnEngine *engine = [NgnEngine sharedInstance];
-        
-        ConnectionState_t registrationState = [engine.sipService getRegistrationState];
-        NgnNSLog(kTAG, @"applicationWillEnterForeground and RegistrationState=%d, NetworkReachable=%s", registrationState, engine.networkService.reachable ? "TRUE" : "FALSE");
+//        NgnEngine *engine = [NgnEngine sharedInstance];
+//
+//        ConnectionState_t registrationState = [engine.sipService getRegistrationState];
+//        NgnNSLog(kTAG, @"applicationWillEnterForeground and RegistrationState=%d, NetworkReachable=%s", registrationState, engine.networkService.reachable ? "TRUE" : "FALSE");
         
 #if __IPHONE_OS_VERSION_MIN_REQUIRED >= 40000
         // terminate background task
@@ -235,14 +235,14 @@ static dispatch_block_t sExpirationHandler = nil;
             sBackgroundTask = UIBackgroundTaskInvalid;
         }
         // stop keepAwake
-        [engine stopKeepAwake];
+       // [engine stopKeepAwake];
         
 #endif /* __IPHONE_OS_VERSION_MIN_REQUIRED */
         
-        if(registrationState != CONN_STATE_CONNECTED){
-            //                [self queryConfigurationAndRegister];
-            [PMSipTools sipRegister];
-        }
+//        if(registrationState != CONN_STATE_CONNECTED){
+//            //                [self queryConfigurationAndRegister];
+//            [PMSipTools sipRegister];
+//        }
         
         // check native contacts changed while app was runnig on background
         if(nativeABChangedWhileInBackground){
@@ -263,13 +263,13 @@ static dispatch_block_t sExpirationHandler = nil;
 -(void)applicationDidReceiveMemoryWarning{
     [[SDImageCache sharedImageCache] clearMemory];
     
-    if (![PMTools isNullOrEmpty:[UserManagerTool userManager].user_sip]) {
-        NgnNSLog(kTAG, @"applicationDidReceiveMemoryWarning");
-        [[NgnEngine sharedInstance].contactService unload];
-        [[NgnEngine sharedInstance].historyService clear];
-        [[NgnEngine sharedInstance].storageService clearFavorites];
-        
-    }
+//    if (![PMTools isNullOrEmpty:[UserManagerTool userManager].user_sip]) {
+//        NgnNSLog(kTAG, @"applicationDidReceiveMemoryWarning");
+//        [[NgnEngine sharedInstance].contactService unload];
+//        [[NgnEngine sharedInstance].historyService clear];
+//        [[NgnEngine sharedInstance].storageService clearFavorites];
+//
+//    }
     
 }
 

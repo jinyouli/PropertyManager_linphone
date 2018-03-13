@@ -103,16 +103,16 @@
     if ([self checkNetWork]) {
         
         NSDictionary * headDic = @{@"uuid":[PMTools getUUID],@"username":self.username};
-        NSDictionary * paraDic = @{@"username":self.username,@"verify_code":self.verify_code,@"new_password":[MD5Util md5:self.passwordTextField1.contentTextField.text]};
-        
-        [DetailRequest SYChange_pwd_by_verify_codeWithHeader:headDic WithParms:paraDic SuccessBlock:^{
-            [[NSUserDefaults standardUserDefaults] setObject:self.passwordTextField1.contentTextField.text forKey:@"password"];
-            
-            //[SVProgressHUD showSuccessWithStatus:@"修改密码成功"];
-            [SYCommon addAlertWithTitle:@"修改密码成功"];
-            
-            //[self performSelector:@selector(popToRootVC) withObject:nil afterDelay:1.5f];
-        }];
+//        NSDictionary * paraDic = @{@"username":self.username,@"verify_code":self.verify_code,@"new_password":[MD5Util md5:self.passwordTextField1.contentTextField.text]};
+//        
+//        [DetailRequest SYChange_pwd_by_verify_codeWithHeader:headDic WithParms:paraDic SuccessBlock:^{
+//            [[NSUserDefaults standardUserDefaults] setObject:self.passwordTextField1.contentTextField.text forKey:@"password"];
+//            
+//            //[SVProgressHUD showSuccessWithStatus:@"修改密码成功"];
+//            [SYCommon addAlertWithTitle:@"修改密码成功"];
+//            
+//            //[self performSelector:@selector(popToRootVC) withObject:nil afterDelay:1.5f];
+//        }];
         
     }
     

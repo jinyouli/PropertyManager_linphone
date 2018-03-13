@@ -9,7 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "MyMessageHistoryEntry.h"
 #import "ContactModel.h"
-#import "iOSNgnStack.h"
+//#import "iOSNgnStack.h"
 
 @interface MyMessageTableViewCell : UITableViewCell
 

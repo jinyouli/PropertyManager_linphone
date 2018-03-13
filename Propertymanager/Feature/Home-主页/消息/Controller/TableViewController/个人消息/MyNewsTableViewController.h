@@ -7,7 +7,7 @@
 //
 
 #import "BaseNewsTableViewController.h"
-#import "iOSNgnStack.h"
+//#import "iOSNgnStack.h"
 
 
 @interface MyNewsTableViewController : BaseNewsTableViewController
@@ -15,8 +15,8 @@
     
 @private
     NSMutableArray* messages;
-    NgnContact *pickedContact;
-    NgnPhoneNumber *pickedNumber;
+//    NgnContact *pickedContact;
+//    NgnPhoneNumber *pickedNumber;
 }
 
 @end

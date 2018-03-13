@@ -14,12 +14,9 @@
 #import "MyRootViewController.h"
 #import "MyNewsChatViewController.h"
 #import "LookEntranceVedioViewController.h"
-#import "iOSNgnStack.h"
+//#import "iOSNgnStack.h"
 #import "PhotosSelectedViewController.h"
 
-#import "MediaContent.h"
-#import "MediaSessionMgr.h"
-#import "tsk_base64.h"
 
 
 // 个推

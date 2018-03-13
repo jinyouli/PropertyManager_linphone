@@ -7,7 +7,6 @@
 //
 
 #import "SYSipSendMessage.h"
-#import "iOSNgnStack.h"
 
 @implementation SYSipSendMessage
 
@@ -29,6 +28,7 @@
     SYLog(@"%s\n%@", __FUNCTION__, sipString);
     SYLog(@"text = %@", text);
     
+    /*
     ActionConfig* actionConfig = new ActionConfig();
     if(actionConfig){
         actionConfig->addHeader("Organization", "Doubango Telecom");
@@ -44,6 +44,7 @@
         delete actionConfig, actionConfig = tsk_null;
     }
     [NgnMessagingSession releaseSession: &imSession];
+     */
 }
 
 

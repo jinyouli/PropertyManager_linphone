@@ -35,27 +35,28 @@
 }
 
 -(BOOL) queryConfigurationAndRegister{
-    BOOL on3G = ([NgnEngine sharedInstance].networkService.networkType & NetworkType_WWAN);
-    BOOL use3G = [[NgnEngine sharedInstance].configurationService getBoolWithKey:NETWORK_USE_3G];
-    if(on3G && !use3G){
-        [self networkAlert:kNetworkAlertMsgThreedGNotEnabled];
-        return NO;
-    }
-    else if(![[NgnEngine sharedInstance].networkService isReachable]){
-        [self networkAlert:kNetworkAlertMsgNotReachable];
-        return NO;
-    }
-    else {
-        [PMSipTools sipRegister];
-        return [PMSipTools sipIsRegister];
-    }
+//    BOOL on3G = ([NgnEngine sharedInstance].networkService.networkType & NetworkType_WWAN);
+//    BOOL use3G = [[NgnEngine sharedInstance].configurationService getBoolWithKey:NETWORK_USE_3G];
+//    if(on3G && !use3G){
+//        [self networkAlert:kNetworkAlertMsgThreedGNotEnabled];
+//        return NO;
+//    }
+//    else if(![[NgnEngine sharedInstance].networkService isReachable]){
+//        [self networkAlert:kNetworkAlertMsgNotReachable];
+//        return NO;
+//    }
+//    else {
+//        [PMSipTools sipRegister];
+//        return [PMSipTools sipIsRegister];
+//    }
+    return NO;
 }
 
 -(void) setAudioInterrupt: (BOOL)interrupt {
-    NgnAVSession *avSession = [NgnAVSession getFirstActiveCallAndNot:-1];
-    if (avSession) {
-        [avSession setAudioInterrupt:interrupt];
-    }
+//    NgnAVSession *avSession = [NgnAVSession getFirstActiveCallAndNot:-1];
+//    if (avSession) {
+//        [avSession setAudioInterrupt:interrupt];
+//    }
 }
 
 

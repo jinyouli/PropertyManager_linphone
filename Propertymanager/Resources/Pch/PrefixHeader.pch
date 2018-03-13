@@ -53,7 +53,6 @@
     #import "AFNetworking.h"
     #import "MD5Util.h"
     #import "IQKeyboardManager.h"
-    #import "WJYAlertView.h"
 
     //头文件
     #import "PMConst.h"

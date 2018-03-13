@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "NgnHistorySMSEvent.h"
+//#import "NgnHistorySMSEvent.h"
 
 @interface MyMessageHistoryEntry : NSObject
 {
@@ -24,5 +24,5 @@
 @property(nonatomic,retain) NSDate *date;
 @property(nonatomic,assign) NSTimeInterval start;
 
--(MyMessageHistoryEntry*)initWithEvent: (NgnHistorySMSEvent*)event;
+//-(MyMessageHistoryEntry*)initWithEvent: (NgnHistorySMSEvent*)event;
 @end

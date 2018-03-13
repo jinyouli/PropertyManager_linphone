@@ -70,11 +70,12 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 
 #ifdef __OBJC__
 
+
+#import <UIKit/UIKit.h>
 #import "iToast.h"
 #import "SYCommon.h"
 // 自定义工具类
 #import "MBProgressHUD.h"
-#import "GeTuiSdk.h"
 #import "UIScrollView+UITouch.h"
 #import "ZYButton.h"
 #import "ZYLabel.h"
@@ -107,9 +108,9 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #import "UIButton+WebCache.h"
 #import "SVProgressHUD.h"
 #import "AFNetworking.h"
-#import "MD5Util.h"
+//#import "MD5Util.h"
 #import "IQKeyboardManager.h"
-#import "WJYAlertView.h"
+//#import "WJYAlertView.h"
 
 //头文件
 #import "PMConst.h"

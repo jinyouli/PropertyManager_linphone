@@ -180,86 +180,86 @@
 
     // GLView
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    self.glViewVideoRemote = [[[iOSGLView alloc] initWithFrame:screenBounds] autorelease];
-    [self.view insertSubview:self.glViewVideoRemote atIndex:0];
+//    self.glViewVideoRemote = [[[iOSGLView alloc] initWithFrame:screenBounds] autorelease];
+//    [self.view insertSubview:self.glViewVideoRemote atIndex:0];
 
 }
 
 -(void)btnToggleClick{
-    if(videoSession){
-        self.buttonToolBarToggle.selected = !self.buttonToolBarToggle.selected;
-        [videoSession toggleCamera];
-    }
+//    if(videoSession){
+//        self.buttonToolBarToggle.selected = !self.buttonToolBarToggle.selected;
+//        [videoSession toggleCamera];
+//    }
 }
 
 //挂断
 - (void) buttonHangupClick{
-    if(videoSession && [videoSession isConnected]) {
-        SYLog(@"videoSession 存在  连接");
-        [videoSession hangUpCall];
-        // releases session
-        [NgnAVSession releaseSession:&videoSession];
-        // starts timer suicide
-        [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
-                                         target:self
-                                       selector:@selector(timerSuicideTick:)
-                                       userInfo:nil
-                                        repeats:NO];
-        
-    }
-    else if(videoSession && ![videoSession isConnected]) {
-        SYLog(@"videoSession 存在  但未连接");
-        [videoSession hangUpCall];
-        // releases session
-        [NgnAVSession releaseSession:&videoSession];
-        // starts timer suicide
-        [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
-                                         target:self
-                                       selector:@selector(timerSuicideTick:)
-                                       userInfo:nil
-                                        repeats:NO];
-        
-    }
-    else {
-        SYLog(@"videoSession 为空  挂断不起作用");
-        [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
-                                         target:self
-                                       selector:@selector(timerSuicideTick:)
-                                       userInfo:nil
-                                        repeats:NO];
-    }
+//    if(videoSession && [videoSession isConnected]) {
+//        SYLog(@"videoSession 存在  连接");
+//        [videoSession hangUpCall];
+//        // releases session
+//        [NgnAVSession releaseSession:&videoSession];
+//        // starts timer suicide
+//        [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
+//                                         target:self
+//                                       selector:@selector(timerSuicideTick:)
+//                                       userInfo:nil
+//                                        repeats:NO];
+//
+//    }
+//    else if(videoSession && ![videoSession isConnected]) {
+//        SYLog(@"videoSession 存在  但未连接");
+//        [videoSession hangUpCall];
+//        // releases session
+//        [NgnAVSession releaseSession:&videoSession];
+//        // starts timer suicide
+//        [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
+//                                         target:self
+//                                       selector:@selector(timerSuicideTick:)
+//                                       userInfo:nil
+//                                        repeats:NO];
+//
+//    }
+//    else {
+//        SYLog(@"videoSession 为空  挂断不起作用");
+//        [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
+//                                         target:self
+//                                       selector:@selector(timerSuicideTick:)
+//                                       userInfo:nil
+//                                        repeats:NO];
+//    }
 
 }
 //接受
 - (void) buttonAcceptClick{
-    if(videoSession){
-        [videoSession acceptCall];
-    }
+//    if(videoSession){
+//        [videoSession acceptCall];
+//    }
 }
 
 //免提
 - (void)handsFreeBtnClick:(UIButton *)sender {
     
-    [videoSession setSpeakerEnabled:![videoSession isSpeakerEnabled]];
-    if([[NgnEngine sharedInstance].soundService setSpeakerEnabled:[videoSession isSpeakerEnabled]]){
-        sender.selected = [videoSession isSpeakerEnabled];
-    }
+//    [videoSession setSpeakerEnabled:![videoSession isSpeakerEnabled]];
+//    if([[NgnEngine sharedInstance].soundService setSpeakerEnabled:[videoSession isSpeakerEnabled]]){
+//        sender.selected = [videoSession isSpeakerEnabled];
+//    }
 
 }
 
 //静音
 - (void)muteBtnClick:(UIButton *)sender{
     
-    self.muteBtn.selected = !self.muteBtn.selected;
-    [videoSession setMute:self.muteBtn.selected];
-    self.muteBtn.selected = [videoSession isMuted];
+//    self.muteBtn.selected = !self.muteBtn.selected;
+//    [videoSession setMute:self.muteBtn.selected];
+//    self.muteBtn.selected = [videoSession isMuted];
 }
 
 // 视频中静音
 -(void)toolbarMuteClick{
     self.buttonToolBarMute.selected = !self.buttonToolBarMute.selected;
-    [videoSession setMute:![videoSession isMuted]];
-    self.buttonToolBarMute.selected = [videoSession isMuted];
+//    [videoSession setMute:![videoSession isMuted]];
+//    self.buttonToolBarMute.selected = [videoSession isMuted];
     [self showBottomView:self.viewToolbar shouldRefresh:YES];
 }
 
@@ -268,8 +268,8 @@
     [super viewDidLoad];
 
     // listen to the events
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(onInviteEvent:) name:kNgnInviteEventArgs_Name object:nil];
+//    [[NSNotificationCenter defaultCenter]
+//     addObserver:self selector:@selector(onInviteEvent:) name:kNgnInviteEventArgs_Name object:nil];
 
     //监听占线
     [[NSNotificationCenter defaultCenter]
@@ -300,22 +300,22 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.isDail = YES;
-    [videoSession release];
-    videoSession = [[NgnAVSession getSessionWithId: self.sessionId] retain];
-    if(videoSession){
-        if([videoSession isConnected]){
-            [videoSession setSpeakerEnabled:YES];
-            [videoSession setRemoteVideoDisplay:self.glViewVideoRemote];
-            [videoSession setLocalVideoDisplay:self.viewLocalVideo];
-        }
-    }
+//    [videoSession release];
+//    videoSession = [[NgnAVSession getSessionWithId: self.sessionId] retain];
+//    if(videoSession){
+//        if([videoSession isConnected]){
+//            [videoSession setSpeakerEnabled:YES];
+//            [videoSession setRemoteVideoDisplay:self.glViewVideoRemote];
+//            [videoSession setLocalVideoDisplay:self.viewLocalVideo];
+//        }
+//    }
 //    [self updateViewAndState];
-    [self updateVideoOrientation];
-    [self updateRemoteDeviceInfo];
+//    [self updateVideoOrientation];
+//    [self updateRemoteDeviceInfo];
     
-    if (videoSession.historyEvent) {
-        self.ContactModel = [PMSipTools gainContactModelFromSipNum:videoSession.historyEvent.remoteParty];
-    }
+//    if (videoSession.historyEvent) {
+//        self.ContactModel = [PMSipTools gainContactModelFromSipNum:videoSession.historyEvent.remoteParty];
+//    }
     isOnLine = YES;
     self.handsFreeBtn.selected = YES;
     self.muteBtn.selected = NO;
@@ -345,11 +345,11 @@
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     
-    if(videoSession && [videoSession isConnected]){
-        [videoSession setRemoteVideoDisplay:nil];
-        [videoSession setLocalVideoDisplay:nil];
-    }
-    [NgnAVSession releaseSession: &videoSession];
+//    if(videoSession && [videoSession isConnected]){
+//        [videoSession setRemoteVideoDisplay:nil];
+//        [videoSession setLocalVideoDisplay:nil];
+//    }
+//    [NgnAVSession releaseSession: &videoSession];
 }
 -(void)viewDidDisappear:(BOOL)animated{
     [super viewDidDisappear:animated];
@@ -357,20 +357,20 @@
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation {
-    [NgnCamera setPreview:nil];
+   // [NgnCamera setPreview:nil];
     return YES;
 }
 
 - (void)didRotateFromInterfaceOrientation:(UIInterfaceOrientation)fromInterfaceOrientation{
     [super didRotateFromInterfaceOrientation:fromInterfaceOrientation];
     
-    [self updateVideoOrientation];
+   // [self updateVideoOrientation];
     
     if(!self.viewToolbar.hidden){
         [self showBottomView:self.viewToolbar shouldRefresh:YES];
     }
 
-    [self sendDeviceInfo];
+    //[self sendDeviceInfo];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -389,27 +389,26 @@
 }
 
 
-- (void)dealloc {
-
-    
-    [_viewToolbar release];
-    [_nameLabel release];
-    [_labelStatus release];
-    
-    [_viewTop release];
-    [_buttonToolBarMute release];
-    [_buttonToolBarEnd release];
-    [_buttonToolBarToggle release];
-    
-    [_buttonAccept release];
-    [_buttonHangup release];
-    
-    [_glViewVideoRemote release];
-    
-    [_timerQoS release];
-    
-    [super dealloc];
-}
+//- (void)dealloc {
+//
+////    [_viewToolbar release];
+////    [_nameLabel release];
+////    [_labelStatus release];
+////
+////    [_viewTop release];
+////    [_buttonToolBarMute release];
+//    [_buttonToolBarEnd release];
+//    [_buttonToolBarToggle release];
+//
+//    [_buttonAccept release];
+//    [_buttonHangup release];
+//
+//    [_glViewVideoRemote release];
+//
+//    [_timerQoS release];
+//
+//    [super dealloc];
+//}
 
 
 
@@ -432,7 +431,7 @@
         if(view_ == self.viewToolbar){
             // update content
             
-            self.buttonToolBarMute.selected = [videoSession isMuted];
+            //self.buttonToolBarMute.selected = [videoSession isMuted];
             
         }
         
@@ -444,428 +443,428 @@
     view_.hidden = YES;
 }
 
--(void) updateViewAndState{
-    
-    if(videoSession){
-        switch (videoSession.state) {
-            case INVITE_STATE_INPROGRESS:
-            {
-                self.viewTop.hidden = NO;
-                self.bgImageView.hidden = NO;
-                self.labelStatus.text = @"视频请求中...";
-                self.viewLocalVideo.hidden = YES;
-                
-                
-                [self hideBottomView:self.viewToolbar];
-                
-                self.buttonAccept.hidden = YES;
-                self.buttonHangup.hidden = NO;
-                
-                CGRect rect = self.buttonHangup.frame;
-                rect.origin.y = self.buttonHangup.frame.origin.y;
-                self.buttonHangup.frame = rect;
-                
-                [self.buttonHangup setTitle:@"结束" forState:UIControlStateNormal];
-                break;
-            }
-            case INVITE_STATE_INCOMING:
-            {
-                
-                
-                self.viewTop.hidden = NO;
-                self.bgImageView.hidden = NO;
-                self.viewLocalVideo.hidden = YES;
-                self.labelStatus.text = @"视频来电...";
-                
-                [self hideBottomView:self.viewToolbar];
-                
-                
-                self.buttonHangup.hidden = NO;
-                [self.buttonHangup setTitle:@"挂断" forState:UIControlStateNormal];
-                
-                
-                self.buttonAccept.hidden = NO;
-                [self.buttonAccept setTitle:@"接受" forState:UIControlStateNormal];
-                
-                // 勿扰模式
-                BOOL isOpen = isOpenDnd;
-                BOOL res = [PMSipTools isBetweenTime];
-                if (isOpen && res) {
-                    
-                    SYLog(@"开启勿扰模式 且 在时间范围内 不打扰");
-                    [PMSipTools stopRing];
-                    
-                }
-                else{
-                    SYLog(@"没开启勿扰模式");
-                    [PMSipTools playRing];
-                    
-                }
-                
-                break;
-            }
-            case INVITE_STATE_REMOTE_RINGING:
-            {
-                self.viewTop.hidden = NO;
-                self.bgImageView.hidden = NO;
-                self.viewLocalVideo.hidden = YES;
-                self.labelStatus.text = @"正在视频通话...";
-                
-                [self btnToggleClick];
-                [self btnToggleClick];
-                
-                [self hideBottomView:self.viewToolbar];
-                
-                
-                self.buttonAccept.hidden = YES;
-                self.buttonHangup.hidden = NO;
-                [self.buttonHangup setTitle:@"结束" forState:UIControlStateNormal];
-                
-                
-                [videoSession setSpeakerEnabled:YES];
-                [[[NgnEngine sharedInstance] getSoundService] stopRingTone];
-                [[[NgnEngine sharedInstance] getSoundService] stopRingBackTone];
-                
-                if(sendingVideo){
-                    [videoSession setLocalVideoDisplay:_viewLocalVideo];
-                }
-                
-                break;
-            }
-            case INVITE_STATE_INCALL:
-            {
-                self.viewTop.hidden = YES;
-                self.bgImageView.hidden = YES;
-                self.viewLocalVideo.hidden = NO;
-                self.labelStatus.text = @"正在视频通话...";
-                
-                [self showBottomView:self.viewToolbar shouldRefresh:NO];
-                
-                [[NgnEngine sharedInstance].soundService setSpeakerEnabled:[videoSession isSpeakerEnabled]];
-                
-                [[[NgnEngine sharedInstance] getSoundService] stopRingTone];
-                [[[NgnEngine sharedInstance] getSoundService] stopRingBackTone];
-                break;
-            }
-            case INVITE_STATE_TERMINATED:
-            {
-                [self buttonHangupClick];
-                [self closeView];
-            }
-            case INVITE_STATE_TERMINATING:
-            {
-                self.viewTop.hidden = NO;
-                self.bgImageView.hidden = NO;
-                self.labelStatus.text = @"视频结束中...";
-                self.viewLocalVideo.hidden = YES;
-                
-                
-                [self hideBottomView:self.viewToolbar];
-                
-                [[NgnEngine sharedInstance].soundService stopRingBackTone];
-                [[NgnEngine sharedInstance].soundService stopRingTone];
-                break;
-            }
-            default:
-                break;
-        }
-    }
-}
+//-(void) updateViewAndState{
+//
+//    if(videoSession){
+//        switch (videoSession.state) {
+//            case INVITE_STATE_INPROGRESS:
+//            {
+//                self.viewTop.hidden = NO;
+//                self.bgImageView.hidden = NO;
+//                self.labelStatus.text = @"视频请求中...";
+//                self.viewLocalVideo.hidden = YES;
+//
+//
+//                [self hideBottomView:self.viewToolbar];
+//
+//                self.buttonAccept.hidden = YES;
+//                self.buttonHangup.hidden = NO;
+//
+//                CGRect rect = self.buttonHangup.frame;
+//                rect.origin.y = self.buttonHangup.frame.origin.y;
+//                self.buttonHangup.frame = rect;
+//
+//                [self.buttonHangup setTitle:@"结束" forState:UIControlStateNormal];
+//                break;
+//            }
+//            case INVITE_STATE_INCOMING:
+//            {
+//
+//
+//                self.viewTop.hidden = NO;
+//                self.bgImageView.hidden = NO;
+//                self.viewLocalVideo.hidden = YES;
+//                self.labelStatus.text = @"视频来电...";
+//
+//                [self hideBottomView:self.viewToolbar];
+//
+//
+//                self.buttonHangup.hidden = NO;
+//                [self.buttonHangup setTitle:@"挂断" forState:UIControlStateNormal];
+//
+//
+//                self.buttonAccept.hidden = NO;
+//                [self.buttonAccept setTitle:@"接受" forState:UIControlStateNormal];
+//
+//                // 勿扰模式
+//                BOOL isOpen = isOpenDnd;
+//                BOOL res = [PMSipTools isBetweenTime];
+//                if (isOpen && res) {
+//
+//                    SYLog(@"开启勿扰模式 且 在时间范围内 不打扰");
+//                    [PMSipTools stopRing];
+//
+//                }
+//                else{
+//                    SYLog(@"没开启勿扰模式");
+//                    [PMSipTools playRing];
+//
+//                }
+//
+//                break;
+//            }
+//            case INVITE_STATE_REMOTE_RINGING:
+//            {
+//                self.viewTop.hidden = NO;
+//                self.bgImageView.hidden = NO;
+//                self.viewLocalVideo.hidden = YES;
+//                self.labelStatus.text = @"正在视频通话...";
+//
+//                [self btnToggleClick];
+//                [self btnToggleClick];
+//
+//                [self hideBottomView:self.viewToolbar];
+//
+//
+//                self.buttonAccept.hidden = YES;
+//                self.buttonHangup.hidden = NO;
+//                [self.buttonHangup setTitle:@"结束" forState:UIControlStateNormal];
+//
+//
+//                [videoSession setSpeakerEnabled:YES];
+//                [[[NgnEngine sharedInstance] getSoundService] stopRingTone];
+//                [[[NgnEngine sharedInstance] getSoundService] stopRingBackTone];
+//
+//                if(sendingVideo){
+//                    [videoSession setLocalVideoDisplay:_viewLocalVideo];
+//                }
+//
+//                break;
+//            }
+//            case INVITE_STATE_INCALL:
+//            {
+//                self.viewTop.hidden = YES;
+//                self.bgImageView.hidden = YES;
+//                self.viewLocalVideo.hidden = NO;
+//                self.labelStatus.text = @"正在视频通话...";
+//
+//                [self showBottomView:self.viewToolbar shouldRefresh:NO];
+//
+//                [[NgnEngine sharedInstance].soundService setSpeakerEnabled:[videoSession isSpeakerEnabled]];
+//
+//                [[[NgnEngine sharedInstance] getSoundService] stopRingTone];
+//                [[[NgnEngine sharedInstance] getSoundService] stopRingBackTone];
+//                break;
+//            }
+//            case INVITE_STATE_TERMINATED:
+//            {
+//                [self buttonHangupClick];
+//                [self closeView];
+//            }
+//            case INVITE_STATE_TERMINATING:
+//            {
+//                self.viewTop.hidden = NO;
+//                self.bgImageView.hidden = NO;
+//                self.labelStatus.text = @"视频结束中...";
+//                self.viewLocalVideo.hidden = YES;
+//
+//
+//                [self hideBottomView:self.viewToolbar];
+//
+//                [[NgnEngine sharedInstance].soundService stopRingBackTone];
+//                [[NgnEngine sharedInstance].soundService stopRingTone];
+//                break;
+//            }
+//            default:
+//                break;
+//        }
+//    }
+//}
 
--(void) closeView{
-    [[NgnEngine sharedInstance].soundService stopRingBackTone];
-    [[NgnEngine sharedInstance].soundService stopRingTone];
-    [NgnCamera setPreview:nil];
-    [self dismissViewControllerAnimated:YES completion:nil];
-    
-}
+//-(void) closeView{
+//    [[NgnEngine sharedInstance].soundService stopRingBackTone];
+//    [[NgnEngine sharedInstance].soundService stopRingTone];
+//    [NgnCamera setPreview:nil];
+//    [self dismissViewControllerAnimated:YES completion:nil];
+//
+//}
 
--(void) updateVideoOrientation{
-    if(videoSession){
-        if(![videoSession isConnected]){
-            [NgnCamera setPreview:self.glViewVideoRemote];
-        }
-#if 0 // @deprecated
-        switch ([UIDevice currentDevice].orientation) {
-            case UIInterfaceOrientationPortrait:
-                [videoSession setOrientation:AVCaptureVideoOrientationPortrait];
-                break;
-            case UIInterfaceOrientationPortraitUpsideDown:
-                [videoSession setOrientation:AVCaptureVideoOrientationPortraitUpsideDown];
-                break;
-            case UIInterfaceOrientationLandscapeLeft:
-                [videoSession setOrientation:AVCaptureVideoOrientationLandscapeLeft];
-                break;
-            case UIInterfaceOrientationLandscapeRight:
-                [videoSession setOrientation:AVCaptureVideoOrientationLandscapeRight];
-                break;
-        }
-#endif
-    }
-#if 0 // @deprecated
-    if(glViewVideoRemote){
-        [glViewVideoRemote setOrientation:[UIDevice currentDevice].orientation];
-    }
-#endif
-}
+//-(void) updateVideoOrientation{
+//    if(videoSession){
+//        if(![videoSession isConnected]){
+//            [NgnCamera setPreview:self.glViewVideoRemote];
+//        }
+//#if 0 // @deprecated
+//        switch ([UIDevice currentDevice].orientation) {
+//            case UIInterfaceOrientationPortrait:
+//                [videoSession setOrientation:AVCaptureVideoOrientationPortrait];
+//                break;
+//            case UIInterfaceOrientationPortraitUpsideDown:
+//                [videoSession setOrientation:AVCaptureVideoOrientationPortraitUpsideDown];
+//                break;
+//            case UIInterfaceOrientationLandscapeLeft:
+//                [videoSession setOrientation:AVCaptureVideoOrientationLandscapeLeft];
+//                break;
+//            case UIInterfaceOrientationLandscapeRight:
+//                [videoSession setOrientation:AVCaptureVideoOrientationLandscapeRight];
+//                break;
+//        }
+//#endif
+//    }
+//#if 0 // @deprecated
+//    if(glViewVideoRemote){
+//        [glViewVideoRemote setOrientation:[UIDevice currentDevice].orientation];
+//    }
+//#endif
+//}
+//
+//-(void) updateRemoteDeviceInfo{
+//    BOOL deviceOrientPortrait = [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait || [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortraitUpsideDown;
+//    switch(videoSession.remoteDeviceInfo.orientation)
+//    {
+//        case NgnDeviceInfo_Orientation_Portrait:
+//            [self.glViewVideoRemote setContentMode:UIViewContentModeScaleAspectFill];
+//            if(!deviceOrientPortrait){
+//#if 0
+//#endif
+//            }
+//            break;
+//        case NgnDeviceInfo_Orientation_Landscape:
+//            [self.glViewVideoRemote setContentMode:UIViewContentModeCenter];
+//            if(deviceOrientPortrait){
+//#if 0
+//                CGAffineTransform landscapeTransform = CGAffineTransformMakeRotation(degreesToRadian(90));
+//                landscapeTransform = CGAffineTransformTranslate(landscapeTransform, +90.0, +90.0);
+//                [self.view setTransform:landscapeTransform];
+//#endif
+//            }
+//            break;
+//    }
+//}
+//
+//-(void) sendDeviceInfo{
+//    if([[NgnEngine sharedInstance].configurationService getBoolWithKey:GENERAL_SEND_DEVICE_INFO]){
+//        if(videoSession){
+//            NSString* content = nil;
+//            switch ([[UIDevice currentDevice] orientation]) {
+//                case UIDeviceOrientationPortrait:
+//                case UIDeviceOrientationPortraitUpsideDown:
+//                    content = @"orientation:portrait\r\nlang:fr-FR\r\n";
+//                    break;
+//                default:
+//                    content = @"orientation:landscape\r\nlang:fr-FR\r\n";
+//                    break;
+//            }
+//            [videoSession sendInfoWithContentString:content contentType:kContentDoubangoDeviceInfo];
+//        }
+//    }
+//}
 
--(void) updateRemoteDeviceInfo{
-    BOOL deviceOrientPortrait = [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortrait || [[UIDevice currentDevice] orientation] == UIDeviceOrientationPortraitUpsideDown;
-    switch(videoSession.remoteDeviceInfo.orientation)
-    {
-        case NgnDeviceInfo_Orientation_Portrait:
-            [self.glViewVideoRemote setContentMode:UIViewContentModeScaleAspectFill];
-            if(!deviceOrientPortrait){
-#if 0
-#endif
-            }
-            break;
-        case NgnDeviceInfo_Orientation_Landscape:
-            [self.glViewVideoRemote setContentMode:UIViewContentModeCenter];
-            if(deviceOrientPortrait){
-#if 0
-                CGAffineTransform landscapeTransform = CGAffineTransformMakeRotation(degreesToRadian(90));
-                landscapeTransform = CGAffineTransformTranslate(landscapeTransform, +90.0, +90.0);
-                [self.view setTransform:landscapeTransform];
-#endif
-            }
-            break;
-    }
-}
 
--(void) sendDeviceInfo{
-    if([[NgnEngine sharedInstance].configurationService getBoolWithKey:GENERAL_SEND_DEVICE_INFO]){
-        if(videoSession){
-            NSString* content = nil;
-            switch ([[UIDevice currentDevice] orientation]) {
-                case UIDeviceOrientationPortrait:
-                case UIDeviceOrientationPortraitUpsideDown:
-                    content = @"orientation:portrait\r\nlang:fr-FR\r\n";
-                    break;
-                default:
-                    content = @"orientation:landscape\r\nlang:fr-FR\r\n";
-                    break;
-            }
-            [videoSession sendInfoWithContentString:content contentType:kContentDoubangoDeviceInfo];
-        }
-    }
-}
-
-
--(void) onInviteEvent:(NSNotification*)notification {
-    
-    NgnInviteEventArgs* eargs = [notification object];
-    
-    if(!videoSession || videoSession.id != eargs.sessionId){
-        return;
-    }
-    
-    if (!eargs.otherIsOnLine) {
-        self.labelStatus.text = @"对方不在线...";
-        
-        isOnLine = NO;
-        _dismiss = [PSTAlertController presentDismissableAlertWithTitle:@"⚠️\n" message:@"对方不在线，请稍后尝试！" controller:self];
-        
-    }
-    
-    if (eargs.otherNotAnswer) {
-        self.labelStatus.text = @"对方没有接听...";
-        NSLog(@"!!!!对方没有接听");
-    }
-
-    NSLog(@"状态==%d",eargs.eventType);
-    switch (eargs.eventType) {
-        case INVITE_EVENT_INPROGRESS:
-        case INVITE_EVENT_INCOMING:
-            
-            
-        case INVITE_EVENT_RINGING:
-        default:
-        {
-            // updates status info
-            [self updateViewAndState];
-            
-            // video session
-            [NgnCamera setPreview:self.glViewVideoRemote];
-            if(sendingVideo){
-                [videoSession setRemoteVideoDisplay:nil];
-                [videoSession setLocalVideoDisplay:_viewLocalVideo];
-                
-            }
-            
-            break;
-        }
-       
-            
-        case INVITE_EVENT_CONNECTED:
-            
-            [self btnToggleClick];
-            [self btnToggleClick];
-            [videoSession setSpeakerEnabled:YES];
-            
-        case INVITE_EVENT_EARLY_MEDIA:
-            
-            
-        case INVITE_EVENT_MEDIA_UPDATED:
-        {
-            // updates status info 1
-            [self updateViewAndState];
-            
-            // video session
-            [self updateVideoOrientation];
-            
-            [NgnCamera setPreview:nil];
-            [videoSession setRemoteVideoDisplay:self.glViewVideoRemote];
-            
-            [self updateRemoteDeviceInfo];
-            [self sendDeviceInfo];
-            // starts QoS timer
-            if (self.timerQoS == nil) {
-                self.timerQoS = [NSTimer scheduledTimerWithTimeInterval:kQoSTimer
-                                                                 target:self
-                                                               selector:@selector(timerQoSTick:)
-                                                               userInfo:nil
-                                                                repeats:YES];
-            }
-            sendingVideo = YES;
-            [videoSession setLocalVideoDisplay:_viewLocalVideo];
-            break;
-        }
-            
-        case INVITE_EVENT_REMOTE_DEVICE_INFO_CHANGED:
-        {
-            [self updateRemoteDeviceInfo];
-            break;
-        }
-            
-        case INVITE_EVENT_TERMINATED:
-        {
-            // stops QoS timer
-            if (self.timerQoS) {
-                [self.timerQoS invalidate];
-                self.timerQoS = nil;
-            }
-            
-            // updates status info
-            [self updateViewAndState];
-            
-            // video session
-            if(videoSession){
-                [videoSession setRemoteVideoDisplay:nil];
-                [videoSession setLocalVideoDisplay:nil];
-            }
-            //            [self.glViewVideoRemote stopAnimation];
-            [NgnCamera setPreview:self.glViewVideoRemote];
-            
-            // releases session
-            [NgnAVSession releaseSession:&videoSession];
-            
-            
-            if (!isOnLine) {
-                [_dismiss addDidDismissBlock:^(PSTAlertAction * _Nonnull action) {
-                    [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
-                                                     target:self
-                                                   selector:@selector(timerSuicideTick:)
-                                                   userInfo:nil
-                                                    repeats:NO];
-                }];
-                
-            }
-            else{
-                [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
-                                                 target:self
-                                               selector:@selector(timerSuicideTick:)
-                                               userInfo:nil
-                                                repeats:NO];
-            }
-            
-            
-            break;
-        }
-        case INVITE_EVENT_TERMWAIT:
-        {
-            // stops QoS timer
-            if (self.timerQoS) {
-                [self.timerQoS invalidate];
-                self.timerQoS = nil;
-            }
-            
-            // updates status info
-            [self updateViewAndState];
-            
-            // video session
-            if(videoSession){
-                [videoSession setRemoteVideoDisplay:nil];
-                [videoSession setLocalVideoDisplay:nil];
-            }
-            //            [self.glViewVideoRemote stopAnimation];
-            [NgnCamera setPreview:self.glViewVideoRemote];
-            
-            // releases session
-            [NgnAVSession releaseSession:&videoSession];
-            
-            
-            if (!isOnLine) {
-                [_dismiss addDidDismissBlock:^(PSTAlertAction * _Nonnull action) {
-                    [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
-                                                     target:self
-                                                   selector:@selector(timerSuicideTick:)
-                                                   userInfo:nil
-                                                    repeats:NO];
-                }];
-                
-            }
-            else{
-                [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
-                                                 target:self
-                                               selector:@selector(timerSuicideTick:)
-                                               userInfo:nil
-                                                repeats:NO];
-            }
-
-            
-            break;
-        }
-    }
-    
-    switch (eargs.otherInCallstate) {
-        case OTHER_DEFAULT:{
-            
-            break;
-        }
-            
-        case OTHER_ANSWER_NOT:{
-            //"对方没有接听";
-            [self buttonHangupClick];
-            [self closeView];
-            break;
-        }
-            
-        case OTHER_ANSWER_OR_REJECT:{
-            //"对方接听或拒绝";
-
-            break;
-        }
-            
-        case OTHER_REJECT:{
-            //"对方拒接";
-            [self buttonHangupClick];
-            [self closeView];
-        }
-    }
-}
-
--(void)timerInCallTick:(NSTimer*)timer{
-    // to be implemented for the call time display
-}
-
--(void)timerQoSTick:(NSTimer*)timer{
-    if (videoSession && videoSession.connected) {
-        NgnQoS* ngnQoS = [videoSession videoQoS];
-        if (ngnQoS) {
-        }
-    }
-}
+//-(void) onInviteEvent:(NSNotification*)notification {
+//
+//    NgnInviteEventArgs* eargs = [notification object];
+//
+//    if(!videoSession || videoSession.id != eargs.sessionId){
+//        return;
+//    }
+//
+//    if (!eargs.otherIsOnLine) {
+//        self.labelStatus.text = @"对方不在线...";
+//
+//        isOnLine = NO;
+//        _dismiss = [PSTAlertController presentDismissableAlertWithTitle:@"⚠️\n" message:@"对方不在线，请稍后尝试！" controller:self];
+//
+//    }
+//
+//    if (eargs.otherNotAnswer) {
+//        self.labelStatus.text = @"对方没有接听...";
+//        NSLog(@"!!!!对方没有接听");
+//    }
+//
+//    NSLog(@"状态==%d",eargs.eventType);
+//    switch (eargs.eventType) {
+//        case INVITE_EVENT_INPROGRESS:
+//        case INVITE_EVENT_INCOMING:
+//
+//
+//        case INVITE_EVENT_RINGING:
+//        default:
+//        {
+//            // updates status info
+//            [self updateViewAndState];
+//
+//            // video session
+//            [NgnCamera setPreview:self.glViewVideoRemote];
+//            if(sendingVideo){
+//                [videoSession setRemoteVideoDisplay:nil];
+//                [videoSession setLocalVideoDisplay:_viewLocalVideo];
+//
+//            }
+//
+//            break;
+//        }
+//
+//
+//        case INVITE_EVENT_CONNECTED:
+//
+//            [self btnToggleClick];
+//            [self btnToggleClick];
+//            [videoSession setSpeakerEnabled:YES];
+//
+//        case INVITE_EVENT_EARLY_MEDIA:
+//
+//
+//        case INVITE_EVENT_MEDIA_UPDATED:
+//        {
+//            // updates status info 1
+//            [self updateViewAndState];
+//
+//            // video session
+//            [self updateVideoOrientation];
+//
+//            [NgnCamera setPreview:nil];
+//            [videoSession setRemoteVideoDisplay:self.glViewVideoRemote];
+//
+//            [self updateRemoteDeviceInfo];
+//            [self sendDeviceInfo];
+//            // starts QoS timer
+//            if (self.timerQoS == nil) {
+//                self.timerQoS = [NSTimer scheduledTimerWithTimeInterval:kQoSTimer
+//                                                                 target:self
+//                                                               selector:@selector(timerQoSTick:)
+//                                                               userInfo:nil
+//                                                                repeats:YES];
+//            }
+//            sendingVideo = YES;
+//            [videoSession setLocalVideoDisplay:_viewLocalVideo];
+//            break;
+//        }
+//
+//        case INVITE_EVENT_REMOTE_DEVICE_INFO_CHANGED:
+//        {
+//            [self updateRemoteDeviceInfo];
+//            break;
+//        }
+//
+//        case INVITE_EVENT_TERMINATED:
+//        {
+//            // stops QoS timer
+//            if (self.timerQoS) {
+//                [self.timerQoS invalidate];
+//                self.timerQoS = nil;
+//            }
+//
+//            // updates status info
+//            [self updateViewAndState];
+//
+//            // video session
+//            if(videoSession){
+//                [videoSession setRemoteVideoDisplay:nil];
+//                [videoSession setLocalVideoDisplay:nil];
+//            }
+//            //            [self.glViewVideoRemote stopAnimation];
+//            [NgnCamera setPreview:self.glViewVideoRemote];
+//
+//            // releases session
+//            [NgnAVSession releaseSession:&videoSession];
+//
+//
+//            if (!isOnLine) {
+//                [_dismiss addDidDismissBlock:^(PSTAlertAction * _Nonnull action) {
+//                    [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
+//                                                     target:self
+//                                                   selector:@selector(timerSuicideTick:)
+//                                                   userInfo:nil
+//                                                    repeats:NO];
+//                }];
+//
+//            }
+//            else{
+//                [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
+//                                                 target:self
+//                                               selector:@selector(timerSuicideTick:)
+//                                               userInfo:nil
+//                                                repeats:NO];
+//            }
+//
+//
+//            break;
+//        }
+//        case INVITE_EVENT_TERMWAIT:
+//        {
+//            // stops QoS timer
+//            if (self.timerQoS) {
+//                [self.timerQoS invalidate];
+//                self.timerQoS = nil;
+//            }
+//
+//            // updates status info
+//            [self updateViewAndState];
+//
+//            // video session
+//            if(videoSession){
+//                [videoSession setRemoteVideoDisplay:nil];
+//                [videoSession setLocalVideoDisplay:nil];
+//            }
+//            //            [self.glViewVideoRemote stopAnimation];
+//            [NgnCamera setPreview:self.glViewVideoRemote];
+//
+//            // releases session
+//            [NgnAVSession releaseSession:&videoSession];
+//
+//
+//            if (!isOnLine) {
+//                [_dismiss addDidDismissBlock:^(PSTAlertAction * _Nonnull action) {
+//                    [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
+//                                                     target:self
+//                                                   selector:@selector(timerSuicideTick:)
+//                                                   userInfo:nil
+//                                                    repeats:NO];
+//                }];
+//
+//            }
+//            else{
+//                [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
+//                                                 target:self
+//                                               selector:@selector(timerSuicideTick:)
+//                                               userInfo:nil
+//                                                repeats:NO];
+//            }
+//
+//
+//            break;
+//        }
+//    }
+//
+//    switch (eargs.otherInCallstate) {
+//        case OTHER_DEFAULT:{
+//
+//            break;
+//        }
+//
+//        case OTHER_ANSWER_NOT:{
+//            //"对方没有接听";
+//            [self buttonHangupClick];
+//            [self closeView];
+//            break;
+//        }
+//
+//        case OTHER_ANSWER_OR_REJECT:{
+//            //"对方接听或拒绝";
+//
+//            break;
+//        }
+//
+//        case OTHER_REJECT:{
+//            //"对方拒接";
+//            [self buttonHangupClick];
+//            [self closeView];
+//        }
+//    }
+//}
+//
+//-(void)timerInCallTick:(NSTimer*)timer{
+//    // to be implemented for the call time display
+//}
+//
+//-(void)timerQoSTick:(NSTimer*)timer{
+//    if (videoSession && videoSession.connected) {
+//        NgnQoS* ngnQoS = [videoSession videoQoS];
+//        if (ngnQoS) {
+//        }
+//    }
+//}
 
 -(void)timerSuicideTick:(NSTimer*)timer{
     [self performSelectorOnMainThread:@selector(closeView) withObject:nil waitUntilDone:NO];

@@ -36,16 +36,16 @@
 @synthesize date;
 @synthesize start;
 
--(MyMessageHistoryEntry*)initWithEvent: (NgnHistorySMSEvent*)event{
-    if((self = [super init])){
-        self->eventId = event.id;
-        self.remoteParty = event.remoteParty;
-        self->start = event.start;
-        self.date = [NSDate dateWithTimeIntervalSince1970: self.start];
-        self.content = event.contentAsString;
-    }
-    return self;
-}
+//-(MyMessageHistoryEntry*)initWithEvent: (NgnHistorySMSEvent*)event{
+//    if((self = [super init])){
+//        self->eventId = event.id;
+//        self.remoteParty = event.remoteParty;
+//        self->start = event.start;
+//        self.date = [NSDate dateWithTimeIntervalSince1970: self.start];
+//        self.content = event.contentAsString;
+//    }
+//    return self;
+//}
 
 @end
 

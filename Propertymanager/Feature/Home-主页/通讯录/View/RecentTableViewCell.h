@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "iOSNgnStack.h"
+//#import "iOSNgnStack.h"
 #import "ContactModel.h"
 @interface RecentTableViewCell : UITableViewCell
 
@@ -17,6 +17,6 @@
 @property (nonatomic,strong) UIImageView *callTypeImageView;//呼叫类型
 @property (nonatomic,strong) UILabel *callTimeLabel;//呼叫时间
 
-@property (retain, nonatomic) NgnHistoryEvent* event;
+//@property (retain, nonatomic) NgnHistoryEvent* event;
 @property (retain, nonatomic) ContactModel* contactModel;
 @end

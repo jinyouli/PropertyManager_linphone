@@ -20,7 +20,7 @@
  */
 #import <UIKit/UIKit.h>
 
-#import "iOSNgnStack.h"
+//#import "iOSNgnStack.h"
 
 @interface CallViewController : UIViewController {
 	long sessionId;
@@ -28,6 +28,7 @@
 
 @property (nonatomic) long sessionId;
 
+/*
 +(BOOL) makeAudioCallWithRemoteParty: (NSString*) remoteUri andSipStack: (NgnSipStack*) sipStack withName:(NSString *) name;
 +(BOOL) makeAudioVideoCallWithRemoteParty: (NSString*) remoteUri andSipStack: (NgnSipStack*) sipStack withName:(NSString *)name;
 +(BOOL) receiveIncomingCall: (NgnAVSession*)session;
@@ -35,4 +36,5 @@
 
 
 +(BOOL) makeEntranceAudioVideoCallWithRemoteParty: (NSString*) remoteUri andSipStack: (NgnSipStack*) sipStack withDomain_sn:(NSString *)domain_sn;
+ */
 @end

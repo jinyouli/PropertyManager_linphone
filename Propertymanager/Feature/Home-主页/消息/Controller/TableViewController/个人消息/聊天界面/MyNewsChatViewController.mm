@@ -34,28 +34,24 @@
     @synchronized(messages){
         [messages removeAllObjects];
         
-//        NSData *userData = [[NSUserDefaults standardUserDefaults] objectForKey:@"chatData"];
-//        NgnHistoryEvent* model = [NSKeyedUnarchiver unarchiveObjectWithData:userData];
-//        [messages addObject:model];
+//        NSArray* events = [[[[NgnEngine sharedInstance].historyService events] allValues] sortedArrayUsingSelector:@selector(compareHistoryEventByDateDESC:)];
         
-        NSArray* events = [[[[NgnEngine sharedInstance].historyService events] allValues] sortedArrayUsingSelector:@selector(compareHistoryEventByDateDESC:)];
-        
-        for (int i = 0 ; i < events.count; i ++) {
-            NgnHistoryEvent* event = events[i];
-            if (!event) {
-                continue;
-            }
-            if (!(event.mediaType & MediaType_SMS)) {
-                continue;
-            }
-            if (![event.remoteParty isEqualToString: self.remoteParty]) {
-                continue;
-            }
-            if(!event || !(event.mediaType & MediaType_SMS) || ![event.remoteParty isEqualToString: self.remoteParty]){
-                continue;
-            }
-            [messages addObject:event];
-        }
+//        for (int i = 0 ; i < events.count; i ++) {
+//            NgnHistoryEvent* event = events[i];
+//            if (!event) {
+//                continue;
+//            }
+//            if (!(event.mediaType & MediaType_SMS)) {
+//                continue;
+//            }
+//            if (![event.remoteParty isEqualToString: self.remoteParty]) {
+//                continue;
+//            }
+//            if(!event || !(event.mediaType & MediaType_SMS) || ![event.remoteParty isEqualToString: self.remoteParty]){
+//                continue;
+//            }
+//            [messages addObject:event];
+//        }
         
     }
 }
@@ -78,61 +74,61 @@
 }
 
 -(void) onHistoryEvent:(NSNotification*)notification{
-    NgnHistoryEventArgs* eargs = [notification object];
-    
-    switch (eargs.eventType) {
-        case HISTORY_EVENT_ITEM_ADDED:
-        {
-            if((eargs.mediaType & MediaType_SMS)){
-                NgnHistoryEvent* event = [[[NgnEngine sharedInstance].historyService events] objectForKey: [NSNumber numberWithLongLong: eargs.eventId]];
-                NSInteger eventInt = [event.remoteParty integerValue];
-                NSInteger remotInt = [self.remoteParty integerValue];
-                if (event) {
-                    if (eventInt == remotInt) {
-                        [messages addObject: event];
-                        [self reloadData];
-                    }
-                }
-            }
-            break;
-        }
-            
-        case HISTORY_EVENT_ITEM_MOVED:
-        case HISTORY_EVENT_ITEM_UPDATED:
-        {
-            [self reloadData];
-            break;
-        }
-            
-        case HISTORY_EVENT_ITEM_REMOVED:
-        {
-            if((eargs.mediaType & MediaType_SMS)){
-                for (NgnHistoryEvent* event in messages) {
-                    if(event.id == eargs.eventId){
-                        [messages removeObject: event];
-                        [tableView reloadData];
-                        break;
-                    }
-                }
-            }
-            break;
-        }
-            
-        case HISTORY_EVENT_RESET:{
-            [[NgnEngine sharedInstance].historyService deleteEventWithId:eargs.eventId];
-        }
-        default:
-        {
-            [self refreshDataAndReload];
-            break;
-        }
-    }
+//    NgnHistoryEventArgs* eargs = [notification object];
+//
+//    switch (eargs.eventType) {
+//        case HISTORY_EVENT_ITEM_ADDED:
+//        {
+//            if((eargs.mediaType & MediaType_SMS)){
+//                NgnHistoryEvent* event = [[[NgnEngine sharedInstance].historyService events] objectForKey: [NSNumber numberWithLongLong: eargs.eventId]];
+//                NSInteger eventInt = [event.remoteParty integerValue];
+//                NSInteger remotInt = [self.remoteParty integerValue];
+//                if (event) {
+//                    if (eventInt == remotInt) {
+//                        [messages addObject: event];
+//                        [self reloadData];
+//                    }
+//                }
+//            }
+//            break;
+//        }
+//
+//        case HISTORY_EVENT_ITEM_MOVED:
+//        case HISTORY_EVENT_ITEM_UPDATED:
+//        {
+//            [self reloadData];
+//            break;
+//        }
+//
+//        case HISTORY_EVENT_ITEM_REMOVED:
+//        {
+//            if((eargs.mediaType & MediaType_SMS)){
+//                for (NgnHistoryEvent* event in messages) {
+//                    if(event.id == eargs.eventId){
+//                        [messages removeObject: event];
+//                        [tableView reloadData];
+//                        break;
+//                    }
+//                }
+//            }
+//            break;
+//        }
+//
+//        case HISTORY_EVENT_RESET:{
+//            [[NgnEngine sharedInstance].historyService deleteEventWithId:eargs.eventId];
+//        }
+//        default:
+//        {
+//            [self refreshDataAndReload];
+//            break;
+//        }
+//    }
 }
 
 @end
 
 @interface MyNewsChatViewController ()
-@property(nonatomic,retain) NgnContact *contact;
+//@property(nonatomic,retain) NgnContact *contact;
 @property(nonatomic,retain) NSString* remotePartyUri;
 
 
@@ -150,8 +146,8 @@
         
         if (![PMTools isNullOrEmpty:params[@"myRemoteParty"]]) {
             self.remoteParty = params[@"myRemoteParty"];
-            self.contact = [[NgnEngine sharedInstance].contactService getContactByPhoneNumber: self.remoteParty];
-            self.remotePartyUri = [NgnUriUtils makeValidSipUri:self.remoteParty];
+//            self.contact = [[NgnEngine sharedInstance].contactService getContactByPhoneNumber: self.remoteParty];
+//            self.remotePartyUri = [NgnUriUtils makeValidSipUri:self.remoteParty];
         }
         if (![PMTools isNullOrEmpty:params[@"name"]]) {
             self.myNewsTitle = params[@"name"];
@@ -174,7 +170,7 @@
 @synthesize textView;
 @synthesize viewFooter;
 @synthesize remotePartyUri;
-@synthesize contact;
+//@synthesize contact;
 
 
 -(void)dealloc{
@@ -209,10 +205,10 @@
     [self refreshDataAndReload];
 
     
-    [[NSNotificationCenter defaultCenter]	addObserver:self 
-                                             selector:@selector(onHistoryEvent:) 
-                                                 name:kNgnHistoryEventArgs_Name 
-                                               object:nil];
+//    [[NSNotificationCenter defaultCenter]    addObserver:self
+//                                             selector:@selector(onHistoryEvent:)
+//                                                 name:kNgnHistoryEventArgs_Name
+//                                               object:nil];
     
     //注册键盘监听事件
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardUP:) name:UIKeyboardWillShowNotification object:nil];
@@ -358,32 +354,32 @@
         [self.bottomView.voiceTextView resignFirstResponder];
         self.bottomView.voiceTextView.text = @"";
         
-        if(![PMTools isNullOrEmpty:text]){
-            NgnHistorySMSEvent* event = [NgnHistoryEvent createSMSEventWithStatus:HistoryEventStatus_Outgoing
-                                                                   andRemoteParty: self.remoteParty
-                                                                       andContent:[text dataUsingEncoding:NSUTF8StringEncoding]];
-            NgnMessagingSession* session = [NgnMessagingSession createOutgoingSessionWithStack:[[NgnEngine sharedInstance].sipService getSipStack] andToUri: self.remotePartyUri];
-            event.status = [session sendTextMessage:text contentType: kContentTypePlainText] ? HistoryEventStatus_Outgoing : HistoryEventStatus_Failed;
-            [[NgnEngine sharedInstance].historyService addEvent: event];
-    
-        }
+//        if(![PMTools isNullOrEmpty:text]){
+//            NgnHistorySMSEvent* event = [NgnHistoryEvent createSMSEventWithStatus:HistoryEventStatus_Outgoing
+//                                                                   andRemoteParty: self.remoteParty
+//                                                                       andContent:[text dataUsingEncoding:NSUTF8StringEncoding]];
+//            NgnMessagingSession* session = [NgnMessagingSession createOutgoingSessionWithStack:[[NgnEngine sharedInstance].sipService getSipStack] andToUri: self.remotePartyUri];
+//            event.status = [session sendTextMessage:text contentType: kContentTypePlainText] ? HistoryEventStatus_Outgoing : HistoryEventStatus_Failed;
+//            [[NgnEngine sharedInstance].historyService addEvent: event];
+//
+//        }
 
     }
 }
 
--(void)setRemoteParty:(NSString *) myRemoteParty{
-
-    remoteParty = myRemoteParty;
-    self.contact = [[NgnEngine sharedInstance].contactService getContactByPhoneNumber: remoteParty];
-    self.remotePartyUri = [NgnUriUtils makeValidSipUri:self.remoteParty];
-}
-
--(void)setRemoteParty:(NSString *)remoteParty_ andContact:(NgnContact*)contact_{
-
-    self->remoteParty = remoteParty_ ;
-    self.contact = contact_;
-    self.remotePartyUri = [NgnUriUtils makeValidSipUri:self.remoteParty];
-}
+//-(void)setRemoteParty:(NSString *) myRemoteParty{
+//
+//    remoteParty = myRemoteParty;
+//    self.contact = [[NgnEngine sharedInstance].contactService getContactByPhoneNumber: remoteParty];
+//    self.remotePartyUri = [NgnUriUtils makeValidSipUri:self.remoteParty];
+//}
+//
+//-(void)setRemoteParty:(NSString *)remoteParty_ andContact:(NgnContact*)contact_{
+//
+//    self->remoteParty = remoteParty_ ;
+//    self.contact = contact_;
+//    self.remotePartyUri = [NgnUriUtils makeValidSipUri:self.remoteParty];
+//}
 
 -(NSString*)remoteParty{
     return self->remoteParty;
@@ -401,60 +397,60 @@
     BaloonChatCell *cell = [BaloonChatCell cellWithTableview:tableView];
  
     @synchronized(messages){
-        [cell setEvent:[messages objectAtIndex: indexPath.row] forTableView:_tableView withOtherName:self.myNewsTitle];
+//        [cell setEvent:[messages objectAtIndex: indexPath.row] forTableView:_tableView withOtherName:self.myNewsTitle];
     }
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)_tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;{
     @synchronized(messages){
-        NgnHistorySMSEvent * event = [messages objectAtIndex: indexPath.row];
-        if(event){
-            NSString* content = event.contentAsString ? event.contentAsString : @"";
-            CGSize constraintSize = [PMTools sizeWithText:content font:MiddleFont maxSize:CGSizeMake(ScreenWidth - 120, 2500)];
-            if (constraintSize.height < 30) {
-                return 60;
-            }
-            else{
-                return 40 + constraintSize.height;
-            }
-        }
+//        NgnHistorySMSEvent * event = [messages objectAtIndex: indexPath.row];
+//        if(event){
+//            NSString* content = event.contentAsString ? event.contentAsString : @"";
+//            CGSize constraintSize = [PMTools sizeWithText:content font:MiddleFont maxSize:CGSizeMake(ScreenWidth - 120, 2500)];
+//            if (constraintSize.height < 30) {
+//                return 60;
+//            }
+//            else{
+//                return 40 + constraintSize.height;
+//            }
+//        }
         return 0.0;
     }
 }
 
 - (void)tableView:(UITableView *)aTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (editingStyle == UITableViewCellEditingStyleDelete){
-        NgnHistoryEvent* event = [messages objectAtIndex: indexPath.row];
-        if (event) {
-            [[NgnEngine sharedInstance].historyService deleteEvent: event];
-        }
+//        NgnHistoryEvent* event = [messages objectAtIndex: indexPath.row];
+//        if (event) {
+//            [[NgnEngine sharedInstance].historyService deleteEvent: event];
+//        }
     }
 }
 
 
 -(BOOL)cheakSip{
     
-    if ([[NgnEngine sharedInstance].sipService isRegistered]){
-        
-        return YES;
-    }
-    else{
-        [self.view endEditing:YES];
-        [WJYAlertView showTwoButtonsWithTitle:@"提示" Message:@"网络不好，请稍后尝试！" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
-            
-            [PMSipTools sipRegister];
-            
-        } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"取消" Click:^{
-            
-        }];
-
-        
-        
-        return NO;
-    }
+//    if ([[NgnEngine sharedInstance].sipService isRegistered]){
+//
+//        return YES;
+//    }
+//    else{
+//        [self.view endEditing:YES];
+//        [WJYAlertView showTwoButtonsWithTitle:@"提示" Message:@"网络不好，请稍后尝试！" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
+//
+//            [PMSipTools sipRegister];
+//
+//        } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"取消" Click:^{
+//
+//        }];
+//
+//
+//
+//        return NO;
+//    }
     
-    
+    return NO;
 }
 
 

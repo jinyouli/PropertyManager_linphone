@@ -7,9 +7,9 @@
 //
 
 #import "PMSipTools.h"
-#import "iOSNgnStack.h"
+//#import "iOSNgnStack.h"
 #import "AppDelegate.h"
-#import "GeTuiSdk.h"
+//#import "GeTuiSdk.h"
 
 
 @implementation PMSipTools
@@ -18,14 +18,14 @@ dispatch_source_t source;
 
 
 +(BOOL)sipIsRegister{
-    UserManager * user = [UserManagerTool userManager];
-    if (![PMTools isNullOrEmpty:user.user_sip] && [PMTools connectedToNetwork]) {
-        return [[NgnEngine sharedInstance].sipService isRegistered];
-    }
-    else{
-        return NO;
-    }
-    
+//    UserManager * user = [UserManagerTool userManager];
+//    if (![PMTools isNullOrEmpty:user.user_sip] && [PMTools connectedToNetwork]) {
+//        return [[NgnEngine sharedInstance].sipService isRegistered];
+//    }
+//    else{
+//        return NO;
+//    }
+    return NO;
 }
 
 
@@ -40,24 +40,24 @@ dispatch_source_t source;
     
     NSString * kPublicIdentity = [NSString stringWithFormat:@"sip:%@@%@",user.user_sip,user.sip_host_addr];
     // set credentials
-    [[NgnEngine sharedInstance].configurationService setStringWithKey:IDENTITY_DISPLAY_NAME andValue:user.worker_name];
-    [[NgnEngine sharedInstance].configurationService setStringWithKey:IDENTITY_IMPI andValue:user.user_sip];
-    [[NgnEngine sharedInstance].configurationService setStringWithKey:IDENTITY_IMPU andValue:kPublicIdentity];
-    [[NgnEngine sharedInstance].configurationService setStringWithKey:IDENTITY_PASSWORD andValue:user.user_password];
-    [[NgnEngine sharedInstance].configurationService setStringWithKey:NETWORK_REALM andValue:user.sip_host_addr];
-    [[NgnEngine sharedInstance].configurationService setStringWithKey:NETWORK_PCSCF_HOST andValue:user.sip_host_addr];
+//    [[NgnEngine sharedInstance].configurationService setStringWithKey:IDENTITY_DISPLAY_NAME andValue:user.worker_name];
+//    [[NgnEngine sharedInstance].configurationService setStringWithKey:IDENTITY_IMPI andValue:user.user_sip];
+//    [[NgnEngine sharedInstance].configurationService setStringWithKey:IDENTITY_IMPU andValue:kPublicIdentity];
+//    [[NgnEngine sharedInstance].configurationService setStringWithKey:IDENTITY_PASSWORD andValue:user.user_password];
+//    [[NgnEngine sharedInstance].configurationService setStringWithKey:NETWORK_REALM andValue:user.sip_host_addr];
+//    [[NgnEngine sharedInstance].configurationService setStringWithKey:NETWORK_PCSCF_HOST andValue:user.sip_host_addr];
     
     
-    int intPort = [user.sip_host_port intValue];
-    [[NgnEngine sharedInstance].configurationService setIntWithKey:NETWORK_PCSCF_PORT andValue:intPort];
-    [[NgnEngine sharedInstance].configurationService setBoolWithKey:NETWORK_USE_EARLY_IMS andValue:YES];
-    [[NgnEngine sharedInstance].configurationService setBoolWithKey:NETWORK_USE_3G andValue:YES];
-    
-    
-    [[NgnEngine sharedInstance].configurationService setBoolWithKey:NETWORK_USE_KEEPAWAKE andValue:YES];
-    
-    int registerTimeout = [user.registrationTimeout intValue];
-    [[NgnEngine sharedInstance].configurationService setIntWithKey:NETWORK_REGISTRATION_TIMEOUT andValue:registerTimeout];
+//    int intPort = [user.sip_host_port intValue];
+//    [[NgnEngine sharedInstance].configurationService setIntWithKey:NETWORK_PCSCF_PORT andValue:intPort];
+//    [[NgnEngine sharedInstance].configurationService setBoolWithKey:NETWORK_USE_EARLY_IMS andValue:YES];
+//    [[NgnEngine sharedInstance].configurationService setBoolWithKey:NETWORK_USE_3G andValue:YES];
+//
+//
+//    [[NgnEngine sharedInstance].configurationService setBoolWithKey:NETWORK_USE_KEEPAWAKE andValue:YES];
+//
+//    int registerTimeout = [user.registrationTimeout intValue];
+//    [[NgnEngine sharedInstance].configurationService setIntWithKey:NETWORK_REGISTRATION_TIMEOUT andValue:registerTimeout];
     
     SYLog(@" 配置   %@ \n%@\n %@\n",user.user_sip,user.user_password,kPublicIdentity);
 }
@@ -74,9 +74,9 @@ dispatch_source_t source;
 }
 
 +(BOOL)sipUnRegister{
-    if ([PMTools connectedToNetwork]) {
-        return [[NgnEngine sharedInstance] stop];
-    }
+//    if ([PMTools connectedToNetwork]) {
+//        return [[NgnEngine sharedInstance] stop];
+//    }
     
     return NO;
 
@@ -186,16 +186,16 @@ dispatch_source_t source;
 +(void)playRing{
     
     SYLog(@"播放");
-    [[[NgnEngine sharedInstance] getSoundService] playRingTone];
-    [[[NgnEngine sharedInstance] getSoundService] playRingBackTone];
+//    [[[NgnEngine sharedInstance] getSoundService] playRingTone];
+//    [[[NgnEngine sharedInstance] getSoundService] playRingBackTone];
 }
 
 /** 停止播放*/
 +(void)stopRing{
     
-    SYLog(@"停止播放");
-    [[[NgnEngine sharedInstance] getSoundService] stopRingTone];
-    [[[NgnEngine sharedInstance] getSoundService] stopRingBackTone];
+//    SYLog(@"停止播放");
+//    [[[NgnEngine sharedInstance] getSoundService] stopRingTone];
+//    [[[NgnEngine sharedInstance] getSoundService] stopRingBackTone];
 }
 
 /**注册*/
@@ -207,12 +207,12 @@ dispatch_source_t source;
    
         SYLog(@"sip注册开始");
         // start the engine
-        [[NgnEngine sharedInstance] start];
-        [PMSipTools UpdateUser_SipConfig];
-        
+//        [[NgnEngine sharedInstance] start];
 //        [PMSipTools UpdateUser_SipConfig];
-        [[NgnEngine sharedInstance].historyService load];
-        [[NgnEngine sharedInstance].sipService registerIdentity];
+//
+////        [PMSipTools UpdateUser_SipConfig];
+//        [[NgnEngine sharedInstance].historyService load];
+//        [[NgnEngine sharedInstance].sipService registerIdentity];
 
         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(480 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
             NSLog(@" 8分钟进来啦！");

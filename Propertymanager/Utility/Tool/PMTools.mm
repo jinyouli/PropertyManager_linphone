@@ -8,10 +8,10 @@
 
 #import "PMTools.h"
 #define kStringEmpty	@""
-#import "KeyChainStore.h"
-#import "MediaContent.h"
-#import "MediaSessionMgr.h"
-#import "tsk_base64.h"
+//#import "KeyChainStore.h"
+//#import "MediaContent.h"
+//#import "MediaSessionMgr.h"
+//#import "tsk_base64.h"
 
 
 #import "AppDelegate.h"
@@ -131,24 +131,25 @@ static BOOL kEnableEarlyIMS = TRUE;
 
 +(NSString *)getUUID
 {
-    NSString * strUUID = (NSString *)[KeyChainStore load:@"com.company.app.usernamepassword"];
-    
-    //首次执行该方法时，uuid为空
-    if ([PMTools isNullOrEmpty:strUUID])
-    {
-        //生成一个uuid的方法
-        CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
-        
-        strUUID = (NSString *)CFBridgingRelease(CFUUIDCreateString (kCFAllocatorDefault,uuidRef));
-        
-        //将该uuid保存到keychain
-        [KeyChainStore save:KEY_USERNAME_PASSWORD data:strUUID];
-        
-        //add start
-        CFRelease(uuidRef);
-        // end by zy
-    }
-    return strUUID;
+//    NSString * strUUID = (NSString *)[KeyChainStore load:@"com.company.app.usernamepassword"];
+//
+//    //首次执行该方法时，uuid为空
+//    if ([PMTools isNullOrEmpty:strUUID])
+//    {
+//        //生成一个uuid的方法
+//        CFUUIDRef uuidRef = CFUUIDCreate(kCFAllocatorDefault);
+//
+//        strUUID = (NSString *)CFBridgingRelease(CFUUIDCreateString (kCFAllocatorDefault,uuidRef));
+//
+//        //将该uuid保存到keychain
+//       // [KeyChainStore save:KEY_USERNAME_PASSWORD data:strUUID];
+//
+//        //add start
+//        CFRelease(uuidRef);
+//        // end by zy
+//    }
+//    return strUUID;
+    return @"";
 }
 
 + (UIColor *)colorFromHexRGB:(NSString *)inColorString
@@ -279,27 +280,27 @@ static BOOL kEnableEarlyIMS = TRUE;
             if(i > (localArray.count -1)){
                 //有新版本，提示！
 //                [self showUpdateView:versionStr withViewController:viewController];
-                [WJYAlertView showTwoButtonsWithTitle:@"更新通知" Message:@"有新的版本更新，是否前往更新？" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"更新" Click:^{
-                    NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/cn/app/you-lin-bang/id1138808109?mt=8"];
-                    [[UIApplication sharedApplication]openURL:url];
-                } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"关闭" Click:^{
-                    
-                }];
+//                [WJYAlertView showTwoButtonsWithTitle:@"更新通知" Message:@"有新的版本更新，是否前往更新？" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"更新" Click:^{
+//                    NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/cn/app/you-lin-bang/id1138808109?mt=8"];
+//                    [[UIApplication sharedApplication]openURL:url];
+//                } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"关闭" Click:^{
+//
+//                }];
                 break;
             }
             
             //有新版本，服务器版本对应数字大于本地
-            if ( [serverArray[i] intValue] > [localArray[i] intValue]) {
-                //有新版本，提示！
-//                [self showUpdateView:versionStr withViewController:viewController];
-                [WJYAlertView showTwoButtonsWithTitle:@"更新通知" Message:@"有新的版本更新，是否前往更新？" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"更新" Click:^{
-                    NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/cn/app/you-lin-bang/id1138808109?mt=8"];
-                    [[UIApplication sharedApplication]openURL:url];
-                } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"关闭" Click:^{
-                    
-                }];
-                break;
-            }
+//            if ( [serverArray[i] intValue] > [localArray[i] intValue]) {
+//                //有新版本，提示！
+////                [self showUpdateView:versionStr withViewController:viewController];
+//                [WJYAlertView showTwoButtonsWithTitle:@"更新通知" Message:@"有新的版本更新，是否前往更新？" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"更新" Click:^{
+//                    NSURL *url = [NSURL URLWithString:@"https://itunes.apple.com/cn/app/you-lin-bang/id1138808109?mt=8"];
+//                    [[UIApplication sharedApplication]openURL:url];
+//                } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"关闭" Click:^{
+//
+//                }];
+//                break;
+//            }
         }
 
     }

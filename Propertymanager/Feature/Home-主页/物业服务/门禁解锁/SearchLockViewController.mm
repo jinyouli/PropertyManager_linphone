@@ -44,7 +44,7 @@
 -(void)dealloc{
     
     SYLog(@"entrance dealloc");
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:kNgnRegistrationEventArgs_Name object:nil];
+//    [[NSNotificationCenter defaultCenter]removeObserver:self name:kNgnRegistrationEventArgs_Name object:nil];
 }
 
 - (UIImageView *)sImageView{
@@ -69,7 +69,7 @@
 -(void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
     _sImageView.hidden = YES;
-    [[NSNotificationCenter defaultCenter]removeObserver:self name:kNgnRegistrationEventArgs_Name object:nil];
+//    [[NSNotificationCenter defaultCenter]removeObserver:self name:kNgnRegistrationEventArgs_Name object:nil];
 }
 
 
@@ -96,7 +96,7 @@
                     // 可以拨打门口视频
                     SYLog(@"直接拨打门口视频");
                     NSString * sipNum = [NSString stringWithFormat:@"%@",self.selectedDic[@"sip_number"]];
-                    [CallViewController makeEntranceAudioVideoCallWithRemoteParty:sipNum andSipStack:[[NgnEngine sharedInstance].sipService getSipStack] withDomain_sn:self.selectedDic[@"domain_sn"]];
+//                    [CallViewController makeEntranceAudioVideoCallWithRemoteParty:sipNum andSipStack:[[NgnEngine sharedInstance].sipService getSipStack] withDomain_sn:self.selectedDic[@"domain_sn"]];
                     
                 }
                 else{
@@ -134,57 +134,57 @@
 
 -(void) onRegistrationEvent:(NSNotification*)notification {
     
-    NgnRegistrationEventArgs* eargs = [notification object];
-    SYLog(@"entrance ---- 注册事件 ----  %@",[[NgnEngine sharedInstance].sipService isRegistered]?@"YES":@"NO");
-    switch (eargs.eventType) {
-        case REGISTRATION_NOK:
-            //注册失败
-            break;
-        case UNREGISTRATION_OK:
-            //未注册 （掉线)
-            if ([self checkNetWork]) {
-                self.sipRegCount ++;
-                if (self.sipRegCount <= 5) {
-                    [PMSipTools sipRegister];
-                }
-                else{
-                    [SVProgressHUD showErrorWithStatus:@"网络状态不佳，无法查看门口视频"];
-                }
-            }
-            else{
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    if ([self checkNetWork]) {
-                        self.sipRegCount ++;
-                        if (self.sipRegCount <= 5) {
-                            //去注册
-                            [PMSipTools sipRegister];
-                        }
-                        else{
-                            [SVProgressHUD showErrorWithStatus:@"网络状态不佳，无法查看门口视频"];
-                        }
-                    }
-                    
-                });
-            }
-
-            break;
-        case REGISTRATION_OK:
-            //已注册
-            self.sipRegCount = 0;
-             SYLog(@"注册后拨打门口视频");
-            
-            [CallViewController makeEntranceAudioVideoCallWithRemoteParty:[NSString stringWithFormat:@"%@",self.selectedDic[@"sip_number"]] andSipStack:[[NgnEngine sharedInstance].sipService getSipStack] withDomain_sn:self.selectedDic[@"domain_sn"]];
-            break;
-        case REGISTRATION_INPROGRESS:
-            //正在注册
-            break;
-        case UNREGISTRATION_INPROGRESS:
-            //正在注销
-            break;
-        case UNREGISTRATION_NOK:
-            //未注销失败
-            break;
-    }
+//    NgnRegistrationEventArgs* eargs = [notification object];
+//
+//    switch (eargs.eventType) {
+//        case REGISTRATION_NOK:
+//            //注册失败
+//            break;
+//        case UNREGISTRATION_OK:
+//            //未注册 （掉线)
+//            if ([self checkNetWork]) {
+//                self.sipRegCount ++;
+//                if (self.sipRegCount <= 5) {
+//                    [PMSipTools sipRegister];
+//                }
+//                else{
+//                    [SVProgressHUD showErrorWithStatus:@"网络状态不佳，无法查看门口视频"];
+//                }
+//            }
+//            else{
+//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                    if ([self checkNetWork]) {
+//                        self.sipRegCount ++;
+//                        if (self.sipRegCount <= 5) {
+//                            //去注册
+//                            [PMSipTools sipRegister];
+//                        }
+//                        else{
+//                            [SVProgressHUD showErrorWithStatus:@"网络状态不佳，无法查看门口视频"];
+//                        }
+//                    }
+//
+//                });
+//            }
+//
+//            break;
+//        case REGISTRATION_OK:
+//            //已注册
+//            self.sipRegCount = 0;
+//             SYLog(@"注册后拨打门口视频");
+//
+//            [CallViewController makeEntranceAudioVideoCallWithRemoteParty:[NSString stringWithFormat:@"%@",self.selectedDic[@"sip_number"]] andSipStack:[[NgnEngine sharedInstance].sipService getSipStack] withDomain_sn:self.selectedDic[@"domain_sn"]];
+//            break;
+//        case REGISTRATION_INPROGRESS:
+//            //正在注册
+//            break;
+//        case UNREGISTRATION_INPROGRESS:
+//            //正在注销
+//            break;
+//        case UNREGISTRATION_NOK:
+//            //未注销失败
+//            break;
+//    }
 
 }
 
@@ -206,8 +206,8 @@
     
     [self createSubviews];
     
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(onRegistrationEvent:) name:kNgnRegistrationEventArgs_Name object:nil];
+//    [[NSNotificationCenter defaultCenter]
+//     addObserver:self selector:@selector(onRegistrationEvent:) name:kNgnRegistrationEventArgs_Name object:nil];
     
 }
 

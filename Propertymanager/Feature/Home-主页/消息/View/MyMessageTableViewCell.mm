@@ -117,9 +117,9 @@
     _entry = entry;
     if(entry){
         // remote party
-        NgnContact* contact = [[NgnEngine sharedInstance].contactService getContactByPhoneNumber:self.entry.remoteParty];
-        self.titleLabel.text = (contact && contact.displayName) ? contact.displayName :
-        (self.entry.remoteParty ? self.entry.remoteParty : @"Unknown");
+//        NgnContact* contact = [[NgnEngine sharedInstance].contactService getContactByPhoneNumber:self.entry.remoteParty];
+//        self.titleLabel.text = (contact && contact.displayName) ? contact.displayName :
+//        (self.entry.remoteParty ? self.entry.remoteParty : @"Unknown");
    
         if (![PMTools isNullOrEmpty:entry.remoteParty]) {
             //self.titleLabel.text = entry.remoteParty;
@@ -127,16 +127,16 @@
             [self.photoBtn setTitle:btnName forState:UIControlStateNormal];
         }
         
-        if (!contact.displayName) {
-            self.titleLabel.text = @"未知号码";
-        }
+//        if (!contact.displayName) {
+//            self.titleLabel.text = @"未知号码";
+//        }
         
         // content
         self.desLabel.text =  self.entry.content ? self.entry.content : @"";
 //        SYLog(@"content === %@",self.entry.content);
         
         // date
-        self.timeLabel.text = [[NgnDateTimeUtils historyEventDate] stringFromDate:self.entry.date];
+//        self.timeLabel.text = [[NgnDateTimeUtils historyEventDate] stringFromDate:self.entry.date];
 //        SYLog(@"date === %@",self.entry.date);
         
     }

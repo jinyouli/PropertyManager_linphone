@@ -51,8 +51,8 @@
 @implementation AudioCallViewController(Private)
 
 -(void) closeView{
-    [[NgnEngine sharedInstance].soundService stopRingBackTone];
-    [[NgnEngine sharedInstance].soundService stopRingTone];
+//    [[NgnEngine sharedInstance].soundService stopRingBackTone];
+//    [[NgnEngine sharedInstance].soundService stopRingTone];
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 
@@ -77,87 +77,85 @@
     
     //[self setupDisturb];
     
-    if(audioSession){
-        switch (audioSession.state) {
-            case INVITE_STATE_INPROGRESS:
-            {
-                self.labelStatus.text = @"语音请求中...";
-                
-                self.buttonAccept.hidden = YES;
-                self.buttonHangup.hidden = NO;
-                
-                [self.buttonHangup setTitle:@"结束" forState:kButtonStateAll];
-                
-                break;
-            }
-            case INVITE_STATE_INCOMING:
-            {
-                self.labelStatus.text = @"语音来电...";
-                
-                
-                [self.buttonHangup setTitle:@"挂断" forState:kButtonStateAll];
-                self.buttonHangup.hidden = NO;
-                
-                
-                [self.buttonAccept setTitle:@"接受" forState:kButtonStateAll];
-                self.buttonAccept.hidden = NO;
-
-                [self.buttonHangup setTitle:@"挂断" forState:UIControlStateNormal];
-                
-                self.buttonAccept.hidden = NO;
-                
-                
-                [self setupDisturb];
-
-                
-                break;
-            }
-            case INVITE_STATE_REMOTE_RINGING:
-            {
-                self.labelStatus.text = @"正在语音通话...";
-                
-                self.buttonAccept.hidden = YES;
-                
-                [self.buttonHangup setTitle:@"结束" forState:kButtonStateAll];
-                self.buttonHangup.hidden = NO;
-                
-                [audioSession setSpeakerEnabled:YES];
-                [[[NgnEngine sharedInstance] getSoundService] stopRingTone];
-                [[[NgnEngine sharedInstance] getSoundService] stopRingBackTone];
-                break;
-            }
-            case INVITE_STATE_INCALL:
-            {
-                self.labelStatus.text = @"正在语音通话...";
-                
-                self.buttonAccept.hidden = YES;
-                self.buttonHangup.hidden = NO;
-                
-                [[NgnEngine sharedInstance].soundService setSpeakerEnabled:[audioSession isSpeakerEnabled]];
-                [[NgnEngine sharedInstance].soundService stopRingBackTone];
-                [[NgnEngine sharedInstance].soundService stopRingTone];
-                
-                break;
-            }
-            case INVITE_STATE_TERMINATED:
-            case INVITE_STATE_TERMINATING:
-            {
-                self.labelStatus.text = @"语音结束中...";
-                
-                self.buttonAccept.hidden = YES;
-                self.buttonHangup.hidden = YES;
-                
-                [[NgnEngine sharedInstance].soundService stopRingBackTone];
-                [[NgnEngine sharedInstance].soundService stopRingTone];
-                break;
-            }
-
-            default:
-                break;
-        }
-        
-        
-    }
+//    if(audioSession){
+//        switch (audioSession.state) {
+//            case INVITE_STATE_INPROGRESS:
+//            {
+//                self.labelStatus.text = @"语音请求中...";
+//
+//                self.buttonAccept.hidden = YES;
+//                self.buttonHangup.hidden = NO;
+//
+//                [self.buttonHangup setTitle:@"结束" forState:kButtonStateAll];
+//
+//                break;
+//            }
+//            case INVITE_STATE_INCOMING:
+//            {
+//                self.labelStatus.text = @"语音来电...";
+//
+//
+//                [self.buttonHangup setTitle:@"挂断" forState:kButtonStateAll];
+//                self.buttonHangup.hidden = NO;
+//
+//
+//                [self.buttonAccept setTitle:@"接受" forState:kButtonStateAll];
+//                self.buttonAccept.hidden = NO;
+//
+//                [self.buttonHangup setTitle:@"挂断" forState:UIControlStateNormal];
+//
+//                self.buttonAccept.hidden = NO;
+//
+//
+//                [self setupDisturb];
+//
+//
+//                break;
+//            }
+//            case INVITE_STATE_REMOTE_RINGING:
+//            {
+//                self.labelStatus.text = @"正在语音通话...";
+//
+//                self.buttonAccept.hidden = YES;
+//
+//                [self.buttonHangup setTitle:@"结束" forState:kButtonStateAll];
+//                self.buttonHangup.hidden = NO;
+//
+//                [audioSession setSpeakerEnabled:YES];
+//                [[[NgnEngine sharedInstance] getSoundService] stopRingTone];
+//                [[[NgnEngine sharedInstance] getSoundService] stopRingBackTone];
+//                break;
+//            }
+//            case INVITE_STATE_INCALL:
+//            {
+//                self.labelStatus.text = @"正在语音通话...";
+//
+//                self.buttonAccept.hidden = YES;
+//                self.buttonHangup.hidden = NO;
+//
+//                [[NgnEngine sharedInstance].soundService setSpeakerEnabled:[audioSession isSpeakerEnabled]];
+//                [[NgnEngine sharedInstance].soundService stopRingBackTone];
+//                [[NgnEngine sharedInstance].soundService stopRingTone];
+//
+//                break;
+//            }
+//            case INVITE_STATE_TERMINATED:
+//            case INVITE_STATE_TERMINATING:
+//            {
+//                self.labelStatus.text = @"语音结束中...";
+//
+//                self.buttonAccept.hidden = YES;
+//                self.buttonHangup.hidden = YES;
+//
+//                [[NgnEngine sharedInstance].soundService stopRingBackTone];
+//                [[NgnEngine sharedInstance].soundService stopRingTone];
+//                break;
+//            }
+//
+//            default:
+//                break;
+//        }
+//    }
 }
 
 
@@ -171,107 +169,107 @@
 
 -(void) onInviteEvent:(NSNotification*)notification {
     
-    NgnInviteEventArgs* eargs = [notification object];
-    
-    if(!audioSession || audioSession.id != eargs.sessionId){
-    }
+//    NgnInviteEventArgs* eargs = [notification object];
+//
+//    if(!audioSession || audioSession.id != eargs.sessionId){
+//    }
 
-    if (!eargs.otherIsOnLine) {
-        self.labelStatus.text = @"对方不在线...";
-        isOnLine = NO;
-        self.dismiss = [PSTAlertController presentDismissableAlertWithTitle:@"⚠️\n" message:@"对方不在线，请稍后尝试！" controller:self];
-    }
-    
-    if (eargs.otherNotAnswer) {
-         self.labelStatus.text = @"无人接听...";
-    }
-    
-    
-    switch (eargs.otherInCallstate) {
-        case OTHER_DEFAULT:{
-            break;
-        }
-            
-        case OTHER_ANSWER_NOT:{
-            self.labelStatus.text = @"无人接听...";
-            NSLog(@"~~~~~对方没有接听");
-            break;
-        }
-            
-        case OTHER_ANSWER_OR_REJECT:{
-            self.labelStatus.text = @"对方接听或拒绝...";
-            NSLog(@"~~~~~对方接听或拒绝");
-            
-            break;
-        }
-            
-        case OTHER_REJECT:{
-            self.labelStatus.text = @"对方已挂断...";
-            break;
-        }
-    }
-    
-    
-    
-    
-    switch (eargs.eventType) {
-        case INVITE_EVENT_INPROGRESS:
-        case INVITE_EVENT_INCOMING:
-        case INVITE_EVENT_RINGING:
-        case INVITE_EVENT_LOCAL_HOLD_OK:
-        case INVITE_EVENT_REMOTE_HOLD:
-        default:
-        {
-            // updates view and state
-            [self updateViewAndState];
-            break;
-        }
-            
-            // transilient events
-        case INVITE_EVENT_MEDIA_UPDATING:
-        {
-            [audioSession setSpeakerEnabled:YES];
-            self.labelStatus.text = @"语音来电..";
-            break;
-        }
-            
-        case INVITE_EVENT_MEDIA_UPDATED:
-        {
-            self.labelStatus.text = @"语音结束中..";
-            break;
-        }
-            
-        case INVITE_EVENT_TERMINATED:
-        case INVITE_EVENT_TERMWAIT:
-        {
-            // updates view and state
-            [self updateViewAndState];
-            // releases session
-            [NgnAVSession releaseSession: &audioSession];
-            // starts timer suicide
-            
-            
-            if (!isOnLine) {
-                [self.dismiss addDidDismissBlock:^(PSTAlertAction * _Nonnull action) {
-                    [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
-                                                     target:self
-                                                   selector:@selector(timerSuicideTick:)
-                                                   userInfo:nil
-                                                    repeats:NO];
-                }];
-                
-            }
-            else{
-                [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
-                                                 target:self
-                                               selector:@selector(timerSuicideTick:)
-                                               userInfo:nil
-                                                repeats:NO];
-            }
-            
-            break;
-        }
-    }
+//    if (!eargs.otherIsOnLine) {
+//        self.labelStatus.text = @"对方不在线...";
+//        isOnLine = NO;
+//        self.dismiss = [PSTAlertController presentDismissableAlertWithTitle:@"⚠️\n" message:@"对方不在线，请稍后尝试！" controller:self];
+//    }
+//
+//    if (eargs.otherNotAnswer) {
+//         self.labelStatus.text = @"无人接听...";
+//    }
+//
+//
+//    switch (eargs.otherInCallstate) {
+//        case OTHER_DEFAULT:{
+//            break;
+//        }
+//
+//        case OTHER_ANSWER_NOT:{
+//            self.labelStatus.text = @"无人接听...";
+//            NSLog(@"~~~~~对方没有接听");
+//            break;
+//        }
+//
+//        case OTHER_ANSWER_OR_REJECT:{
+//            self.labelStatus.text = @"对方接听或拒绝...";
+//            NSLog(@"~~~~~对方接听或拒绝");
+//
+//            break;
+//        }
+//
+//        case OTHER_REJECT:{
+//            self.labelStatus.text = @"对方已挂断...";
+//            break;
+//        }
+//    }
+//
+//
+//
+//
+//    switch (eargs.eventType) {
+//        case INVITE_EVENT_INPROGRESS:
+//        case INVITE_EVENT_INCOMING:
+//        case INVITE_EVENT_RINGING:
+//        case INVITE_EVENT_LOCAL_HOLD_OK:
+//        case INVITE_EVENT_REMOTE_HOLD:
+//        default:
+//        {
+//            // updates view and state
+//            [self updateViewAndState];
+//            break;
+//        }
+//
+//            // transilient events
+//        case INVITE_EVENT_MEDIA_UPDATING:
+//        {
+//            [audioSession setSpeakerEnabled:YES];
+//            self.labelStatus.text = @"语音来电..";
+//            break;
+//        }
+//
+//        case INVITE_EVENT_MEDIA_UPDATED:
+//        {
+//            self.labelStatus.text = @"语音结束中..";
+//            break;
+//        }
+//
+//        case INVITE_EVENT_TERMINATED:
+//        case INVITE_EVENT_TERMWAIT:
+//        {
+//            // updates view and state
+//            [self updateViewAndState];
+//            // releases session
+//            [NgnAVSession releaseSession: &audioSession];
+//            // starts timer suicide
+//
+//
+//            if (!isOnLine) {
+//                [self.dismiss addDidDismissBlock:^(PSTAlertAction * _Nonnull action) {
+//                    [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
+//                                                     target:self
+//                                                   selector:@selector(timerSuicideTick:)
+//                                                   userInfo:nil
+//                                                    repeats:NO];
+//                }];
+//
+//            }
+//            else{
+//                [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
+//                                                 target:self
+//                                               selector:@selector(timerSuicideTick:)
+//                                               userInfo:nil
+//                                                repeats:NO];
+//            }
+//
+//            break;
+//        }
+//    }
 }
 
 @end
@@ -396,53 +394,53 @@
 - (void) buttonHangupClick{
     
     //挂断
-    if(audioSession && [audioSession isConnected]) {
-        SYLog(@"videoSession 存在  连接");
-        [audioSession hangUpCall];
-        // releases session
-        [NgnAVSession releaseSession:&audioSession];
-        // starts timer suicide
-        [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
-                                         target:self
-                                       selector:@selector(timerSuicideTick:)
-                                       userInfo:nil
-                                        repeats:NO];
-        
-    }
-    else if (audioSession && ![audioSession isConnected]){
-        SYLog(@"videoSession 存在  但未连接");
-        [audioSession hangUpCall];
-        [NgnAVSession releaseSession:&audioSession];
-        [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
-                                         target:self
-                                       selector:@selector(timerSuicideTick:)
-                                       userInfo:nil
-                                        repeats:NO];
-    }
-    else{
-        SYLog(@"videoSession 为空  挂断不起作用");
-        [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
-                                         target:self
-                                       selector:@selector(timerSuicideTick:)
-                                       userInfo:nil
-                                        repeats:NO];
-    }
+//    if(audioSession && [audioSession isConnected]) {
+//        SYLog(@"videoSession 存在  连接");
+//        [audioSession hangUpCall];
+//        // releases session
+//        [NgnAVSession releaseSession:&audioSession];
+//        // starts timer suicide
+//        [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
+//                                         target:self
+//                                       selector:@selector(timerSuicideTick:)
+//                                       userInfo:nil
+//                                        repeats:NO];
+//
+//    }
+//    else if (audioSession && ![audioSession isConnected]){
+//        SYLog(@"videoSession 存在  但未连接");
+//        [audioSession hangUpCall];
+//        [NgnAVSession releaseSession:&audioSession];
+//        [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
+//                                         target:self
+//                                       selector:@selector(timerSuicideTick:)
+//                                       userInfo:nil
+//                                        repeats:NO];
+//    }
+//    else{
+//        SYLog(@"videoSession 为空  挂断不起作用");
+//        [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
+//                                         target:self
+//                                       selector:@selector(timerSuicideTick:)
+//                                       userInfo:nil
+//                                        repeats:NO];
+//    }
 
 }
 //接受
 - (void) buttonAcceptClick{
-    if(audioSession){
-        [audioSession acceptCall];
-    }
+//    if(audioSession){
+//        [audioSession acceptCall];
+//    }
 }
 
 //免提
 - (void)handsFreeBtnClick:(UIButton *)sender {
     
-    [audioSession setSpeakerEnabled:![audioSession isSpeakerEnabled]];
-    if([[NgnEngine sharedInstance].soundService setSpeakerEnabled:[audioSession isSpeakerEnabled]]){
-        self.handsFreeBtn.selected = [audioSession isSpeakerEnabled];
-    }
+//    [audioSession setSpeakerEnabled:![audioSession isSpeakerEnabled]];
+//    if([[NgnEngine sharedInstance].soundService setSpeakerEnabled:[audioSession isSpeakerEnabled]]){
+//        self.handsFreeBtn.selected = [audioSession isSpeakerEnabled];
+//    }
 }
 
 //静音
@@ -450,16 +448,16 @@
     
 //    self.muteBtn.selected = !self.muteBtn.selected;
     
-    if([audioSession setMute:![audioSession isMuted]]){
-        self.muteBtn.selected = [audioSession isMuted];
-    }
+//    if([audioSession setMute:![audioSession isMuted]]){
+//        self.muteBtn.selected = [audioSession isMuted];
+//    }
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(onInviteEvent:) name:kNgnInviteEventArgs_Name object:nil];
+//    [[NSNotificationCenter defaultCenter]
+//     addObserver:self selector:@selector(onInviteEvent:) name:kNgnInviteEventArgs_Name object:nil];
     //监听占线
     [[NSNotificationCenter defaultCenter]
      addObserver:self selector:@selector(LineISBusy) name:@"LineISBusy" object:nil];
@@ -488,15 +486,15 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.isDail = YES;
-    [audioSession release];
-    audioSession = [[NgnAVSession getSessionWithId: self.sessionId] retain];
-    if(audioSession){
-        [audioSession setSpeakerEnabled:YES];
-        [[NgnEngine sharedInstance].soundService setSpeakerEnabled:YES];
-    }
-    if (audioSession.historyEvent) {
-        self.ContactModel = [PMSipTools gainContactModelFromSipNum:audioSession.historyEvent.remoteParty];
-    }
+//    [audioSession release];
+//    audioSession = [[NgnAVSession getSessionWithId: self.sessionId] retain];
+//    if(audioSession){
+//        [audioSession setSpeakerEnabled:YES];
+//        [[NgnEngine sharedInstance].soundService setSpeakerEnabled:YES];
+//    }
+//    if (audioSession.historyEvent) {
+//        self.ContactModel = [PMSipTools gainContactModelFromSipNum:audioSession.historyEvent.remoteParty];
+//    }
     
     isOnLine = YES;
     
@@ -507,24 +505,24 @@
     self.nameLabel.text = _workname;
     self.nameL.text = [PMTools subStringFromString:_workname isFrom:NO];
     
-    if (audioSession.state == INVITE_STATE_INCOMING)
-    {
-        self.labelStatus.text = @"语音来电...";
-        
-        
-        [self.buttonHangup setTitle:@"挂断" forState:kButtonStateAll];
-        self.buttonHangup.hidden = NO;
-        
-        
-        [self.buttonAccept setTitle:@"接受" forState:kButtonStateAll];
-        self.buttonAccept.hidden = NO;
-        
-        [self.buttonHangup setTitle:@"挂断" forState:UIControlStateNormal];
-        
-        self.buttonAccept.hidden = NO;
-        
-        [self setupDisturb];
-    }
+//    if (audioSession.state == INVITE_STATE_INCOMING)
+//    {
+//        self.labelStatus.text = @"语音来电...";
+//
+//
+//        [self.buttonHangup setTitle:@"挂断" forState:kButtonStateAll];
+//        self.buttonHangup.hidden = NO;
+//
+//
+//        [self.buttonAccept setTitle:@"接受" forState:kButtonStateAll];
+//        self.buttonAccept.hidden = NO;
+//
+//        [self.buttonHangup setTitle:@"挂断" forState:UIControlStateNormal];
+//
+//        self.buttonAccept.hidden = NO;
+//
+//        [self setupDisturb];
+//    }
 }
 
 -(void) viewDidAppear:(BOOL)animated{
@@ -535,7 +533,7 @@
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
-    [NgnAVSession releaseSession: &audioSession];
+    //[NgnAVSession releaseSession: &audioSession];
 
     [UIDevice currentDevice].proximityMonitoringEnabled = NO;
 }
@@ -550,23 +548,23 @@
     [super viewDidUnload];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
-
-- (void)dealloc {	
-    [_labelStatus release];
-    [_buttonHangup release];
-    [_buttonAccept release];
-    [_ContactModel release];
-    [_bgImageView release];
-    [_dismiss release];
-    [_handsFreeBtn release];
-    [_muteBtn release];
-    [_myIconImageView release];
-    [_nameL release];
-    [_nameLabel release];
-    [_workname release];
-    
-    [super dealloc];
-}
+//
+//- (void)dealloc {
+//    [_labelStatus release];
+//    [_buttonHangup release];
+//    [_buttonAccept release];
+//    [_ContactModel release];
+//    [_bgImageView release];
+//    [_dismiss release];
+//    [_handsFreeBtn release];
+//    [_muteBtn release];
+//    [_myIconImageView release];
+//    [_nameL release];
+//    [_nameLabel release];
+//    [_workname release];
+//
+//    [super dealloc];
+//}
 
 
 @end

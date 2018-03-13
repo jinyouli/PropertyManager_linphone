@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate+Notification.h"
-#import "GeTuiSdk.h"
 #import "ProOrderNewsViewController.h" // 工单页
 #import "NotificationBtn.h"  // 推送btn
 #import "SystemAudio.h"   //系统声音
@@ -61,7 +60,7 @@
 
 #pragma mark -  Background Fetch 接口回调
 - (void)application:(UIApplication *)application performFetchWithCompletionHandler:(void (^)(UIBackgroundFetchResult))completionHandler {
-    [GeTuiSdk resume];
+   // [GeTuiSdk resume];
     completionHandler(UIBackgroundFetchResultNewData);
 }
 
@@ -127,7 +126,7 @@
     NSLog(@"deviceToken ====== %@",token);
     
     //向个推服务器注册deviceToken
-    [GeTuiSdk registerDeviceToken:token];
+   // [GeTuiSdk registerDeviceToken:token];
 }
 
 
@@ -175,20 +174,20 @@
     if([notifKey isEqualToString:kNotifKey_IncomingCall]){
         //来电
         NSNumber* sessionId = [notification.userInfo objectForKey:kNotifIncomingCall_SessionId];
-        NgnAVSession* session = [NgnAVSession getSessionWithId:[sessionId longValue]];
-        
-        if(session){
-            
-            if (session.state == INVITE_STATE_TERMINATED || session.state == INVITE_STATE_TERMINATING) {
-                
-                [SVProgressHUD showErrorWithStatus:@"对方已挂断"];
-            }
-            else{
-                [CallViewController receiveIncomingCall:session];
-            }
-            
-            application.applicationIconBadgeNumber -= notification.applicationIconBadgeNumber;
-        }
+//        NgnAVSession* session = [NgnAVSession getSessionWithId:[sessionId longValue]];
+//
+//        if(session){
+//
+//            if (session.state == INVITE_STATE_TERMINATED || session.state == INVITE_STATE_TERMINATING) {
+//
+//                [SVProgressHUD showErrorWithStatus:@"对方已挂断"];
+//            }
+//            else{
+//                [CallViewController receiveIncomingCall:session];
+//            }
+//
+//            application.applicationIconBadgeNumber -= notification.applicationIconBadgeNumber;
+//        }
     }
     else if([notifKey isEqualToString:kNotifKey_IncomingMsg]){
         // 信息
@@ -239,18 +238,18 @@
     application.applicationIconBadgeNumber = 0;
     if ([type isEqualToString:kNotifKey_IncomingCall]) {
         //来电
-        NSNumber* sessionId = [userInfo objectForKey:kNotifIncomingCall_SessionId];
-        NgnAVSession* session = [NgnAVSession getSessionWithId:[sessionId longValue]];
-
-        if(session){
-            if (session.state == INVITE_STATE_TERMINATED || session.state == INVITE_STATE_TERMINATING) {
-                
-                [SVProgressHUD showErrorWithStatus:@"对方已挂断"];
-            }
-            else{
-                [CallViewController receiveIncomingCall:session];
-            }
-        }
+//        NSNumber* sessionId = [userInfo objectForKey:kNotifIncomingCall_SessionId];
+//        NgnAVSession* session = [NgnAVSession getSessionWithId:[sessionId longValue]];
+//
+//        if(session){
+//            if (session.state == INVITE_STATE_TERMINATED || session.state == INVITE_STATE_TERMINATING) {
+//
+//                [SVProgressHUD showErrorWithStatus:@"对方已挂断"];
+//            }
+//            else{
+//                [CallViewController receiveIncomingCall:session];
+//            }
+//        }
     }
     else if ([type isEqualToString:kNotifKey_IncomingMsg]){
         //信息
@@ -315,16 +314,16 @@
         
         if ([userInfo[@"cnt"][@"username"] isEqualToString:userLoginUsername]) {
             NSLog(@"个推 下线 --- %@",SYUSERLOGIN);
-            [WJYAlertView showOneButtonWithTitle:@"提示信息" Message:@"您的账号已在别处登录，请重新登录！" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
-                
-                /**下线*/
-                [PMSipTools sipUnRegister];
-                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"token"];
-                [UserManager cancelManage];
-                [UserManagerTool saveUserManager:[UserManager manager]];
-                [self setmanagerRootVC];
-                
-            }];
+//            [WJYAlertView showOneButtonWithTitle:@"提示信息" Message:@"您的账号已在别处登录，请重新登录！" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
+//
+//                /**下线*/
+//                [PMSipTools sipUnRegister];
+//                [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"token"];
+//                [UserManager cancelManage];
+//                [UserManagerTool saveUserManager:[UserManager manager]];
+//                [self setmanagerRootVC];
+//
+//            }];
         }
     }
     else{
@@ -430,7 +429,7 @@
         [self handleAlertRemoteNotificationType:orderPushItem.cmd withUserInfo:dic];
     }
     
-    [GeTuiSdk sendFeedbackMessage:90001 taskId:taskId msgId:msgId];
+   // [GeTuiSdk sendFeedbackMessage:90001 taskId:taskId msgId:msgId];
 }
 
 #pragma mark -  个推（clientID）
@@ -451,14 +450,14 @@
         return;
     }
     
-    [WJYAlertView showOneButtonWithTitle:@"提示信息" Message:@"您的账号已在别处登录，请重新登录！" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
-        /**下线*/
-        [PMSipTools sipUnRegister];
-        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"token"];
-        [UserManager cancelManage];
-        [UserManagerTool saveUserManager:[UserManager manager]];
-        [self setmanagerRootVC];
-    }];
+//    [WJYAlertView showOneButtonWithTitle:@"提示信息" Message:@"您的账号已在别处登录，请重新登录！" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
+//        /**下线*/
+//        [PMSipTools sipUnRegister];
+//        [[NSUserDefaults standardUserDefaults] setObject:@"" forKey:@"token"];
+//        [UserManager cancelManage];
+//        [UserManagerTool saveUserManager:[UserManager manager]];
+//        [self setmanagerRootVC];
+//    }];
     
 }
 

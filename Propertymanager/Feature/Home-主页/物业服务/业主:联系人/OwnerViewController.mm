@@ -83,8 +83,8 @@
     [self.view addSubview:self.topView];
     [self.view addSubview:self.bottomView];
     
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(onRegistrationEvent:) name:kNgnRegistrationEventArgs_Name object:nil];
+//    [[NSNotificationCenter defaultCenter]
+//     addObserver:self selector:@selector(onRegistrationEvent:) name:kNgnRegistrationEventArgs_Name object:nil];
     
 }
 
@@ -133,7 +133,6 @@
                     if(![self cheakSip])
                         return;
                     
-                    [[NgnEngine sharedInstance].historyService load];
                     NSString * strSip = [NSString stringWithFormat:@"%@",self.contactModel.user_sip];
                     
                     [[Routable sharedRouter] open:MYNEWSCHAT_VIEWCONTROLLER animated:YES extraParams:@{@"myRemoteParty":strSip,@"name":self.contactModel.fworkername}];
@@ -159,7 +158,6 @@
                     if(![self cheakSip])
                         return;
                     NSString * sipNum = [NSString stringWithFormat:@"%@",self.contactModel.user_sip];
-                    [CallViewController makeAudioCallWithRemoteParty:sipNum andSipStack:[[NgnEngine sharedInstance].sipService getSipStack] withName:self.contactModel.fworkername];
                 }
                 else{
                     [self createAlertWithMessage:@"未查询到该联系人相关信息"];
@@ -178,7 +176,6 @@
                     return;
                 
                 NSString * sipNum = [NSString stringWithFormat:@"%@",self.contactModel.user_sip];
-                [CallViewController makeAudioVideoCallWithRemoteParty:sipNum  andSipStack: [[NgnEngine sharedInstance].sipService getSipStack] withName:self.contactModel.fworkername];
             }
             else{
                 [self createAlertWithMessage:@"未查询到该联系人相关信息"];
@@ -210,83 +207,79 @@
 #pragma mark - notify 注册事件
 -(void) onRegistrationEvent:(NSNotification*)notification {
     
-    NgnRegistrationEventArgs* eargs = [notification object];
-    SYLog(@"entrance ---- 注册事件 ----  %@",[[NgnEngine sharedInstance].sipService isRegistered]?@"YES":@"NO");
-    switch (eargs.eventType) {
-        case REGISTRATION_NOK:
-            //注册失败
-            break;
-        case UNREGISTRATION_OK:
-            //未注册 （掉线)
-            if ([self checkNetWork]) {
-                self.sipRegCount ++;
-                if (self.sipRegCount <= 5) {
-                    [PMSipTools sipRegister];
-                }
-                else{
-                    [self createAlert];
-                }
-            }
-            else{
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    if ([self checkNetWork]) {
-                        self.sipRegCount ++;
-                        if (self.sipRegCount <= 5) {
-                            //去注册
-                            [PMSipTools sipRegister];
-                        }
-                        else{
-                            [self createAlert];
-                        }
-                    }
-                    
-                });
-            }
-            
-            break;
-        case REGISTRATION_OK:
-            //已注册
-            self.sipRegCount = 0;
-            SYLog(@"注册后短信  语音  或  视频");
-            switch (self.type) {
-                case 0:
-                {
-                    //短信
-                    [[NgnEngine sharedInstance].historyService load];
-                    NSString * strSip = [NSString stringWithFormat:@"%@",self.contactModel.user_sip];
-                    
-                    [[Routable sharedRouter] open:MYNEWSCHAT_VIEWCONTROLLER animated:YES extraParams:@{@"myRemoteParty":strSip,@"name":self.contactModel.fworkername}];
-                }
-                    break;
-                case 1:
-                {
-                    //语音
-                    NSString * sipNum = [NSString stringWithFormat:@"%@",self.contactModel.user_sip];
-                    [CallViewController makeAudioCallWithRemoteParty:sipNum andSipStack:[[NgnEngine sharedInstance].sipService getSipStack] withName:self.contactModel.fworkername];
-                }
-                    break;
-                    
-                case 2:
-                {
-                    //视频
-                    NSString * sipNum = [NSString stringWithFormat:@"%@",self.contactModel.user_sip];
-                    [CallViewController makeAudioVideoCallWithRemoteParty:sipNum  andSipStack: [[NgnEngine sharedInstance].sipService getSipStack] withName:self.contactModel.fworkername];
-                }
-                    break;
-
-            }
-
-            break;
-        case REGISTRATION_INPROGRESS:
-            //正在注册
-            break;
-        case UNREGISTRATION_INPROGRESS:
-            //正在注销
-            break;
-        case UNREGISTRATION_NOK:
-            //未注销失败
-            break;
-    }
+//    NgnRegistrationEventArgs* eargs = [notification object];
+//    switch (eargs.eventType) {
+//        case REGISTRATION_NOK:
+//            //注册失败
+//            break;
+//        case UNREGISTRATION_OK:
+//            //未注册 （掉线)
+//            if ([self checkNetWork]) {
+//                self.sipRegCount ++;
+//                if (self.sipRegCount <= 5) {
+//                    [PMSipTools sipRegister];
+//                }
+//                else{
+//                    [self createAlert];
+//                }
+//            }
+//            else{
+//                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+//                    if ([self checkNetWork]) {
+//                        self.sipRegCount ++;
+//                        if (self.sipRegCount <= 5) {
+//                            //去注册
+//                            [PMSipTools sipRegister];
+//                        }
+//                        else{
+//                            [self createAlert];
+//                        }
+//                    }
+//
+//                });
+//            }
+//
+//            break;
+//        case REGISTRATION_OK:
+//            //已注册
+//            self.sipRegCount = 0;
+//            SYLog(@"注册后短信  语音  或  视频");
+//            switch (self.type) {
+//                case 0:
+//                {
+//                    //短信
+//                    NSString * strSip = [NSString stringWithFormat:@"%@",self.contactModel.user_sip];
+//
+//                    [[Routable sharedRouter] open:MYNEWSCHAT_VIEWCONTROLLER animated:YES extraParams:@{@"myRemoteParty":strSip,@"name":self.contactModel.fworkername}];
+//                }
+//                    break;
+//                case 1:
+//                {
+//                    //语音
+//                    NSString * sipNum = [NSString stringWithFormat:@"%@",self.contactModel.user_sip];
+//                }
+//                    break;
+//
+//                case 2:
+//                {
+//                    //视频
+//                    NSString * sipNum = [NSString stringWithFormat:@"%@",self.contactModel.user_sip];
+//                }
+//                    break;
+//
+//            }
+//
+//            break;
+//        case REGISTRATION_INPROGRESS:
+//            //正在注册
+//            break;
+//        case UNREGISTRATION_INPROGRESS:
+//            //正在注销
+//            break;
+//        case UNREGISTRATION_NOK:
+//            //未注销失败
+//            break;
+//    }
     
 }
 
@@ -302,19 +295,19 @@
     }
     
     [self.view endEditing:YES];
-    [WJYAlertView showTwoButtonsWithTitle:@"提示" Message:content ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
-        
-        if (self.type == 0) {
-            [self showMessageView:@[self.contactModel.fusername] title:@"" body:@""];
-        }
-        else{
-            [PMTools callPhoneNumber:self.contactModel.fusername inView:self.view];
-        }
-        
-        
-    } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"取消" Click:^{
-        
-    }];
+//    [WJYAlertView showTwoButtonsWithTitle:@"提示" Message:content ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
+//        
+//        if (self.type == 0) {
+//            [self showMessageView:@[self.contactModel.fusername] title:@"" body:@""];
+//        }
+//        else{
+//            [PMTools callPhoneNumber:self.contactModel.fusername inView:self.view];
+//        }
+//        
+//        
+//    } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"取消" Click:^{
+//        
+//    }];
 }
 
 
@@ -324,16 +317,16 @@
         self.type = -1;
         return NO;
     }
-    
-    if ([[NgnEngine sharedInstance].sipService isRegistered]){
-        
-        return YES;
-    }
-    else{
-        [PMSipTools sipRegister];
-        
-        return NO;
-    }
+    return NO;
+//    if ([[NgnEngine sharedInstance].sipService isRegistered]){
+//
+//        return YES;
+//    }
+//    else{
+//        [PMSipTools sipRegister];
+//
+//        return NO;
+//    }
     
     
 }

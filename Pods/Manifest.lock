@@ -30,7 +30,6 @@ PODS:
   - HandyAutoLayout (1.0.0)
   - HappyDNS (0.3.12)
   - Masonry (1.1.0)
-  - MBProgressHUD (1.1.0)
   - MJExtension (3.0.13)
   - MJRefresh (3.1.15.3)
   - MLLabel (1.10.5)
@@ -53,7 +52,6 @@ DEPENDENCIES:
   - FMDB
   - HandyAutoLayout (~> 1.0.0)
   - Masonry
-  - MBProgressHUD (~> 1.1.0)
   - MJExtension
   - MJRefresh
   - MLLabel
@@ -72,7 +70,6 @@ SPEC CHECKSUMS:
   HandyAutoLayout: f6ef3ab011318f8493fa868d93d9b03ceef4ef90
   HappyDNS: 691a3041128055d09866f86e6e9ca90f24da1f18
   Masonry: 678fab65091a9290e40e2832a55e7ab731aad201
-  MBProgressHUD: e7baa36a220447d8aeb12769bf0585582f3866d9
   MJExtension: 5932755f451458eefa24239358817f8d291240c7
   MJRefresh: b48380ae2b927b46c4ef000de9adb8dc748e1df7
   MLLabel: d76124055a2205e7f76878e62cd06ba925ba0c97
@@ -84,6 +81,6 @@ SPEC CHECKSUMS:
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
   UMengAnalytics-NO-IDFA: 16666e32edce5be44ae5b14aaaa7f3582e09d6ab
 
-PODFILE CHECKSUM: 9ae933b318f4337507f4bb0612704015ceb79cb8
+PODFILE CHECKSUM: e977130ca88a8b8aa68560165a0f3d979f1493da
 
 COCOAPODS: 1.4.0

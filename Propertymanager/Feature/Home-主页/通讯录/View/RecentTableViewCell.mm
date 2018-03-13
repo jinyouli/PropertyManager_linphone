@@ -33,127 +33,127 @@
     [self.contentView addSubview:self.callTimeLabel];
 }
 
--(void)setEvent:(NgnHistoryEvent *)event{
-    _event = event;
-    if((event.mediaType & MediaType_Audio)){
-        self.callTypeImageView.image = [UIImage imageNamed:@"dail_audio"];
-    }
-    if((event.mediaType & MediaType_Video)){
-        self.callTypeImageView.image = [UIImage imageNamed:@"dail_video"];
-    }
-    
-    if ([PMTools isNullOrEmpty:event.remotePartyDisplayName]) {
-        self.nameLabel.text = event.remoteParty;
-    }
-    else{
-        
-        if (![PMTools isNullOrEmpty:event.remotePartyDisplayName]) {
-            self.nameLabel.text = event.remotePartyDisplayName;
-            self.nameL.text = [PMTools subStringFromString:event.remotePartyDisplayName isFrom:NO];
-        }
-        
-        
-        
-    }
-    
-    
-    self.headImageView.backgroundColor = mainColor;
-    
-    
-    NSString * myTimeStr = @"";
-    //比较播出时间的日期
-    NSDate *eventDate = [NSDate dateWithTimeIntervalSince1970: event.start];
-    NSInteger eventYear = [[[NgnDateTimeUtils chatYear] stringFromDate:
-                            eventDate] integerValue];
-    NSInteger eventMonth = [[[NgnDateTimeUtils chatMonth] stringFromDate:
-                            eventDate] integerValue];
-    NSInteger eventDay = [[[NgnDateTimeUtils chatDay] stringFromDate:
-                            eventDate] integerValue];
-    
-    NSDate *currentDate = [NSDate date];
-    NSInteger currentYear = [[[NgnDateTimeUtils chatYear] stringFromDate:
-                            currentDate] integerValue];
-    NSInteger currentMonth = [[[NgnDateTimeUtils chatMonth] stringFromDate:
-                             currentDate] integerValue];
-    NSInteger currentDay = [[[NgnDateTimeUtils chatDay] stringFromDate:
-                           currentDate] integerValue];
-    
-    NSString * timeStr = @"";
-    
-    //今天
-    if (currentYear == eventYear &&
-        currentMonth == eventMonth &&
-        currentDay == eventDay) {
-        
-        timeStr = [[NgnDateTimeUtils historyEventTime] stringFromDate:
-                   eventDate];
-        
-    }//昨天
-    else if(currentYear == eventYear &&
-            currentMonth == eventMonth &&
-             currentDay - eventDay == 1){
-        
-        NSString * str = [[NgnDateTimeUtils historyEventTime] stringFromDate:
-                                    eventDate];
-        timeStr = [NSString stringWithFormat:@"昨天 %@",str];
-       
-    } //前天
-    else if(currentYear == eventYear &&
-            currentMonth == eventMonth &&
-            currentDay - eventDay == 2){
-        NSString * str = [[NgnDateTimeUtils historyEventTime] stringFromDate:
-                          eventDate];
-        timeStr = [NSString stringWithFormat:@"前天 %@",str];
-        
-    }
-    else{
-        NSString * str1 = [[NgnDateTimeUtils historyEventDate] stringFromDate:
-                              eventDate];
-        NSString * str2 = [[NgnDateTimeUtils historyEventTime] stringFromDate:
-                           eventDate];
-        timeStr = [NSString stringWithFormat:@"%@ %@",str1,str2];
-    }
-    
-    
-    switch (event.status) {
-        case HistoryEventStatus_Missed:
-            //未接
-            myTimeStr = [NSString stringWithFormat:@"未接 %@",timeStr];
-            self.callTimeLabel.textColor = ITextColor;
-            break;
-        case HistoryEventStatus_Failed:
-        {   //拨号失败
-            self.callTypeImageView.backgroundColor = ITextColor;
-            myTimeStr = [NSString stringWithFormat:@"失败 %@",timeStr];
-            break;
-        }
-        case HistoryEventStatus_Outgoing:
-            //呼出
-        case HistoryEventStatus_Incoming:
-            //呼入
-        default:
-        {
-            if (event.status == HistoryEventStatus_Outgoing) {
-                myTimeStr = [NSString stringWithFormat:@"呼出 %@",timeStr];
-                
-            }
-            else{
-                myTimeStr = [NSString stringWithFormat:@"呼入 %@",timeStr];
-            }
-            self.callTimeLabel.textColor = mainTextColor;
-            break;
-        }
-    }
-    
-    self.callTimeLabel.text = myTimeStr;
-    
-}
+//-(void)setEvent:(NgnHistoryEvent *)event{
+//    _event = event;
+//    if((event.mediaType & MediaType_Audio)){
+//        self.callTypeImageView.image = [UIImage imageNamed:@"dail_audio"];
+//    }
+//    if((event.mediaType & MediaType_Video)){
+//        self.callTypeImageView.image = [UIImage imageNamed:@"dail_video"];
+//    }
+//
+//    if ([PMTools isNullOrEmpty:event.remotePartyDisplayName]) {
+//        self.nameLabel.text = event.remoteParty;
+//    }
+//    else{
+//
+//        if (![PMTools isNullOrEmpty:event.remotePartyDisplayName]) {
+//            self.nameLabel.text = event.remotePartyDisplayName;
+//            self.nameL.text = [PMTools subStringFromString:event.remotePartyDisplayName isFrom:NO];
+//        }
+//
+//
+//
+//    }
+//
+//
+//    self.headImageView.backgroundColor = mainColor;
+//
+//
+//    NSString * myTimeStr = @"";
+//    //比较播出时间的日期
+//    NSDate *eventDate = [NSDate dateWithTimeIntervalSince1970: event.start];
+//    NSInteger eventYear = [[[NgnDateTimeUtils chatYear] stringFromDate:
+//                            eventDate] integerValue];
+//    NSInteger eventMonth = [[[NgnDateTimeUtils chatMonth] stringFromDate:
+//                            eventDate] integerValue];
+//    NSInteger eventDay = [[[NgnDateTimeUtils chatDay] stringFromDate:
+//                            eventDate] integerValue];
+//
+//    NSDate *currentDate = [NSDate date];
+//    NSInteger currentYear = [[[NgnDateTimeUtils chatYear] stringFromDate:
+//                            currentDate] integerValue];
+//    NSInteger currentMonth = [[[NgnDateTimeUtils chatMonth] stringFromDate:
+//                             currentDate] integerValue];
+//    NSInteger currentDay = [[[NgnDateTimeUtils chatDay] stringFromDate:
+//                           currentDate] integerValue];
+//
+//    NSString * timeStr = @"";
+//
+//    //今天
+//    if (currentYear == eventYear &&
+//        currentMonth == eventMonth &&
+//        currentDay == eventDay) {
+//
+//        timeStr = [[NgnDateTimeUtils historyEventTime] stringFromDate:
+//                   eventDate];
+//
+//    }//昨天
+//    else if(currentYear == eventYear &&
+//            currentMonth == eventMonth &&
+//             currentDay - eventDay == 1){
+//
+//        NSString * str = [[NgnDateTimeUtils historyEventTime] stringFromDate:
+//                                    eventDate];
+//        timeStr = [NSString stringWithFormat:@"昨天 %@",str];
+//
+//    } //前天
+//    else if(currentYear == eventYear &&
+//            currentMonth == eventMonth &&
+//            currentDay - eventDay == 2){
+//        NSString * str = [[NgnDateTimeUtils historyEventTime] stringFromDate:
+//                          eventDate];
+//        timeStr = [NSString stringWithFormat:@"前天 %@",str];
+//
+//    }
+//    else{
+//        NSString * str1 = [[NgnDateTimeUtils historyEventDate] stringFromDate:
+//                              eventDate];
+//        NSString * str2 = [[NgnDateTimeUtils historyEventTime] stringFromDate:
+//                           eventDate];
+//        timeStr = [NSString stringWithFormat:@"%@ %@",str1,str2];
+//    }
+//
+//
+//    switch (event.status) {
+//        case HistoryEventStatus_Missed:
+//            //未接
+//            myTimeStr = [NSString stringWithFormat:@"未接 %@",timeStr];
+//            self.callTimeLabel.textColor = ITextColor;
+//            break;
+//        case HistoryEventStatus_Failed:
+//        {   //拨号失败
+//            self.callTypeImageView.backgroundColor = ITextColor;
+//            myTimeStr = [NSString stringWithFormat:@"失败 %@",timeStr];
+//            break;
+//        }
+//        case HistoryEventStatus_Outgoing:
+//            //呼出
+//        case HistoryEventStatus_Incoming:
+//            //呼入
+//        default:
+//        {
+//            if (event.status == HistoryEventStatus_Outgoing) {
+//                myTimeStr = [NSString stringWithFormat:@"呼出 %@",timeStr];
+//
+//            }
+//            else{
+//                myTimeStr = [NSString stringWithFormat:@"呼入 %@",timeStr];
+//            }
+//            self.callTimeLabel.textColor = mainTextColor;
+//            break;
+//        }
+//    }
+//
+//    self.callTimeLabel.text = myTimeStr;
+//
+//}
 
 -(void)setContactModel:(ContactModel *)contactModel{
     _contactModel = contactModel;
     if (contactModel) {
         if ([PMTools isNullOrEmpty:contactModel.fworkername]) {
-            self.nameLabel.text = _event.remoteParty;
+           // self.nameLabel.text = _event.remoteParty;
         }
         else{
             

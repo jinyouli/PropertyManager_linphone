@@ -18,7 +18,6 @@ pod 'CTAssetsPickerController'
 pod "Qiniu", "~> 7.1"
 pod 'HandyAutoLayout', '~> 1.0.0’
 pod 'UMengAnalytics-NO-IDFA'
-pod 'MBProgressHUD', '~> 1.1.0'
 
 end
 
