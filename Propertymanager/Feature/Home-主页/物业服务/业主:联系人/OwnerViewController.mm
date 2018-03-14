@@ -11,6 +11,7 @@
 #import "CallViewController.h"
 #import "ContactInfoView.h"
 #import "ContactModel.h"
+#import "VideoCallViewController.h"
 
 @interface OwnerViewController ()<MFMessageComposeViewControllerDelegate>
 {
@@ -86,6 +87,8 @@
 //    [[NSNotificationCenter defaultCenter]
 //     addObserver:self selector:@selector(onRegistrationEvent:) name:kNgnRegistrationEventArgs_Name object:nil];
     
+    NSString * sipNum = [NSString stringWithFormat:@"%@",self.contactModel.user_sip];
+    NSLog(@"sipnum == %@",sipNum);
 }
 
 #pragma mark - Delegate 实现方法
@@ -130,8 +133,8 @@
                 
                 if (![PMTools isNullOrEmpty:self.contactModel.user_sip]) {
                     
-                    if(![self cheakSip])
-                        return;
+//                    if(![self cheakSip])
+//                        return;
                     
                     NSString * strSip = [NSString stringWithFormat:@"%@",self.contactModel.user_sip];
                     
@@ -172,17 +175,22 @@
             self.type = 2;
             if (![PMTools isNullOrEmpty:self.contactModel.user_sip]) {
                 
-                if(![self cheakSip])
-                    return;
+//                if(![self cheakSip])
+//                    return;
                 
                 NSString * sipNum = [NSString stringWithFormat:@"%@",self.contactModel.user_sip];
+                
+                SYLockListModel *model = [[SYLockListModel alloc] init];
+                model.sip_number = sipNum;
+                
+                VideoCallViewController *videoVC = [[VideoCallViewController alloc] initWithCall:nil GuardInfo:model InComingCall:NO];
+                
+                AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate ;
+                [delegate.window.rootViewController presentViewController:videoVC animated:YES completion:nil];
             }
             else{
                 [self createAlertWithMessage:@"未查询到该联系人相关信息"];
             }
-            
-            
-            
         }
             break;
         case 3:

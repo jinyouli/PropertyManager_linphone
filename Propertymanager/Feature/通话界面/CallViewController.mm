@@ -125,7 +125,7 @@
     [super viewDidUnload];
 }
 
-//+(BOOL) makeAudioCallWithRemoteParty: (NSString*) remoteUri andSipStack: (NgnSipStack*) sipStack withName:(NSString *) name{
+//+(BOOL) makeAudioCallWithRemoteParty: (NSString*) remoteUri withName:(NSString *) name{
 //    if(![PMTools isNullOrEmpty:remoteUri]){
 //        NgnAVSession* audioSession = [[NgnAVSession makeAudioCallWithRemoteParty: remoteUri andSipStack: [[NgnEngine sharedInstance].sipService getSipStack]] retain];
 //
@@ -145,7 +145,6 @@
 //            UIViewController * modalViewController = rootVC;
 //            dispatch_async(dispatch_get_main_queue(), ^{
 //                [modalViewController presentViewController:audioCallController animated:YES completion:nil];
-//                [audioSession release];
 //            });
 //
 //            return YES;
@@ -153,7 +152,7 @@
 //    }
 //    return NO;
 //}
-//
+
 //+(BOOL) makeAudioVideoCallWithRemoteParty: (NSString*) remoteUri andSipStack: (NgnSipStack*) sipStack withName:(NSString *)name{
 //    if(![PMTools isNullOrEmpty:remoteUri]){
 //        NgnAVSession* videoSession = [[NgnAVSession makeAudioVideoCallWithRemoteParty: remoteUri
@@ -174,7 +173,6 @@
 //            UIViewController * modalViewController = rootVC;
 //            dispatch_async(dispatch_get_main_queue(), ^{
 //                [modalViewController presentViewController:videoCallController animated:YES completion:nil];
-//                [videoSession release];
 //            });
 //
 //            return YES;
@@ -182,9 +180,9 @@
 //    }
 //    return NO;
 //}
-//
-//
-//
+
+
+
 //#pragma mark - 门禁解锁页面的跳转
 //
 //+(BOOL) makeEntranceAudioVideoCallWithRemoteParty: (NSString*) remoteUri andSipStack: (NgnSipStack*) sipStack withDomain_sn:(NSString *)domain_sn{

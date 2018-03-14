@@ -64,5 +64,5 @@
 
 -(void)btnToggleClick;
 
-
+- (instancetype)initWithCall:(SYLinphoneCall *)call GuardInfo:(SYLockListModel *)model InComingCall:(BOOL)isInComingCall;
 @end

@@ -12,16 +12,10 @@
 #import "GeTuiSdk.h"
 #import "iflyMSC/IFlySpeechUtility.h" //讯飞
 #import "Definition.h"
-
-
-
 #import "AppDelegate+Private.h"
 #import "AppDelegate+SipCallback.h"
 #import "AppDelegate+SipBackground.h"
 #import "AppDelegate+Notification.h"
-
-
-
 
 #import "HomeViewController.h"  //首页
 #import "LoginViewController.h" //登录页
@@ -63,8 +57,9 @@
 
 #define USHARE_DEMO_APPKEY @"57690fd167e58eeedf00206b"
 
-@interface AppDelegate ()<GeTuiSdkDelegate>
-
+@interface AppDelegate ()<GeTuiSdkDelegate,SYLinphoneDelegate>
+@property (nonatomic,assign) BOOL isCallComing; //只显示一个门口机呼过来页面
+@property (nonatomic,assign) SYLinphoneCall *currentCall;   //当前呼叫的call
 @end
 
 @implementation AppDelegate
@@ -105,16 +100,14 @@
 
     // idoubs 注册通知
     [self registNotification];
+    
+    [self configLinphone];
 
     // idoubs 后台运行
     [self didFinishLaunchingWithOptions];
     [self setupUM];
     
    // [self getDeviceInfo];
-    
-   // [MyUserDefaults setObject:@"api.sayee.cn:28084" forKey:@"firLocalhost"];
-//    [MyUserDefaults setObject:@"gdsayee.cn:22014" forKey:@"scoendLocalhost"];
-    
     
     //[DetailRequest loginBtnClickWithPhone:userLoginUsername password:userPassword isFirstLogin:NO];
     return YES;
@@ -154,22 +147,26 @@
     //[MobClick setLogEnabled:YES];
 }
 
+#pragma mark - linphone 初始化
+- (void)configLinphone{
+    
+    [[SYLinphoneManager instance] startSYLinphonephone];
+    [SYLinphoneManager instance].nExpires = 120 * 60;
+    [SYLinphoneManager instance].ipv6Enabled = NO;
+    [SYLinphoneManager instance].videoEnable = YES;
+    [[SYLinphoneManager instance] setDelegate:self];
+}
+
 #pragma mark - 注册个推
 -(void)regiestGeTui{
 
     [GeTuiSdk runBackgroundEnable:YES]; // 是否允许APP后台运行
-
     [GeTuiSdk resetBadge];
 
     SYLog(@"注册个推");
     [GeTuiSdk startSdkWithAppId:kGtAppId appKey:kGtAppKey appSecret:kGtAppSecret delegate:self];
-
-
     [self registerRemoteNotification];
-
-
     [GeTuiSdk setPushModeForOff:NO];
-    
 }
 
 
@@ -203,7 +200,6 @@
     
     if(status != NotReachable)
     {
-    
         [[NSNotificationCenter defaultCenter] postNotificationName:@"Reachable" object:nil];
     } else if (status== NotReachable) {
 
@@ -217,7 +213,6 @@
 -(void)setmanagerRootVC{
     
     if ([MyUserDefaults boolForKey:@"initializeFlag"]) {
-        
         if (!FirstLocalhost) {
             [MyUserDefaults setObject:SYFirIP forKey:@"firLocalhost"];
         }
@@ -226,45 +221,34 @@
         if ([PMTools isNullOrEmpty:userToken]) {
 
             [PMSipTools sipUnRegister];
-            
             [self loginVCOrRootVC:YES];
         }
         else{
-            
             dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
                 //个推
                 [self regiestGeTui];
-                
                 //获取七牛凭证
                 [DetailRequest getQiNiuToken];
-
             });
-            
             [self loginVCOrRootVC:NO];
         }
-        
         [vc removeFromParentViewController];
         vc.view = nil;
         
     } else {
         
         [self setInitializeStandardUserDefaults];
-        
         [self loginVCOrRootVC:YES];
-        
     }
 }
 
 #pragma mark - 选择根视图
 - (void) loginVCOrRootVC:(BOOL)ret{
     
-    
     if (ret) {
         // 登录页面
-        
         LoginViewController * loginVC = [[LoginViewController alloc]init];
         [self setupRouter];
-        
         
         UINavigationController * nav = [[UINavigationController alloc]initWithRootViewController:loginVC];
         nav.navigationBar.backgroundColor = mainColor;
@@ -308,9 +292,36 @@
     [MyUserDefaults setBool:YES forKey:AllShakeOpen];
     [MyUserDefaults setBool:YES forKey:NewsShakeOpen];
     [MyUserDefaults setBool:YES forKey:OrdersShakeOpen];
-    
 }
 
+//有来电
+- (void)onIncomingCall:(SYLinphoneCall *)call withState:(SYLinphoneCallState)state withMessage:(NSDictionary *)message withIsVideo:(BOOL)isVideo{
+    
+    //如果已经有来电呼叫，则把后面呼进来的都拒掉
+    if (self.isCallComing) {
+        [[SYLinphoneManager instance] hangUpCall:call];
+        return;
+    }
+    //[[NSNotificationCenter defaultCenter] postNotificationName:SYNOTICE_DissMissGuardView object:nil];
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
+        
+        UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        VideoCallViewController *vc = [[VideoCallViewController alloc] initWithCall:call GuardInfo:nil InComingCall:YES];
+        //vc.sipNumber = [[SYLinphoneManager instance] getSipNumber:call];
+        [viewController presentViewController:vc animated:YES completion:^{
+            
+        }];
+    }else{
+        //保存当前call
+        self.currentCall = call;
+    }
+//    if ([SYAppConfig isPlayingSipVideo]) {
+//        self.isDismissInComingCallVC = YES;
+//        [SYAppConfig shareInstance].isPlayingVideoAndOtherImComing = YES;
+//        [[SYLinphoneManager instance] hangUpCall];
+//    }
+    self.isCallComing = YES;
+}
 
 
 #pragma mark

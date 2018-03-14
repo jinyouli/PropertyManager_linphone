@@ -32,7 +32,7 @@
 
 -(void) refreshData{
     @synchronized(messages){
-        [messages removeAllObjects];
+        //[messages removeAllObjects];
         
 //        NSArray* events = [[[[NgnEngine sharedInstance].historyService events] allValues] sortedArrayUsingSelector:@selector(compareHistoryEventByDateDESC:)];
         
@@ -148,11 +148,16 @@
             self.remoteParty = params[@"myRemoteParty"];
 //            self.contact = [[NgnEngine sharedInstance].contactService getContactByPhoneNumber: self.remoteParty];
 //            self.remotePartyUri = [NgnUriUtils makeValidSipUri:self.remoteParty];
+            
         }
         if (![PMTools isNullOrEmpty:params[@"name"]]) {
             self.myNewsTitle = params[@"name"];
         }
-
+        
+        self.remoteParty = params[@"myRemoteParty"];
+        self.myNewsTitle = params[@"name"];
+        self.dictParams = params;
+        
         self.tableView = [[UITableView alloc]initWithFrame:CGRectMake(0, 0, ScreenWidth, ScreenHeight - 64 - 50) style:UITableViewStylePlain];
         self.tableView.backgroundColor = BGColor;
         self.tableView.delegate = self;
@@ -214,6 +219,11 @@
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardUP:) name:UIKeyboardWillShowNotification object:nil];
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardDown:) name:UIKeyboardWillHideNotification object:nil];
     
+    [NSNotificationCenter.defaultCenter addObserver:self
+                                           selector:@selector(textReceivedEvent:)
+                                               name:kLinphoneMessageReceived
+                                             object:nil];
+    
     
     self.bottomView = [[BottomChatToolView alloc]initWithFrame:CGRectMake(0, ScreenHeight - 64 - 50, ScreenWidth, 50)];
     self.bottomView.voiceBtn.selected = NO;
@@ -225,7 +235,26 @@
     }];
 
     [self.view addSubview:self.bottomView];
+    
+    NSArray *userArray = [NSArray arrayWithObjects:@"user",@"time",@"message",@"state", nil];
+    [[MyFMDataBase shareMyFMDataBase] createDataBaseWithDataBaseName:@"PersonCall"];
+    [[MyFMDataBase shareMyFMDataBase] createTableWithTableName:@"PersonCall" tableArray:userArray];
 }
+
+#pragma mark - Event Functions
+
+- (void)textReceivedEvent:(NSNotification *)notif {
+    
+    [messages addObject:[notif userInfo]];
+    [self refreshDataAndReload];
+    
+    NSLog(@"通知==%@",[notif userInfo]);
+    
+    [[MyFMDataBase shareMyFMDataBase] insertDataWithTableName:@"PersonCall" insertDictionary:[notif userInfo]];
+    NSArray *selectArray = [[MyFMDataBase shareMyFMDataBase] selectDataWithTableName:@"PersonCall" withDic:nil];
+    NSLog(@"守护==%@",selectArray);
+}
+
 -(void)bottomBtnClickWithIndex:(NSInteger)index isUp:(BOOL)isUp withVolume:(NSInteger)volume withMyVoiceStr:(NSString *)str{
     switch (index) {
         case 1:
@@ -304,7 +333,6 @@
 
 #pragma mark - 键盘上升
 -(void)keyboardUP:(NSNotification *)noti{
-    SYLog(@"键盘上升");
     
     //获取键盘的高度
     NSDictionary *userInfo = [noti userInfo];
@@ -327,7 +355,6 @@
 }
 #pragma mark - 键盘下降
 -(void)keyboardDown:(NSNotification *)noti{
-    SYLog(@"键盘下降");
     // textView 下降
     CGRect newframe = self.bottomView.frame;
     newframe.origin.y = ScreenHeight - newframe.size.height - 64;
@@ -344,25 +371,28 @@
     // Release any retained subviews of the main view.
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
-    [messages removeAllObjects];
+    //[messages removeAllObjects];
 }
 
 - (void)sendMessageBtnClick{
     
-    if ([self checkNetWork] && [self cheakSip]) {
+    if ([self checkNetWork]) {
         NSString* text = self.bottomView.voiceTextView.text;
         [self.bottomView.voiceTextView resignFirstResponder];
         self.bottomView.voiceTextView.text = @"";
         
-//        if(![PMTools isNullOrEmpty:text]){
+        if(![PMTools isNullOrEmpty:text]){
+            
+            [[LinphoneManager instance] sendMessage:text withExterlBodyUrl:nil withInternalURL:nil Address:self.dictParams[@"myRemoteParty"]];
+            
 //            NgnHistorySMSEvent* event = [NgnHistoryEvent createSMSEventWithStatus:HistoryEventStatus_Outgoing
 //                                                                   andRemoteParty: self.remoteParty
 //                                                                       andContent:[text dataUsingEncoding:NSUTF8StringEncoding]];
 //            NgnMessagingSession* session = [NgnMessagingSession createOutgoingSessionWithStack:[[NgnEngine sharedInstance].sipService getSipStack] andToUri: self.remotePartyUri];
 //            event.status = [session sendTextMessage:text contentType: kContentTypePlainText] ? HistoryEventStatus_Outgoing : HistoryEventStatus_Failed;
 //            [[NgnEngine sharedInstance].historyService addEvent: event];
-//
-//        }
+
+        }
 
     }
 }
@@ -385,39 +415,43 @@
     return self->remoteParty;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return 1;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    return 40;
+}
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    @synchronized(messages){
-        return [messages count];
-    }
+    return messages.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)_tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     BaloonChatCell *cell = [BaloonChatCell cellWithTableview:tableView];
- 
-    @synchronized(messages){
-//        [cell setEvent:[messages objectAtIndex: indexPath.row] forTableView:_tableView withOtherName:self.myNewsTitle];
-    }
+    [cell setEvent:[messages objectAtIndex:indexPath.row] forTableView:_tableView withOtherName:self.myNewsTitle];
     return cell;
 }
 
-- (CGFloat)tableView:(UITableView *)_tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;{
-    @synchronized(messages){
-//        NgnHistorySMSEvent * event = [messages objectAtIndex: indexPath.row];
-//        if(event){
-//            NSString* content = event.contentAsString ? event.contentAsString : @"";
-//            CGSize constraintSize = [PMTools sizeWithText:content font:MiddleFont maxSize:CGSizeMake(ScreenWidth - 120, 2500)];
-//            if (constraintSize.height < 30) {
-//                return 60;
-//            }
-//            else{
-//                return 40 + constraintSize.height;
-//            }
-//        }
-        return 0.0;
-    }
-}
+//- (CGFloat)tableView:(UITableView *)_tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath;{
+//    @synchronized(messages){
+////        NgnHistorySMSEvent * event = [messages objectAtIndex: indexPath.row];
+////        if(event){
+////            NSString* content = event.contentAsString ? event.contentAsString : @"";
+////            CGSize constraintSize = [PMTools sizeWithText:content font:MiddleFont maxSize:CGSizeMake(ScreenWidth - 120, 2500)];
+////            if (constraintSize.height < 30) {
+////                return 60;
+////            }
+////            else{
+////                return 40 + constraintSize.height;
+////            }
+////        }
+//        return 0.0;
+//    }
+//}
 
 - (void)tableView:(UITableView *)aTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (editingStyle == UITableViewCellEditingStyleDelete){

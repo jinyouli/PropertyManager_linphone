@@ -124,7 +124,7 @@
     
     NSString *sql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES(%@)",tableName,scutureString2,valueString2];
     
-//    SYLog(@"插入语句 ===   %@",sql);
+    SYLog(@"插入语句 ===   %@",sql);
     
     BOOL isInsert = [self.dataBase executeUpdate:sql];
     
@@ -237,11 +237,24 @@
     }
     
     
-//    SYLog(@"选择内容语句 === %@",sql);
+    SYLog(@"选择内容语句 === %@",sql);
     @synchronized(self) {
     NSMutableArray * mArr = [NSMutableArray array];
     FMResultSet *result = [self.dataBase executeQuery:sql];
+        
+        
+        
     while ([result next]) {
+        if ([tableName isEqualToString:@"PersonCall"]) {
+            
+            NSMutableDictionary * mdic = [[NSMutableDictionary alloc]init];
+            [mdic setObject:[result stringForColumn:@"user"] forKey:@"user"];
+            [mdic setObject:[result stringForColumn:@"time"] forKey:@"time"];
+            [mdic setObject:[result stringForColumn:@"message"] forKey:@"message"];
+            [mdic setObject:[NSNumber numberWithInt:[result intForColumn:@"state"]] forKey:@"state"];
+            [mArr addObject:mdic];
+        }
+        
         if ([tableName isEqualToString:OrderInfo]) {
             // 报修单模型
             ComplainHeaderDataModel * headModel = [[ComplainHeaderDataModel alloc]init];

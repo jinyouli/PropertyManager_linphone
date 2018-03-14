@@ -28,6 +28,7 @@
 
 @property (nonatomic) long sessionId;
 
+
 /*
 +(BOOL) makeAudioCallWithRemoteParty: (NSString*) remoteUri andSipStack: (NgnSipStack*) sipStack withName:(NSString *) name;
 +(BOOL) makeAudioVideoCallWithRemoteParty: (NSString*) remoteUri andSipStack: (NgnSipStack*) sipStack withName:(NSString *)name;

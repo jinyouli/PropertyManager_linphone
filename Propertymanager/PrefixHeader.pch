@@ -113,13 +113,23 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #import "GeTuiSdk.h"
 #import <CoreGraphics/CoreGraphics.h>
 #import <CoreGraphics/CGBase.h>
+#import "SYUserInfoModel.h"
+#import "AppDelegate.h"
+#import "SYLinphoneStatus.h"
+#import "LinphoneManager.h"
+#import "SYLinphoneManager.h"
+#import "Utils.h"
+#import "MyFMDataBase.h"
 
 //头文件
 #import "PMConst.h"
 #import "DefaultsMacros.h"
 #import "UtilsMacros.h"
+#import "Utils.h"
+#include "linphone/linphonecore.h"
+#import <UIKit/UIKit.h>
+#import "linphonecore.h"
 
- #import <UIKit/UIKit.h>
 #ifdef DEBUG
 static const DDLogLevel ddLogLevel = LOG_LEVEL_VERBOSE;
 #else

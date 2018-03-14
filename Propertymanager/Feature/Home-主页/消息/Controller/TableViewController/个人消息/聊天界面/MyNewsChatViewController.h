@@ -29,7 +29,9 @@
 /** 底部view*/
 @property(nonatomic,retain) UIView *viewFooter;
 /** 对方impi*/
-@property(nonatomic,retain) NSString *remoteParty;
+@property(nonatomic,copy) NSString *remoteParty;
+
+@property (nonatomic,strong) NSDictionary *dictParams;
 
 //(void)setRemoteParty:(NSString *)remoteParty andContact:(NgnContact*)contact;
 

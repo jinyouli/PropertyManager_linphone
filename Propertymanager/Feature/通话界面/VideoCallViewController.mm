@@ -27,7 +27,10 @@
 @interface VideoCallViewController()
 /** 是否获取事件*/
 @property (nonatomic,strong) ContactModel * ContactModel;
-
+@property (nonatomic, assign) SYLinphoneCall *call;
+@property (nonatomic, strong) SYLockListModel *model;
+@property (nonatomic, assign) BOOL isInComingCall;
+@property (nonatomic, strong) UIView *glViewVideoRemote;
 
 -(void) showBottomView: (UIView*)view_ shouldRefresh:(BOOL)refresh;
 @end
@@ -42,9 +45,49 @@
         self->sendingVideo = YES;
         isOnLine = YES;
         
-        [self createDefaultSubviews];
+       // [self createDefaultSubviews];
     }
     return self;
+}
+
+- (instancetype)initWithCall:(SYLinphoneCall *)call GuardInfo:(SYLockListModel *)model InComingCall:(BOOL)isInComingCall{
+    
+    if (self == [super init]) {
+        self.call = call;
+        self.model = model;
+        self.isInComingCall = isInComingCall;
+    }
+    return self;
+}
+
+- (void)viewDidLoad {
+    [super viewDidLoad];
+    
+    // listen to the events
+    //    [[NSNotificationCenter defaultCenter]
+    //     addObserver:self selector:@selector(onInviteEvent:) name:kNgnInviteEventArgs_Name object:nil];
+    
+    //监听占线
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self selector:@selector(LineISBusy) name:@"LineISBusy" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(linphoneCallUpdate:) name:kSYLinphoneCallUpdate object:nil];
+    
+    [self createDefaultSubviews];
+    [self configData];
+}
+
+#pragma mark - private
+- (void)configData{
+
+    if (self.isInComingCall) {
+        
+    }
+    else {
+        
+        [[SYLinphoneManager instance] call:self.model.sip_number displayName:@"测试" transfer:NO Video:self.glViewVideoRemote];
+    }
+    
+    linphone_core_set_native_preview_window_id(LC, (__bridge void *)(_viewLocalVideo));
 }
 
 -(void)createDefaultSubviews{
@@ -52,20 +95,12 @@
     _bgImageView.userInteractionEnabled = YES;
     _bgImageView.image = [UIImage imageNamed:@"dailBG"];
     [self.view addSubview:_bgImageView];
-    
-    //本地视频图像
-    _viewLocalVideo = [[UIView alloc]initWithFrame:CGRectMake(ScreenWidth - 74, 20, 64, 86)];
-    _viewLocalVideo.layer.borderWidth = 1.f;
-    _viewLocalVideo.layer.borderColor = [[UIColor blackColor] CGColor];
-    [self.view addSubview:_viewLocalVideo];
-    _viewLocalVideo.hidden = YES;
-    
-    
+
     //viewTop
     _viewTop = [[UIView alloc]initWithFrame:self.view.bounds];
     _viewTop.backgroundColor = [UIColor clearColor];
     _viewTop.frame = self.view.bounds;
-    [self.view addSubview:_viewTop];
+    
     
     _myIconImageView = [[UIImageView alloc]initWithFrame:CGRectMake(ScreenWidth/2 - 45, 100, 90, 90)];
     _myIconImageView.layer.cornerRadius = _myIconImageView.frame.size.width / 2;
@@ -180,9 +215,19 @@
 
     // GLView
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
-//    self.glViewVideoRemote = [[[iOSGLView alloc] initWithFrame:screenBounds] autorelease];
-//    [self.view insertSubview:self.glViewVideoRemote atIndex:0];
-
+    self.glViewVideoRemote = [[UIView alloc] initWithFrame:screenBounds] ;
+    //[self.view insertSubview:self.glViewVideoRemote atIndex:0];
+    self.glViewVideoRemote.hidden = YES;
+    [self.view addSubview:self.glViewVideoRemote];
+    
+    [self.view addSubview:_viewTop];
+    
+    //本地视频图像
+    _viewLocalVideo = [[UIView alloc]initWithFrame:CGRectMake(ScreenWidth - 74, 20, 64, 86)];
+    _viewLocalVideo.layer.borderWidth = 1.f;
+    _viewLocalVideo.layer.borderColor = [[UIColor blackColor] CGColor];
+    [self.view addSubview:_viewLocalVideo];
+    _viewLocalVideo.hidden = NO;
 }
 
 -(void)btnToggleClick{
@@ -194,6 +239,10 @@
 
 //挂断
 - (void) buttonHangupClick{
+    
+    [[SYLinphoneManager instance] hangUpCall];
+    [self dismissViewControllerAnimated:YES completion:nil];
+    
 //    if(videoSession && [videoSession isConnected]) {
 //        SYLog(@"videoSession 存在  连接");
 //        [videoSession hangUpCall];
@@ -235,6 +284,8 @@
 //    if(videoSession){
 //        [videoSession acceptCall];
 //    }
+    
+    [[SYLinphoneManager instance] acceptCall:self.call Video:self.glViewVideoRemote];
 }
 
 //免提
@@ -261,20 +312,6 @@
 //    [videoSession setMute:![videoSession isMuted]];
 //    self.buttonToolBarMute.selected = [videoSession isMuted];
     [self showBottomView:self.viewToolbar shouldRefresh:YES];
-}
-
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-
-    // listen to the events
-//    [[NSNotificationCenter defaultCenter]
-//     addObserver:self selector:@selector(onInviteEvent:) name:kNgnInviteEventArgs_Name object:nil];
-
-    //监听占线
-    [[NSNotificationCenter defaultCenter]
-     addObserver:self selector:@selector(LineISBusy) name:@"LineISBusy" object:nil];
-    
 }
 
 -(void)LineISBusy{
@@ -441,6 +478,41 @@
 
 -(void) hideBottomView:(UIView*)view_{
     view_.hidden = YES;
+}
+
+#pragma mark - notifi
+- (void)linphoneCallUpdate:(NSNotification *)notif{
+    SYLinphoneCallState state = (SYLinphoneCallState)[[notif.userInfo objectForKey:@"state"] intValue];
+    if (state == SYLinphoneCallStreamsRunning) {
+        self.glViewVideoRemote.hidden = NO;
+        _myIconImageView.hidden = YES;
+        _buttonAccept.hidden = YES;
+        _labelStatus.hidden = YES;
+    }
+    else if (state == SYLinphoneCallOutgoingInit){
+        
+    }
+    else if (state == SYLinphoneCallReleased){
+        //用户没有主动退出页面，则视频通话结束后，自动退出当前页面
+        self.glViewVideoRemote.hidden = YES;
+        _myIconImageView.hidden = NO;
+        _buttonAccept.hidden = NO;
+        _labelStatus.hidden = NO;
+        
+        [self closeView];
+    }
+    else if (state == SYLinphoneCallOutgoingEarlyMedia || state == SYLinphoneCallIncomingEarlyMedia){
+        
+    }
+    else if (state == SYLinphoneCallPaused){
+        
+    }
+}
+
+- (void)closeView
+{
+    [[SYLinphoneManager instance] hangUpCall];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 //-(void) updateViewAndState{

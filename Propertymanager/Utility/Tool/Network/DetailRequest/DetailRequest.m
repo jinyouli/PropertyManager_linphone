@@ -162,13 +162,23 @@ static bool isSecondLogin = NO;
                         //设置一下勿扰模式
                         [[DontDisturbManager shareManager] getDisturbStatusWithUsername:phone];
 
-                        [PMSipTools sipRegister];
+                        //[PMSipTools sipRegister];
                         //[[NgnEngine sharedInstance].soundService setSpeakerEnabled:YES];
-
-
                         // 开启重新获取token
-                        [PMTokenTools getTokenByOldToken];
-
+                        //[PMTokenTools getTokenByOldToken];
+                        
+                        SYUserInfoModel *model = [[SYUserInfoModel alloc] init];
+                        model.user_sip = dict[@"result"][@"user_sip"];
+                        model.user_password = dict[@"result"][@"user_password"];
+                        model.username = dict[@"result"][@"username"];
+                        model.fs_ip = dict[@"result"][@"sip_host_addr"];
+                        model.fs_port = dict[@"result"][@"sip_host_port"];
+                        model.transport = dict[@"result"][@"transport"];
+                        
+                        NSLog(@"注册信息==%@,%@,%@,%@,%@,%@",model.user_sip,model.user_password,model.username,model.fs_ip,model.fs_port,model.transport);
+                        
+                        [[SYLinphoneManager instance] addProxyConfig:model.user_sip password:model.user_password displayName:model.username domain:model.fs_ip port:model.fs_port withTransport:model.transport];
+                        
                         if (ret) {
                             //切换根视图
                             [[AppDelegate sharedInstance] setmanagerRootVC];

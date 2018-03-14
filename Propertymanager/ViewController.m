@@ -22,7 +22,6 @@
     self.view.backgroundColor = [UIColor whiteColor];
     
     [self configLinphone];
-    
     [[SYLinphoneManager instance] addProxyConfig:@"2000011787" password:@"aaeb54e1a18b456d9a94dae8bce4b87d" displayName:@"13632550150" domain:@"192.168.1.79" port:@"35162" withTransport:nil];
 }
 

@@ -17,6 +17,7 @@
 @property(nonatomic,assign) float cellHight;
 
 //-(void)setEvent:(NgnHistorySMSEvent*)event forTableView:(UITableView*)tableView withOtherName:(NSString *)otherName;
+-(void)setEvent:(NSDictionary*)event forTableView:(UITableView*)tableView withOtherName:(NSString *)otherName;
 
 
 -(instancetype)initWithTableview:(UITableView *)tableview;
