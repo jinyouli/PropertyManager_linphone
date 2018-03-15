@@ -79,15 +79,17 @@
 #pragma mark - private
 - (void)configData{
 
-    if (self.isInComingCall) {
-        
+    if ([SYLinphoneManager instance].isSYLinphoneReady) {
+        if (self.isInComingCall) {
+            
+        }
+        else {
+            [[SYLinphoneManager instance] call:self.model.sip_number displayName:@"" transfer:NO Video:self.glViewVideoRemote];
+        }
+        //扬声器
+        [SYLinphoneManager instance].speakerEnabled = YES;
+        linphone_core_set_native_preview_window_id(LC, (__bridge void *)(_viewLocalVideo));
     }
-    else {
-        
-        [[SYLinphoneManager instance] call:self.model.sip_number displayName:@"测试" transfer:NO Video:self.glViewVideoRemote];
-    }
-    
-    linphone_core_set_native_preview_window_id(LC, (__bridge void *)(_viewLocalVideo));
 }
 
 -(void)createDefaultSubviews{

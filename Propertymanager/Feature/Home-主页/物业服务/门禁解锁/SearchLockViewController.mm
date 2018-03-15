@@ -92,19 +92,32 @@
                 //查看门口监控
                 self.entranceView.hidden = YES;
                 self.sImageView.hidden = YES;
-                if ([PMSipTools sipIsRegister]) {
-                    // 可以拨打门口视频
-                    SYLog(@"直接拨打门口视频");
-                    NSString * sipNum = [NSString stringWithFormat:@"%@",self.selectedDic[@"sip_number"]];
-//                    [CallViewController makeEntranceAudioVideoCallWithRemoteParty:sipNum andSipStack:[[NgnEngine sharedInstance].sipService getSipStack] withDomain_sn:self.selectedDic[@"domain_sn"]];
-                    
-                }
-                else{
-                    //未注册上
-                    [PMSipTools sipRegister];
-                }
+
+                NSString * sipNum = [NSString stringWithFormat:@"%@",self.selectedDic[@"sip_number"]];
                 
+//                [CallViewController makeEntranceAudioVideoCallWithRemoteParty:sipNum andSipStack:[[NgnEngine sharedInstance].sipService getSipStack] withDomain_sn:self.selectedDic[@"domain_sn"]];
                 
+//                SYLockListModel *model = [[SYLockListModel alloc] init];
+//                model.sip_number = sipNum;
+//                VideoCallViewController *videoVC = [[VideoCallViewController alloc] initWithCall:nil GuardInfo:model InComingCall:NO];
+
+                LookEntranceVedioViewController *lookVC = [[LookEntranceVedioViewController alloc] init];
+                lookVC.sipnum = sipNum;
+                lookVC.domain_sn = self.selectedDic[@"domain_sn"];
+                
+                AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate ;
+                [delegate.window.rootViewController presentViewController:lookVC animated:YES completion:nil];
+                
+//                if ([PMSipTools sipIsRegister]) {
+//                    // 可以拨打门口视频
+//
+////                    [CallViewController makeEntranceAudioVideoCallWithRemoteParty:sipNum andSipStack:[[NgnEngine sharedInstance].sipService getSipStack] withDomain_sn:self.selectedDic[@"domain_sn"]];
+//
+//                }
+//                else{
+//                    //未注册上
+//                    [PMSipTools sipRegister];
+//                }
             }
             else if (tag == 2){
                 //开门-网络请求

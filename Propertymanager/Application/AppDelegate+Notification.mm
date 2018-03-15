@@ -152,6 +152,18 @@
         // 判断为本地通知
         NSLog(@"iOS10 收到本地通知:{\\\\nbody:%@，\\\\ntitle:%@,\\\\nsubtitle:%@,\\\\nbadge：%@，\\\\nsound：%@，\\\\nuserInfo：%@\\\\n}",body,title,subtitle,badge,sound,userInfo);
         
+        if ([[userInfo allKeys] containsObject:@"type"]) {
+            NSString *type = [userInfo objectForKey:@"type"];
+            NSString *sipNumber = [userInfo objectForKey:@"sipNumber"];
+            
+            if ([type isEqualToString:@"localMessage"]) {
+                
+                [[Routable sharedRouter] open:MYNEWSCHAT_VIEWCONTROLLER animated:YES extraParams:@{@"myRemoteParty":sipNumber,@"name":@""}];
+            }
+        }
+
+        
+        
         /**
          iOS10 收到本地通知:{\\nbody:小庄: 咯咯，\\ntitle:,\\nsubtitle:(null),\\nbadge：1，\\nsound：<UNNotificationSound: 0xdd2e8d0>，\\nuserInfo：{
          content = <e592afe5 92af>;

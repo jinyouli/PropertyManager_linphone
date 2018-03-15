@@ -24,6 +24,7 @@
 		E9A3CDCB205272D500832455 /* Common.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A3CDC9205272D400832455 /* Common.m */; };
 		E9A3CDEF2052743700832455 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A3CDEE2052743700832455 /* MBProgressHUD.m */; };
 		E9A3CDF22052746200832455 /* iToast.m in Sources */ = {isa = PBXBuildFile; fileRef = E9A3CDF12052746200832455 /* iToast.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		E9AA7BF0205A94A80044BCA5 /* ring.caf in Resources */ = {isa = PBXBuildFile; fileRef = E9AA7BEF205A94A80044BCA5 /* ring.caf */; };
 		E9B7FC0020565EAD00789520 /* AppDelegate+Notification.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FBEF20565EAD00789520 /* AppDelegate+Notification.mm */; };
 		E9B7FC0120565EAD00789520 /* AppDelegate+Private.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FBF120565EAD00789520 /* AppDelegate+Private.mm */; };
 		E9B7FC0220565EAD00789520 /* AppDelegate+SipBackground.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9B7FBF320565EAD00789520 /* AppDelegate+SipBackground.mm */; };
@@ -504,6 +505,7 @@
 		E9A3CDEE2052743700832455 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		E9A3CDF02052746100832455 /* iToast.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iToast.h; sourceTree = "<group>"; };
 		E9A3CDF12052746200832455 /* iToast.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = iToast.m; sourceTree = "<group>"; };
+		E9AA7BEF205A94A80044BCA5 /* ring.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = ring.caf; sourceTree = "<group>"; };
 		E9B7FBEE20565EAD00789520 /* AppDelegate+Notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+Notification.h"; sourceTree = "<group>"; };
 		E9B7FBEF20565EAD00789520 /* AppDelegate+Notification.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = "AppDelegate+Notification.mm"; sourceTree = "<group>"; };
 		E9B7FBF020565EAD00789520 /* AppDelegate+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+Private.h"; sourceTree = "<group>"; };
@@ -2976,6 +2978,7 @@
 				E9B7FEB220565EF000789520 /* keepawake.wav */,
 				E9B7FEB320565EF000789520 /* ringbacktone.wav */,
 				E9B7FEB420565EF000789520 /* ringtone.mp3 */,
+				E9AA7BEF205A94A80044BCA5 /* ring.caf */,
 			);
 			path = Sound;
 			sourceTree = "<group>";
@@ -4327,6 +4330,7 @@
 				E9FF117F2058BAA100EE469D /* BCUnit-Run.dtd in Resources */,
 				E9B7FEF920565EF000789520 /* 10.png in Resources */,
 				E9B7FF1320565EF000789520 /* changeVedio@2x.png in Resources */,
+				E9AA7BF0205A94A80044BCA5 /* ring.caf in Resources */,
 				E9FF11A22058BAA100EE469D /* house_keeping.mkv in Resources */,
 				E9B7FF1A20565EF100789520 /* home_sip_on@2x.png in Resources */,
 				E9B7FF0920565EF000789520 /* dailBG@1x.png in Resources */,

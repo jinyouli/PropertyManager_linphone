@@ -6,27 +6,33 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            shouldBeEnabled = "No"
+            shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Propertymanager/Feature/Home-&#x4e3b;&#x9875;/&#x901a;&#x8baf;&#x5f55;/TableViewController/&#x6309;&#x5206;&#x7ec4;/GroupTableViewController.mm"
-            timestampString = "542778106.124553"
+            filePath = "Propertymanager/Feature/Home-&#x4e3b;&#x9875;/&#x7269;&#x4e1a;&#x670d;&#x52a1;/&#x4e1a;&#x4e3b;:&#x8054;&#x7cfb;&#x4eba;/OwnerViewController.mm"
+            timestampString = "542809559.069512"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "62"
-            endingLineNumber = "62"
-            landmarkName = "-getDataFromNetWork"
+            startingLineNumber = "203"
+            endingLineNumber = "203"
+            landmarkName = "-contentBtnClick:"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            scope = "0"
-            stopOnStyle = "0">
+            filePath = "Propertymanager/Feature/Home-&#x4e3b;&#x9875;/&#x7269;&#x4e1a;&#x670d;&#x52a1;/&#x4e1a;&#x4e3b;:&#x8054;&#x7cfb;&#x4eba;/OwnerViewController.mm"
+            timestampString = "542809559.070026"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "204"
+            endingLineNumber = "204"
+            landmarkName = "-contentBtnClick:"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

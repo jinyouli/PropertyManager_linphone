@@ -120,6 +120,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #import "SYLinphoneManager.h"
 #import "Utils.h"
 #import "MyFMDataBase.h"
+#import "LookEntranceVedioViewController.h"
 
 //头文件
 #import "PMConst.h"

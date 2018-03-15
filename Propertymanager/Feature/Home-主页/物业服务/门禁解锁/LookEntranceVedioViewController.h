@@ -15,7 +15,7 @@
 @interface LookEntranceVedioViewController : CallViewController
 
 @property (nullable,strong) NSString * domain_sn;
-@property (nonatomic,strong) NSString * sipnum;
+@property (nonatomic,copy) NSString * sipnum;
 
 
 @end

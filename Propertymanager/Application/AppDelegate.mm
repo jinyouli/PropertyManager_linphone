@@ -108,9 +108,25 @@
     [self setupUM];
     
    // [self getDeviceInfo];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendLocalMessage:) name:kLinphoneMessageReceived object:nil];
     
     //[DetailRequest loginBtnClickWithPhone:userLoginUsername password:userPassword isFirstLogin:NO];
     return YES;
+}
+
+- (void)sendLocalMessage:(NSNotification *)notif
+{
+    NSLog(@"通知==%@",[notif userInfo]);
+    int state = [[notif userInfo][@"state"] intValue];
+    if (state == 2) {
+        UILocalNotification *localNote = [[UILocalNotification alloc] init];
+        localNote.fireDate = [NSDate dateWithTimeIntervalSinceNow:1.0];
+        localNote.alertBody = [notif userInfo][@"message"];
+        localNote.soundName = UILocalNotificationDefaultSoundName;
+        localNote.applicationIconBadgeNumber = 1;
+        localNote.userInfo = @{@"type":@"localMessage",@"sipNumber":[notif userInfo][@"sipNumber"]};
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNote];
+    }
 }
 
 //- (void)getDeviceInfo
@@ -294,8 +310,25 @@
     [MyUserDefaults setBool:YES forKey:OrdersShakeOpen];
 }
 
+
+
 //有来电
 - (void)onIncomingCall:(SYLinphoneCall *)call withState:(SYLinphoneCallState)state withMessage:(NSDictionary *)message withIsVideo:(BOOL)isVideo{
+    
+    NSString *sipNumber = [[SYLinphoneManager instance] getSipNumber:call];
+    NSLog(@"sipnum == %@",sipNumber);
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:@"" forKey:@"fusername"];
+    [dict setObject:@"" forKey:@"pingyin"];
+    [dict setObject:@"" forKey:@"fdepartmentname"];
+    [dict setObject:@"" forKey:@"fworkername"];
+    [dict setObject:@"" forKey:@"worker_id"];
+    [dict setObject:sipNumber forKey:@"user_sip"];
+    [dict setObject:@"" forKey:@"fgroup_name"];
+    NSDictionary *insertDict = [[NSDictionary alloc] initWithDictionary:dict];
+    [[MyFMDataBase shareMyFMDataBase] insertDataWithTableName:@"PeopleCalled" insertDictionary:insertDict];
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"alreadyCalled" object:nil];
+    
     
     //如果已经有来电呼叫，则把后面呼进来的都拒掉
     if (self.isCallComing) {
@@ -324,7 +357,6 @@
 }
 
 
-#pragma mark
 #pragma mark - 懒加载
 +(AppDelegate*) sharedInstance{
     return ((AppDelegate*) [[UIApplication sharedApplication] delegate]);

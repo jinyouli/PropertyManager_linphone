@@ -709,15 +709,17 @@ static void linphone_iphone_display_status(struct _LinphoneCore * lc, const char
                     // iOS8 doesn't need the timer trick for the local notification.
                     if( [[UIDevice currentDevice].systemVersion floatValue] >= 8){
                         
-                        if ([Common playRing]) {
-                            data->notification.soundName = @"ring.caf";
-                        }
+//                        if ([Common playRing]) {
+//                            data->notification.soundName = @"ring.caf";
+//                        }
+                        data->notification.soundName = @"ring.caf";
                         data->notification.category = @"incoming_call";
                     } else {
                         
-                        if ([Common playRing]) {
-                            data->notification.soundName = @"shortring.caf";
-                        }
+//                        if ([Common playRing]) {
+//                            data->notification.soundName = @"shortring.caf";
+//                        }
+                        data->notification.soundName = @"shortring.caf";
                         data->timer = [NSTimer scheduledTimerWithTimeInterval:4.0 target:self selector:@selector(localNotifContinue:) userInfo:data->notification repeats:TRUE];
                     }
                     
@@ -1046,11 +1048,15 @@ static void linphone_iphone_registration_state(LinphoneCore *lc, LinphoneProxyCo
     
     //NSString *callID = [NSString stringWithUTF8String:linphone_chat_message_get_custom_header(msg, "Call-ID")];
 
+    
+    //NSString *sipNumber = [[SYLinphoneManager instance] getSipNumber:[[SYLinphoneManager instance] currentCall]];
+    
     NSDictionary *dict = @{
                            @"user" : [self getSipAdress:linphone_chat_message_get_from_address(msg)],
                            @"time" : time,
                            @"message" : content,
-                           @"state" : [NSNumber numberWithInt:2]
+                           @"state" : [NSNumber numberWithInt:2],
+                           @"sipNumber" : @"12"
                            };
     
     [NSNotificationCenter.defaultCenter postNotificationName:kLinphoneMessageReceived object:self userInfo:dict];

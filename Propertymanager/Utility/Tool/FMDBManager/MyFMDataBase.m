@@ -49,7 +49,9 @@
         [_manager createTableWithTableName:ListenHistoryInfo tableArray:ListenHistoryInfoDic];
     }
 
-    
+    NSArray *userArray = [NSArray arrayWithObjects:@"fusername",@"pingyin",@"fdepartmentname",@"fworkername",@"worker_id",@"user_sip",@"fgroup_name", nil];
+    [_manager createDataBaseWithDataBaseName:@"PeopleCalled"];
+    [_manager createTableWithTableName:@"PeopleCalled" tableArray:userArray];
     
     return _manager;
 }
@@ -88,16 +90,16 @@
     NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@(id integer PRIMARY KEY AUTOINCREMENT,%@)",tableName,scutureString2];
     
     
-    SYLog(@"创建表单语句 === %@",sql);
+    //SYLog(@"创建表单语句 === %@",sql);
     
     //通过dataBase使用sql语句
     @synchronized(self) {
        BOOL isCreate = [self.dataBase executeUpdate:sql];
         if (isCreate) {
-            SYLog(@"创建表单成功  表单名称 %@",tableName);
+            //SYLog(@"创建表单成功  表单名称 %@",tableName);
         }
         else{
-            SYLog(@"创建表单失败  表单名称 %@",tableName);
+            //SYLog(@"创建表单失败  表单名称 %@",tableName);
         }
     }
   
@@ -255,6 +257,18 @@
             [mdic setObject:[result stringForColumn:@"id"] forKey:@"id"];
             [mArr addObject:mdic];
         }
+        if ([tableName isEqualToString:@"PeopleCalled"]) {
+
+            NSMutableDictionary * mdic = [[NSMutableDictionary alloc]init];
+            [mdic setObject:[result stringForColumn:@"fusername"] forKey:@"fusername"];
+            [mdic setObject:[result stringForColumn:@"pingyin"] forKey:@"pingyin"];
+            [mdic setObject:[result stringForColumn:@"fdepartmentname"] forKey:@"fdepartmentname"];
+            [mdic setObject:[result stringForColumn:@"fworkername"] forKey:@"fworkername"];
+            [mdic setObject:[result stringForColumn:@"worker_id"] forKey:@"worker_id"];
+            [mdic setObject:[result stringForColumn:@"user_sip"] forKey:@"user_sip"];
+            [mdic setObject:[result stringForColumn:@"fgroup_name"] forKey:@"fgroup_name"];
+            [mArr addObject:mdic];
+        }
         
         if ([tableName isEqualToString:OrderInfo]) {
             // 报修单模型
@@ -310,10 +324,6 @@
             }
             
             [mArr addObject:headModel];
-            
-            SYLog(@"模型 %@",headModel);
-            SYLog(@"类型 %@",[result stringForColumn:@"orderType"]);
-    
         }
         if ([tableName isEqualToString:DetailInfo]) {
             // 回复模型

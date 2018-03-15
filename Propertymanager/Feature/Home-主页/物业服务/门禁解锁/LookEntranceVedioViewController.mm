@@ -35,7 +35,7 @@
 @property (nonatomic,strong) UILabel * timekeepingLabel;   //计时
 
 
-//@property (nonatomic,strong) iOSGLView * glViewVideoRemote;
+@property (nonatomic,strong) UIView * glViewVideoRemote;
 @property (nonatomic,strong) UIView* viewLocalVideo;
 
 @property (nonatomic,strong) UIButton *buttonMute;
@@ -75,15 +75,57 @@
     // listen to the events
 //    [[NSNotificationCenter defaultCenter]
 //     addObserver:self selector:@selector(onInviteEvent:) name:kNgnInviteEventArgs_Name object:nil];
-   
-    
+
     [self createVideoBgView];
-    
     [self createDialBtn];
     
     //监听占线
     [[NSNotificationCenter defaultCenter]
      addObserver:self selector:@selector(LineISBusy) name:@"LineISBusy" object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(linphoneCallUpdate:) name:kSYLinphoneCallUpdate object:nil];
+    
+    [self configData];
+}
+
+#pragma mark - private
+- (void)configData{
+    
+    if ([SYLinphoneManager instance].isSYLinphoneReady) {
+        [[SYLinphoneManager instance] call:self.sipnum displayName:@"" transfer:NO Video:_glViewVideoRemote];
+        //linphone_core_set_native_preview_window_id(LC, (__bridge void *)(_viewLocalVideo));
+        
+        //扬声器
+        [SYLinphoneManager instance].speakerEnabled = YES;
+    }
+}
+
+#pragma mark - notifi
+- (void)linphoneCallUpdate:(NSNotification *)notif{
+    SYLinphoneCallState state = (SYLinphoneCallState)[[notif.userInfo objectForKey:@"state"] intValue];
+    
+    NSLog(@"状态==%d",state);
+    if (state == SYLinphoneCallStreamsRunning) {
+        //_vedioImageView.hidden = YES;
+        
+    }
+    else if (state == SYLinphoneCallOutgoingInit){
+        
+    }
+    else if (state == SYLinphoneCallOutgoingEarlyMedia){
+        _glViewVideoRemote.hidden = NO;
+    }
+    else if (state == SYLinphoneCallReleased){
+        //用户没有主动退出页面，则视频通话结束后，自动退出当前页面
+
+        [[SYLinphoneManager instance] hangUpCall];
+        [self closeView];
+    }
+    else if (state == SYLinphoneCallOutgoingEarlyMedia || state == SYLinphoneCallIncomingEarlyMedia){
+        
+    }
+    else if (state == SYLinphoneCallPaused){
+        
+    }
 }
 
 -(void)LineISBusy{
@@ -111,39 +153,31 @@
 }
 
 -(void)timeStarCount{
-    
-//    if (videoSession && videoSession.connected) {
-//        _timeout ++;
-//        NSString * secStr = @"00";
-//        if (_timeout == 0) {
-//            secStr = @"00";
-//        }
-//        else if (_timeout > 0 && _timeout <= 9 ) {
-//
-//            secStr = [NSString stringWithFormat:@"0%zd",_timeout];
-//
-//        }else if (_timeout > 9 && _timeout <= 30){
-//            secStr = [NSString stringWithFormat:@"%zd",_timeout];
-//        }
-//        else if (_timeout == 31){
-//            //挂断
-//
-////            SYLog(@"挂断");
-////            [videoSession hangUpCall];
-////            // releases session
-////            [NgnAVSession releaseSession:&videoSession];
-//            // starts timer suicide
-//            [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
-//                                             target:self
-//                                           selector:@selector(timerSuicideTick:)
-//                                           userInfo:nil
-//                                            repeats:NO];
-//
-//        }
-//        _timekeepingLabel.text = [NSString stringWithFormat:@"00:%@",secStr];
-//        NSLog(@"时间%@",secStr);
-//    }
-//
+    _timeout ++;
+    NSString * secStr = @"00";
+    if (_timeout == 0) {
+        secStr = @"00";
+    }
+    else if (_timeout > 0 && _timeout <= 9 ) {
+        
+        secStr = [NSString stringWithFormat:@"0%zd",_timeout];
+        
+    }else if (_timeout > 9 && _timeout <= 30){
+        secStr = [NSString stringWithFormat:@"%zd",_timeout];
+    }
+    else if (_timeout == 31){
+        //挂断
+        [[SYLinphoneManager instance] hangUpCall];
+        // starts timer suicide
+        [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
+                                         target:self
+                                       selector:@selector(timerSuicideTick:)
+                                       userInfo:nil
+                                        repeats:NO];
+        
+    }
+    _timekeepingLabel.text = [NSString stringWithFormat:@"00:%@",secStr];
+    NSLog(@"时间%@",secStr);
 }
 
 - (void)viewWillAppear:(BOOL)animated{
@@ -231,6 +265,7 @@
     //视频图层
     _vedioImageView = [[UIImageView alloc]initWithFrame:CGRectMake(2, 15, _videoBgView.frame.size.width - 4, _videoBgView.frame.size.height - 20)];
     _vedioImageView.image = [UIImage imageNamed:@"VedioBG"];
+    _vedioImageView.hidden = NO;
     [_videoBgView addSubview:_vedioImageView];
     
 
@@ -264,23 +299,23 @@
     
     //门口机视频图像
     // GLView
-//    _glViewVideoRemote = [[[iOSGLView alloc] initWithFrame:_vedioImageView.bounds] autorelease];
-//    [_vedioImageView addSubview:_glViewVideoRemote];
-//    _glViewVideoRemote.hidden = YES;
-//
-//
+    _glViewVideoRemote = [[UIView alloc] initWithFrame:_vedioImageView.bounds];
+    [_vedioImageView addSubview:_glViewVideoRemote];
+    _glViewVideoRemote.hidden = YES;
+
+
 //    //本地摄像头视频
-//    self.viewLocalVideo = [[[UIView alloc] initWithFrame:CGRectMake(10, 200, 0, 0)] autorelease];
+    self.viewLocalVideo = [[UIView alloc] initWithFrame:CGRectMake(10, 200, 0, 0)];
     self.viewLocalVideo.hidden = YES;
     
     
     
     //时间计时标签
-//    _timekeepingLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 2, CGRectGetMaxY(_glViewVideoRemote.frame) - 30, 20)];
-//    _timekeepingLabel.font = MiddleFont;
-//    _timekeepingLabel.text = @"00:00";
-//    _timekeepingLabel.textColor = [UIColor whiteColor];
-//    [_glViewVideoRemote addSubview:_timekeepingLabel];
+    _timekeepingLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 2, CGRectGetMaxY(_glViewVideoRemote.frame) - 30, 20)];
+    _timekeepingLabel.font = MiddleFont;
+    _timekeepingLabel.text = @"00:00";
+    _timekeepingLabel.textColor = [UIColor whiteColor];
+    [_glViewVideoRemote addSubview:_timekeepingLabel];
     
     
     //滑块解锁
@@ -326,25 +361,29 @@
 
 #pragma mark - 按钮点击
 -(void)selectBtn:(UIButton *)btn{
-}
 
-//-(void)selectBtn:(UIButton *)btn{
-//
-//    switch (btn.tag) {
-//        case 101:
-//        {
-//          //  静音
+    switch (btn.tag) {
+        case 101:
+        {
+          //  静音
 //            if(videoSession && [videoSession isConnected]) {
 //                //self.buttonMute.selected = !self.buttonMute.selected;
-//
 //                btn.selected = !btn.selected;
 //                [videoSession setMute:btn.selected];
 //            }
-//        }
-//            break;
-//        case 102:
-//        {
-//            //挂断
+        }
+            break;
+        case 102:
+        {
+            //挂断
+            [[SYLinphoneManager instance] hangUpCall];
+            // starts timer suicide
+            [NSTimer scheduledTimerWithTimeInterval:kCallTimerSuicide
+                                             target:self
+                                           selector:@selector(timerSuicideTick:)
+                                           userInfo:nil
+                                            repeats:NO];
+            
 //            if(videoSession && [videoSession isConnected]) {
 //                SYLog(@"videoSession 存在  连接");
 //                [videoSession hangUpCall];
@@ -386,20 +425,18 @@
 //
 //                [self performSelector:@selector(releaseSessionAfterDelay) withObject:nil afterDelay:2];
 //            }
-//
-//
-//        }
-//            break;
-//        case 103:
-//        {
-////            btn.selected = !btn.selected;
-//            //免提
-////            if(videoSession) {
-////                [videoSession setSpeakerEnabled:btn.selected];
-////                if([[NgnEngine sharedInstance].soundService setSpeakerEnabled:[videoSession isSpeakerEnabled]]){
-////                }
-////            }
-//
+        }
+            break;
+        case 103:
+        {
+//            btn.selected = !btn.selected;
+            //免提
+//            if(videoSession) {
+//                [videoSession setSpeakerEnabled:btn.selected];
+//                if([[NgnEngine sharedInstance].soundService setSpeakerEnabled:[videoSession isSpeakerEnabled]]){
+//                }
+//            }
+
 //            if(!videoSession || ![videoSession isConnected]){
 //                NSLog(@"视频还没加载完成");
 //                return;
@@ -409,14 +446,14 @@
 //            if([[NgnEngine sharedInstance].soundService setSpeakerEnabled:[videoSession isSpeakerEnabled]]){
 //                btn.selected = [videoSession isSpeakerEnabled];
 //            }
-//
-//        }
-//            break;
-//            
-//        default:
-//            break;
-//    }
-//}
+
+        }
+            break;
+            
+        default:
+            break;
+    }
+}
 
 -(void)releaseSessionAfterDelay{
     [self selectBtn:_buttonEnd];

@@ -22,6 +22,7 @@
 @implementation PhoneHistTableViewController(Private)
 
 -(void) refreshData{
+    
 //    @synchronized(mEvents){
 //        [mEvents removeAllObjects];
 //        NSArray* events = [[[mHistoryService events] allValues] sortedArrayUsingSelector:@selector(compareHistoryEventByDateASC:)];
@@ -53,24 +54,15 @@
 }
 
 -(void) refreshDataAndReload{
-    
-    if ([NSThread isMainThread])
-    {
-        [self refreshData];
-        [self.tableView reloadData];
-    }
-    else
-    {
-        dispatch_sync(dispatch_get_main_queue(), ^{
-            //Update UI in UI thread here
-            [self refreshData];
-            [self.tableView reloadData];
-            
-        });
-    }
+    [self refreshData];
+    [self.tableView reloadData];
 }
 
 -(void) onHistoryEvent:(NSNotification*)notification{
+    
+}
+
+//-(void) onHistoryEvent:(NSNotification*)notification{
 //    NgnHistoryEventArgs* eargs = [notification object];
 //
 //    //[[NgnEngine sharedInstance].historyService start];
@@ -118,12 +110,14 @@
 //            break;
 //        }
 //    }
-}
+//}
 @end
 
 @interface PhoneHistTableViewController ()
 @property (nonatomic,strong)NSMutableArray *secDataArr;
 @property (nonatomic,strong)NSMutableArray *dataAToZArr;
+@property (nonatomic,strong)NSMutableArray *arrayData;
+
 @end
 
 @implementation PhoneHistTableViewController
@@ -133,7 +127,7 @@
     [super viewWillAppear:animated];
    // [self cheakDataCount:mEvents];
     
-    //[self getDataFromDB];
+    [self getDataFromDB];
 }
 
 
@@ -142,10 +136,8 @@
     [[NSUserDefaults standardUserDefaults]setBool:YES forKey:@"isFirstGet"];
     self.secDataArr = [NSMutableArray array];
     self.dataAToZArr = [NSMutableArray array];
+    self.arrayData = [NSMutableArray array];
     
-//    if(!mEvents){
-//        mEvents = [[NgnHistoryEventMutableArray alloc] init];
-//    }
 //    mStatusFilter = HistoryEventStatus_All;
 //
 //    // get contact service instance
@@ -158,16 +150,37 @@
 //    [self refreshData];
 //
 //    [self cheakDataCount:mEvents];
-//
-//    self.navigationItem.title = @"History";
-//    self.tableView.delegate = self;
-//    self.tableView.dataSource = self;
-//
-//    [[NSNotificationCenter defaultCenter]
-//     addObserver:self selector:@selector(onHistoryEvent:) name:kNgnHistoryEventArgs_Name object:nil];
+
+    self.navigationItem.title = @"History";
+    self.tableView.delegate = self;
+    self.tableView.dataSource = self;
+
+    [[NSNotificationCenter defaultCenter]
+     addObserver:self selector:@selector(getDataFromDB) name:@"alreadyCalled" object:nil];
     
     [self getPersonList];
     [self getAToZList];
+}
+
+- (void)getDataFromDB
+{
+    [self.arrayData removeAllObjects];
+    NSArray *result = [[MyFMDataBase shareMyFMDataBase] selectDataWithTableName:@"PeopleCalled" withDic:nil];
+    NSLog(@"通话记录==%@",result);
+    
+    for (int i=0; i<result.count; i++) {
+        ContactModel *model = [[ContactModel alloc] init];
+        model.fusername = [result objectAtIndex:i][@"fusername"];
+        model.pingyin = [result objectAtIndex:i][@"pingyin"];
+        model.fdepartmentname = [result objectAtIndex:i][@"fdepartmentname"];
+        model.fworkername = [result objectAtIndex:i][@"fworkername"];
+        model.worker_id = [result objectAtIndex:i][@"worker_id"];
+        model.user_sip = [result objectAtIndex:i][@"user_sip"];
+        model.fgroup_name = [result objectAtIndex:i][@"fgroup_name"];
+        [self.arrayData insertObject:model atIndex:0];
+    }
+    
+    [self.tableView reloadData];
 }
 
 - (void)getPersonList{
@@ -230,6 +243,7 @@
     } FailureBlock:^{
 
     }];
+    
 }
 
 -(void)getAToZList{
@@ -260,12 +274,14 @@
     } FailureBlock:^{
 
     }];
+    
 }
 
 // 下拉刷新实现
 -(void)getDataFromNetWork{
     // refresh data
     [self refreshData];
+    [self endRefresh];
 }
 
 
@@ -274,11 +290,22 @@
 //
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-//    @synchronized(mEvents){
-//        return [mEvents count];
-//    }
-    return  1.0;
+    return 1;
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath{
+    return 60;
+}
+
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    return self.arrayData.count;
+}
+
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 0.0;
+}
+
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     static NSString * identify = @"RecentCell";
     RecentTableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:identify];
@@ -288,6 +315,10 @@
     }
     [cell setSelectionStyle:UITableViewCellSelectionStyleNone];
     
+    ContactModel * model = [self.arrayData objectAtIndex:indexPath.section];
+    if (model) {
+        [cell setContactModel:model];
+    }
     
 //    @synchronized(mEvents){
 //        NgnHistoryEvent* event;
@@ -297,36 +328,36 @@
 //        else{
 //            event = [mEvents objectAtIndex: indexPath.row];
 //        }
-//        
+//
 //        [cell setEvent:event];
-//        
+//
 ////        ContactModel * model = [PMSipTools gainContactModelFromSipNum:event.remoteParty];
 ////        if (model) {
 ////            [cell setContactModel:model];
 ////        }
-//        
-//        BOOL isHasName = NO;
-//        for (int i=0; i<self.secDataArr.count; i++) {
-//            ContactModel * personModel = (ContactModel *)[self.secDataArr objectAtIndex:i];
-//            
-//            if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:event.remoteParty]) {
-//                //cell.nameLabel.text = personModel.fworkername;
-//                [cell setContactModel:personModel];
-//                isHasName = YES;
-//            }
-//        }
-//        
-//        if (!isHasName) {
-//            for (int i=0; i<self.dataAToZArr.count; i++) {
-//                ContactModel * personModel = (ContactModel *)[self.dataAToZArr objectAtIndex:i];
-//                
-//                if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:event.remoteParty]) {
-//                    [cell setContactModel:personModel];
-//                    isHasName = YES;
-//                }
-//            }
-//        }
-//    }
+
+        BOOL isHasName = NO;
+        for (int i=0; i<self.secDataArr.count; i++) {
+            ContactModel * personModel = (ContactModel *)[self.secDataArr objectAtIndex:i];
+
+            if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:model.user_sip]) {
+                //cell.nameLabel.text = personModel.fworkername;
+                [cell setContactModel:personModel];
+                isHasName = YES;
+            }
+        }
+
+        if (!isHasName) {
+            for (int i=0; i<self.dataAToZArr.count; i++) {
+                ContactModel * personModel = (ContactModel *)[self.dataAToZArr objectAtIndex:i];
+
+                if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:model.user_sip]) {
+                    [cell setContactModel:personModel];
+                    isHasName = YES;
+                }
+            }
+        }
+
     return cell;
 }
 
@@ -337,48 +368,36 @@
     return [[UIView alloc] init];
 }
 
-
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-//    @synchronized(mEvents){
-//        NgnHistoryEvent* event = [mEvents objectAtIndex: indexPath.row];
-//        if (event) {
-//            //通过sip去数据库获取一个联系人
-//            //获取到联系人 跳转到联系人详情页
-//            
-//            NSLog(@"号码==%@",event.remoteParty);
-//            ContactModel * model = [PMSipTools gainContactModelFromSipNum:event.remoteParty];
-//            if (model) {
-//               
-//                [[Routable sharedRouter] open:OWNER_VIEWCONTROLLER animated:YES extraParams:@{@"isOwner":@(NO),@"contactModel":model}];
-//            }
-//            else{
-//                
-//                BOOL hasModel = NO;
-//                for (int i=0; i<self.secDataArr.count; i++) {
-//                    ContactModel * personModel = (ContactModel *)[self.secDataArr objectAtIndex:i];
-//                    
-//                    if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:[NSString stringWithFormat:@"%@",event.remoteParty]]) {
-//                        hasModel = YES;
-//                        [[Routable sharedRouter] open:OWNER_VIEWCONTROLLER animated:YES extraParams:@{@"isOwner":@(NO),@"contactModel":personModel}];
-//                    }
-//                }
-//                
-//                if (!hasModel) {
-//                    for (int i=0; i<self.dataAToZArr.count; i++) {
-//                        ContactModel * personModel = (ContactModel *)[self.dataAToZArr objectAtIndex:i];
-//                        
-//                        if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:[NSString stringWithFormat:@"%@",event.remoteParty]]) {
-//                            hasModel = YES;
-//                            [[Routable sharedRouter] open:OWNER_VIEWCONTROLLER animated:YES extraParams:@{@"isOwner":@(NO),@"contactModel":personModel}];
-//                        }
-//                    }
-//                }
-//                
-//                if (!hasModel) {
-//                    [SVProgressHUD showErrorWithStatus:@"未查询到该联系人相关信息"];
-//                }
-//            }
-//        }
-//    }
+    
+    ContactModel * model = [self.arrayData objectAtIndex:indexPath.section];
+    if (model) {
+        BOOL hasModel = NO;
+        for (int i=0; i<self.secDataArr.count; i++) {
+            
+            ContactModel * personModel = (ContactModel *)[self.secDataArr objectAtIndex:i];
+            NSLog(@"检测1==%@,%@",personModel.user_sip,model.user_sip);
+            if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:[NSString stringWithFormat:@"%@",model.user_sip]]) {
+                hasModel = YES;
+                [[Routable sharedRouter] open:OWNER_VIEWCONTROLLER animated:YES extraParams:@{@"isOwner":@(NO),@"contactModel":personModel}];
+            }
+        }
+        
+        if (!hasModel) {
+            for (int i=0; i<self.dataAToZArr.count; i++) {
+                
+                ContactModel * personModel = (ContactModel *)[self.dataAToZArr objectAtIndex:i];
+                NSLog(@"检测2==%@,%@",personModel.user_sip,model.user_sip);
+                if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:[NSString stringWithFormat:@"%@",model.user_sip]]) {
+                    hasModel = YES;
+                    [[Routable sharedRouter] open:OWNER_VIEWCONTROLLER animated:YES extraParams:@{@"isOwner":@(NO),@"contactModel":personModel}];
+                }
+            }
+        }
+        
+        if (!hasModel) {
+            [SVProgressHUD showErrorWithStatus:@"未查询到该联系人相关信息"];
+        }
+    }
 }
 @end

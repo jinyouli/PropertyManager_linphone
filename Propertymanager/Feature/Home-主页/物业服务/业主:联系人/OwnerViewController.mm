@@ -87,9 +87,26 @@
 //    [[NSNotificationCenter defaultCenter]
 //     addObserver:self selector:@selector(onRegistrationEvent:) name:kNgnRegistrationEventArgs_Name object:nil];
     
-    NSString * sipNum = [NSString stringWithFormat:@"%@",self.contactModel.user_sip];
-    NSLog(@"sipnum == %@",sipNum);
+    
 }
+
+- (void)insertPeoplecalled:(ContactModel *)model
+{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    [dict setObject:model.fusername forKey:@"fusername"];
+    [dict setObject:model.pingyin forKey:@"pingyin"];
+    [dict setObject:model.fdepartmentname forKey:@"fdepartmentname"];
+    [dict setObject:model.fworkername forKey:@"fworkername"];
+    [dict setObject:model.worker_id forKey:@"worker_id"];
+    [dict setObject:model.user_sip forKey:@"user_sip"];
+    [dict setObject:model.fgroup_name forKey:@"fgroup_name"];
+    
+    NSDictionary *insertDict = [[NSDictionary alloc] initWithDictionary:dict];
+    [[MyFMDataBase shareMyFMDataBase] insertDataWithTableName:@"PeopleCalled" insertDictionary:insertDict];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"alreadyCalled" object:nil];
+}
+
 
 #pragma mark - Delegate 实现方法
 #pragma mark - MFMessageComposeViewControllerDelegate
@@ -149,7 +166,7 @@
             break;
         case 1:
         {
-            
+            [self insertPeoplecalled:self.contactModel];
             if (self.isOwner) {
                 // 给业主发手机短信
                 [self showMessageView:@[self.ownerPhone] title:@"" body:@""];
@@ -171,6 +188,7 @@
             break;
         case 2:
         {
+            [self insertPeoplecalled:self.contactModel];
             // 联系人sip-视频
             self.type = 2;
             if (![PMTools isNullOrEmpty:self.contactModel.user_sip]) {
