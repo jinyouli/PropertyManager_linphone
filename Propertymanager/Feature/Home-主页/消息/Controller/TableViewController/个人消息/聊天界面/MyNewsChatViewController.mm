@@ -57,8 +57,9 @@
 }
 
 -(void) scrollToBottom:(BOOL)animated{
+    
     if([messages count] >0){
-        [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:([messages count] - 1) inSection:0]
+        [tableView scrollToRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:([messages count] - 1)]
                          atScrollPosition:UITableViewScrollPositionBottom animated:animated];
     }
 }
@@ -207,7 +208,7 @@
     [self createLeftBarButtonItemWithTitle:self.myNewsTitle];
     [self createRightBarButtonItemWithImage:nil WithTitle:@"发送" withMethod:@selector(sendMessageBtnClick)];
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
-    [self refreshDataAndReload];
+    //[self refreshDataAndReload];
 
     
 //    [[NSNotificationCenter defaultCenter]    addObserver:self
@@ -236,9 +237,44 @@
 
     [self.view addSubview:self.bottomView];
     
-    NSArray *userArray = [NSArray arrayWithObjects:@"user",@"time",@"message",@"state", nil];
+    NSArray *userArray = [NSArray arrayWithObjects:@"user",@"time",@"message",@"state",@"myName",@"otherName", nil];
     [[MyFMDataBase shareMyFMDataBase] createDataBaseWithDataBaseName:@"PersonCall"];
     [[MyFMDataBase shareMyFMDataBase] createTableWithTableName:@"PersonCall" tableArray:userArray];
+    
+    [self getDataFromDataBase];
+    
+    UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGesture:)];
+    [self.tableView addGestureRecognizer:longGesture];
+}
+
+- (void)longPressGesture:(UILongPressGestureRecognizer *)longGesture
+{
+    if (longGesture.state == UIGestureRecognizerStateBegan) {
+        CGPoint location = [longGesture locationInView:self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
+        
+        [WJYAlertView showTwoButtonsWithTitle:@"提示" Message:@"确定删除该聊天记录吗？" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
+            
+            NSDictionary *dict = [messages objectAtIndex:indexPath.section];
+            NSDictionary *deleteDic = [[NSDictionary alloc] initWithObjectsAndKeys:[dict objectForKey:@"id"],@"id", nil];
+            [[MyFMDataBase shareMyFMDataBase] deleteDataWithTableName:@"PersonCall" delegeteDic:deleteDic];
+            [self getDataFromDataBase];
+            
+        } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"取消" Click:^{
+            
+        }];
+    }
+}
+
+- (void)getDataFromDataBase
+{
+    UserManager * user = [UserManagerTool userManager];
+    NSDictionary *selectDic = [[NSDictionary alloc] initWithObjectsAndKeys:user.username,@"myName",self.myNewsTitle,@"otherName", nil];
+    NSArray *result = [[MyFMDataBase shareMyFMDataBase] selectDataWithTableName:@"PersonCall" withDic:selectDic];
+    
+    messages = [[NSMutableArray alloc] initWithArray:result];
+    [tableView reloadData];
+    NSLog(@"数据==%@",messages);
 }
 
 #pragma mark - Event Functions
@@ -248,11 +284,13 @@
     [messages addObject:[notif userInfo]];
     [self refreshDataAndReload];
     
-    NSLog(@"通知==%@",[notif userInfo]);
+    UserManager * user = [UserManagerTool userManager];
+    NSMutableDictionary *dict = [[NSMutableDictionary alloc] initWithDictionary:[notif userInfo]];
+    [dict setObject:user.username forKey:@"myName"];
+    [dict setObject:self.myNewsTitle forKey:@"otherName"];
     
-    [[MyFMDataBase shareMyFMDataBase] insertDataWithTableName:@"PersonCall" insertDictionary:[notif userInfo]];
-    NSArray *selectArray = [[MyFMDataBase shareMyFMDataBase] selectDataWithTableName:@"PersonCall" withDic:nil];
-    NSLog(@"守护==%@",selectArray);
+    [[MyFMDataBase shareMyFMDataBase] insertDataWithTableName:@"PersonCall" insertDictionary:[NSDictionary dictionaryWithDictionary:dict]];
+    [self getDataFromDataBase];
 }
 
 -(void)bottomBtnClickWithIndex:(NSInteger)index isUp:(BOOL)isUp withVolume:(NSInteger)volume withMyVoiceStr:(NSString *)str{
@@ -417,7 +455,7 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    return 1;
+    return messages.count;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -425,14 +463,27 @@
     return 40;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForFooterInSection:(NSInteger)section
+{
+    return 20;
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForFooterInSection:(NSInteger)section
+{
+    UIView *view = [[UIView alloc] init];
+    return view;
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return messages.count;
+    return 1;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)_tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 
     BaloonChatCell *cell = [BaloonChatCell cellWithTableview:tableView];
-    [cell setEvent:[messages objectAtIndex:indexPath.row] forTableView:_tableView withOtherName:self.myNewsTitle];
+    [cell setEvent:[messages objectAtIndex:indexPath.section] forTableView:_tableView withOtherName:self.myNewsTitle];
+    
+    cell.selectionStyle = UITableViewCellSelectionStyleNone;
     return cell;
 }
 
@@ -452,6 +503,11 @@
 //        return 0.0;
 //    }
 //}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    //[tableView deselectRowAtIndexPath:indexPath animated:NO];
+}
 
 - (void)tableView:(UITableView *)aTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (editingStyle == UITableViewCellEditingStyleDelete){

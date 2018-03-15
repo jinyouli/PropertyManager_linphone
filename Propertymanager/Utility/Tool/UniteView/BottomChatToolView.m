@@ -63,6 +63,7 @@
         if (i == 0) {
             btn.frame = CGRectMake(10, 7.5, 35, 35);
             btn.selected = YES;
+            btn.hidden = YES;
             [btn setImage:[UIImage imageNamed:@"voice_on"] forState:UIControlStateSelected];
             [btn setImage:[UIImage imageNamed:@"silence_off"] forState:UIControlStateNormal];
             
@@ -96,7 +97,8 @@
             [btn addTarget:self action:@selector(remindDragEnter:) forControlEvents:UIControlEventTouchDragEnter];
             
             
-            self.voiceTextView = [[UITextView alloc]initWithFrame:btn.frame];
+            //self.voiceTextView = [[UITextView alloc]initWithFrame:btn.frame];
+            self.voiceTextView = [[UITextView alloc]initWithFrame:CGRectMake(10, 7.5, ScreenWidth - 20, 35)];
             self.voiceTextView.hidden = YES;
             self.voiceTextView.layer.cornerRadius = 8.0f;
             self.voiceTextView.layer.borderColor = mainColor.CGColor;
@@ -105,7 +107,7 @@
             [self addSubview:self.voiceTextView];
             
             
-            self.placeLabel = [[UILabel alloc]initWithFrame:btn.frame];
+            self.placeLabel = [[UILabel alloc]initWithFrame:CGRectMake(10, 7.5, ScreenWidth - 20, 35)];
             self.placeLabel.text = @"请在此处输入文字";
             self.placeLabel.textColor = lineColor;
             self.placeLabel.font = SmallFont;
@@ -115,7 +117,7 @@
             btn.frame = CGRectMake(ScreenWidth - 40, 10, 30, 30);
             [btn setImage:[UIImage imageNamed:@"add"] forState:UIControlStateNormal];
             self.addImageRightBtn = btn;
-            
+            btn.hidden = YES;
             [btn addTarget:self action:@selector(btnClick:) forControlEvents:UIControlEventTouchUpInside];
         }
         btn.backgroundColor = [UIColor whiteColor];

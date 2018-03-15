@@ -85,10 +85,10 @@
     }
     
     NSString *scutureString2 = [scutureString substringToIndex:scutureString.length - 1];
-    NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@(%@)",tableName,scutureString2];
+    NSString *sql = [NSString stringWithFormat:@"CREATE TABLE IF NOT EXISTS %@(id integer PRIMARY KEY AUTOINCREMENT,%@)",tableName,scutureString2];
     
     
-//    SYLog(@"创建表单语句 === %@",sql);
+    SYLog(@"创建表单语句 === %@",sql);
     
     //通过dataBase使用sql语句
     @synchronized(self) {
@@ -252,6 +252,7 @@
             [mdic setObject:[result stringForColumn:@"time"] forKey:@"time"];
             [mdic setObject:[result stringForColumn:@"message"] forKey:@"message"];
             [mdic setObject:[NSNumber numberWithInt:[result intForColumn:@"state"]] forKey:@"state"];
+            [mdic setObject:[result stringForColumn:@"id"] forKey:@"id"];
             [mArr addObject:mdic];
         }
         

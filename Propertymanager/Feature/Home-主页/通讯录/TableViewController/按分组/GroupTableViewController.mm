@@ -101,6 +101,8 @@
         [self cheakDataCount:self.secDataArr];
         [self endRefresh];
     }];
+    
+    [self endRefresh];
 }
 
 -(void)initSectionPingYinArr:(NSArray *)grounpNameArr{
