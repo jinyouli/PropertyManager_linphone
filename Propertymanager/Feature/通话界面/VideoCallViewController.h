@@ -31,9 +31,7 @@
 }
 
 @property (nonatomic,strong) NSString * workname;
-
 @property (retain, nonatomic) NSTimer* timerQoS;
-
 @property (strong, nonatomic) UIImageView *bgImageView;
 @property (strong, nonatomic) UIView* viewLocalVideo;
 
@@ -59,10 +57,10 @@
 
 
 @property (nonatomic,assign) BOOL isDail;
-
+@property (nonatomic,assign) BOOL isLanguage;
 @property (strong, nonatomic) PSTAlertController *dismiss;
 
 -(void)btnToggleClick;
 
-- (instancetype)initWithCall:(SYLinphoneCall *)call GuardInfo:(SYLockListModel *)model InComingCall:(BOOL)isInComingCall;
+- (instancetype)initWithCall:(SYLinphoneCall *)call GuardInfo:(SYLockListModel *)model InComingCall:(BOOL)isInComingCall isLanguage:(BOOL)isLanguage otherName:(NSString *)otherName;
 @end

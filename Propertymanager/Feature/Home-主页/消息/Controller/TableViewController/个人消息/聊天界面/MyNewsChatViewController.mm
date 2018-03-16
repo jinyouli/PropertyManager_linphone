@@ -288,15 +288,15 @@
     [[MyFMDataBase shareMyFMDataBase] insertDataWithTableName:@"PersonCall" insertDictionary:[NSDictionary dictionaryWithDictionary:dict]];
     [self getDataFromDataBase];
     
-    NSMutableDictionary *dictMessage;
-    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"myPersonMessage"]) {
-        dictMessage = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"myPersonMessage"]];
-    }else{
-        dictMessage = [NSMutableDictionary dictionary];
-    }
-    
-    [dictMessage setObject:[notif userInfo][@"message"] forKey:self.myNewsTitle];
-    [[NSUserDefaults standardUserDefaults] setObject:dictMessage forKey:@"myPersonMessage"];
+//    NSMutableDictionary *dictMessage;
+//    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"myPersonMessage"]) {
+//        dictMessage = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"myPersonMessage"]];
+//    }else{
+//        dictMessage = [NSMutableDictionary dictionary];
+//    }
+//    
+//    [dictMessage setObject:[notif userInfo][@"message"] forKey:self.myNewsTitle];
+//    [[NSUserDefaults standardUserDefaults] setObject:dictMessage forKey:@"myPersonMessage"];
 }
 
 -(void)bottomBtnClickWithIndex:(NSInteger)index isUp:(BOOL)isUp withVolume:(NSInteger)volume withMyVoiceStr:(NSString *)str{

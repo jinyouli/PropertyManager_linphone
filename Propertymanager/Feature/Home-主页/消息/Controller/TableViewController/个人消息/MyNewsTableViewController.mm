@@ -188,6 +188,31 @@
     if ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 11.0) {
         self.tableView.contentInset = UIEdgeInsetsMake(45, 0, 0, 0);
     }
+    
+    UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGesture:)];
+    [self.tableView addGestureRecognizer:longGesture];
+}
+
+- (void)longPressGesture:(UILongPressGestureRecognizer *)longGesture
+{
+    if (longGesture.state == UIGestureRecognizerStateBegan) {
+        CGPoint location = [longGesture locationInView:self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
+        
+        [WJYAlertView showTwoButtonsWithTitle:@"提示" Message:@"确定删除该聊天记录吗？" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
+            
+            NSMutableDictionary *dict = [messages objectAtIndex:indexPath.row];
+            NSString *otherName = dict[@"otherName"];
+            
+            NSDictionary *deleteDic = [[NSDictionary alloc] initWithObjectsAndKeys:otherName,@"otherName", nil];
+            [[MyFMDataBase shareMyFMDataBase] deleteDataWithTableName:@"PersonCall" delegeteDic:deleteDic];
+            [self getDataFromDefault];
+            [self cheakDataCount:messages];
+            
+        } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"取消" Click:^{
+            
+        }];
+    }
 }
 
 - (void)getDataFromDefault

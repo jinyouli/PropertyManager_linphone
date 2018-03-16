@@ -24,13 +24,17 @@
 
 #define degreesToRadian(x) (M_PI * (x) / 180.0)
 
-@interface VideoCallViewController()
+@interface VideoCallViewController(){
+    dispatch_source_t videoTimer;
+}
 /** 是否获取事件*/
 @property (nonatomic,strong) ContactModel * ContactModel;
 @property (nonatomic, assign) SYLinphoneCall *call;
 @property (nonatomic, strong) SYLockListModel *model;
 @property (nonatomic, assign) BOOL isInComingCall;
 @property (nonatomic, strong) UIView *glViewVideoRemote;
+@property (nonatomic, strong) NSTimer *timer;
+@property (nonatomic, copy) NSString *otherName;
 
 -(void) showBottomView: (UIView*)view_ shouldRefresh:(BOOL)refresh;
 @end
@@ -50,12 +54,14 @@
     return self;
 }
 
-- (instancetype)initWithCall:(SYLinphoneCall *)call GuardInfo:(SYLockListModel *)model InComingCall:(BOOL)isInComingCall{
+- (instancetype)initWithCall:(SYLinphoneCall *)call GuardInfo:(SYLockListModel *)model InComingCall:(BOOL)isInComingCall isLanguage:(BOOL)isLanguage otherName:(NSString *)otherName{
     
     if (self == [super init]) {
         self.call = call;
         self.model = model;
         self.isInComingCall = isInComingCall;
+        self.isLanguage = isLanguage;
+        self.otherName = otherName;
     }
     return self;
 }
@@ -75,6 +81,34 @@
     
     [self createDefaultSubviews];
     [self configData];
+    
+   // self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerSuicideTick:) userInfo:nil repeats:YES];
+   // [self timerSuicideTick];
+}
+
+-(void)timerSuicideTick{
+    
+    WEAK_SELF;
+    __block int timeout = 0; //倒计时时间
+    
+    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    videoTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
+    dispatch_source_set_timer(videoTimer,dispatch_walltime(NULL, 0), 1.0 * NSEC_PER_SEC, 0); //每秒执行
+    dispatch_source_set_event_handler(videoTimer, ^{
+        if(timeout >= 0){
+            dispatch_source_cancel(videoTimer);
+            dispatch_async(dispatch_get_main_queue(), ^{
+                int hours = timeout / 3600;
+                int minutes = (timeout - hours*3600) / 60;
+                int seconds = timeout % 60;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    weakSelf.labelStatus.text = [NSString stringWithFormat:@"%d:%.2d", minutes, seconds];
+                timeout++;
+            });
+        });
+        }
+    });
+    dispatch_resume(videoTimer);
 }
 
 #pragma mark - private
@@ -112,10 +146,10 @@
     [self.viewTop addSubview:_myIconImageView];
     
     
-    _nameL = [[UILabel alloc]initWithFrame:_myIconImageView.bounds];
+    _nameL = [[UILabel alloc]initWithFrame:CGRectMake(100, 100, 100, 50)];
     _nameL.textAlignment = NSTextAlignmentCenter;
     _nameL.textColor = [UIColor whiteColor];
-    [self.myIconImageView addSubview:_nameL];
+    _nameL.text = self.otherName;
   
     _nameLabel = [[UILabel alloc]init];
     _nameLabel.frame = CGRectMake(0, CGRectGetMaxY(_myIconImageView.frame) + 20, ScreenWidth, 30);
@@ -139,7 +173,7 @@
     _handsFreeBtn.titleLabel.font = MiddleFont;
     [_handsFreeBtn setTitle:@"免提" forState:UIControlStateNormal];
     [_handsFreeBtn addTarget:self action:@selector(handsFreeBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.viewTop addSubview:_handsFreeBtn];
+    //[self.viewTop addSubview:_handsFreeBtn];
     
     
     //静音
@@ -149,7 +183,7 @@
     _muteBtn.titleLabel.font = MiddleFont;
     [_muteBtn setTitle:@"静音" forState:UIControlStateNormal];
     [_muteBtn addTarget:self action:@selector(muteBtnClick:) forControlEvents:UIControlEventTouchUpInside];
-    [self.viewTop addSubview:_muteBtn];
+    //[self.viewTop addSubview:_muteBtn];
     
     
     //挂断
@@ -177,6 +211,11 @@
     _buttonAccept.layer.borderColor = [[UIColor greenColor] CGColor];
     [self.viewTop addSubview:self.buttonAccept];
     
+    if (self.isInComingCall) {
+        _buttonAccept.hidden = NO;
+    }else{
+        _buttonAccept.hidden = YES;
+    }
     
     _viewToolbar = [[UIView alloc]initWithFrame:CGRectMake(0, ScreenHeight - 60, ScreenWidth, 44)];
     _viewToolbar.hidden = YES;
@@ -189,7 +228,7 @@
     [_buttonToolBarToggle setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_buttonToolBarToggle setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
     [_buttonToolBarToggle addTarget:self action:@selector(btnToggleClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.viewToolbar addSubview:_buttonToolBarToggle];
+    //[self.viewToolbar addSubview:_buttonToolBarToggle];
     
     //视频中挂断
     _buttonToolBarEnd = [[UIButton alloc]init];
@@ -210,7 +249,7 @@
     [_buttonToolBarMute setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
     [_buttonToolBarMute setTitleColor:[UIColor redColor] forState:UIControlStateSelected];
     [_buttonToolBarMute addTarget:self action:@selector(toolbarMuteClick) forControlEvents:UIControlEventTouchUpInside];
-    [self.viewToolbar addSubview:_buttonToolBarMute];
+    //[self.viewToolbar addSubview:_buttonToolBarMute];
     
     _buttonToolBarEnd.backgroundColor =
     _buttonToolBarMute.backgroundColor =
@@ -228,10 +267,10 @@
     
     //本地视频图像
     _viewLocalVideo = [[UIView alloc]initWithFrame:CGRectMake(ScreenWidth - 74, 20, 64, 86)];
-    _viewLocalVideo.layer.borderWidth = 1.f;
-    _viewLocalVideo.layer.borderColor = [[UIColor blackColor] CGColor];
     [self.view addSubview:_viewLocalVideo];
-    _viewLocalVideo.hidden = NO;
+    _viewLocalVideo.hidden = YES;
+    _nameL.backgroundColor = [UIColor blackColor];
+    //[self.view addSubview:_nameL];
 }
 
 -(void)btnToggleClick{
@@ -492,11 +531,27 @@
 #pragma mark - notifi
 - (void)linphoneCallUpdate:(NSNotification *)notif{
     SYLinphoneCallState state = (SYLinphoneCallState)[[notif.userInfo objectForKey:@"state"] intValue];
-    if (state == SYLinphoneCallStreamsRunning) {
+    if (state == SYLinphoneCallConnected) {
+        
         self.glViewVideoRemote.hidden = NO;
-        _myIconImageView.hidden = YES;
-        _buttonAccept.hidden = YES;
-        _labelStatus.hidden = YES;
+        _viewLocalVideo.hidden = NO;
+        if (self.isInComingCall) {
+            _myIconImageView.hidden = YES;
+            _buttonAccept.hidden = YES;
+            _labelStatus.hidden = YES;
+            
+        }else {
+            if (self.isLanguage) {
+                self.glViewVideoRemote.hidden = YES;
+                _viewLocalVideo.hidden = YES;
+                _labelStatus.text = @"正在通话中...";
+                _buttonAccept.hidden = YES;
+            }else{
+                _myIconImageView.hidden = YES;
+                _buttonAccept.hidden = YES;
+                _labelStatus.hidden = YES;
+            }
+        }
     }
     else if (state == SYLinphoneCallOutgoingInit){
         
@@ -947,8 +1002,5 @@
 //    }
 //}
 
--(void)timerSuicideTick:(NSTimer*)timer{
-    [self performSelectorOnMainThread:@selector(closeView) withObject:nil waitUntilDone:NO];
-}
 
 @end

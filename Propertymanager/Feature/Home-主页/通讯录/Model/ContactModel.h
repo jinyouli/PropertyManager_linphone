@@ -14,6 +14,7 @@
     NSString * _first_py;
 }
 
+@property (nonatomic,copy) NSString *id;
 @property (nonatomic,strong) NSString *fusername;
 @property (nonatomic,strong) NSString *first_py;
 @property (nonatomic,strong) NSString *fdepartmentname;

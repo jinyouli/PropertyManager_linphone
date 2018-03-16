@@ -160,6 +160,29 @@
     
     [self getPersonList];
     [self getAToZList];
+    
+    UILongPressGestureRecognizer *longGesture = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressGesture:)];
+    [self.tableView addGestureRecognizer:longGesture];
+}
+
+- (void)longPressGesture:(UILongPressGestureRecognizer *)longGesture
+{
+    if (longGesture.state == UIGestureRecognizerStateBegan) {
+        CGPoint location = [longGesture locationInView:self.tableView];
+        NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:location];
+        
+        [WJYAlertView showTwoButtonsWithTitle:@"提示" Message:@"确定删除该聊天记录吗？" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
+            
+            ContactModel *model = [self.arrayData objectAtIndex:indexPath.section];
+            NSDictionary *deleteDic = [[NSDictionary alloc] initWithObjectsAndKeys:model.id,@"id", nil];
+            
+            [[MyFMDataBase shareMyFMDataBase] deleteDataWithTableName:@"PeopleCalled" delegeteDic:deleteDic];
+            [self getDataFromDB];
+            
+        } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"取消" Click:^{
+            
+        }];
+    }
 }
 
 - (void)getDataFromDB
@@ -169,6 +192,7 @@
     
     for (int i=0; i<result.count; i++) {
         ContactModel *model = [[ContactModel alloc] init];
+        model.id = [result objectAtIndex:i][@"id"];
         model.fusername = [result objectAtIndex:i][@"fusername"];
         model.first_py = [result objectAtIndex:i][@"first_py"];
         model.fdepartmentname = [result objectAtIndex:i][@"fdepartmentname"];

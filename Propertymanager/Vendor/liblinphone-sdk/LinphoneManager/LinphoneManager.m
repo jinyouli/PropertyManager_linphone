@@ -808,7 +808,7 @@ static void linphone_iphone_display_status(struct _LinphoneCore * lc, const char
                 notification.alertAction = NSLocalizedString(@"Show", nil);
                 notification.alertLaunchImage = @"Default";
                 //				notification.userInfo = [NSDictionary dictionaryWithObject:[NSString stringWithUTF8String:linphone_call_log_get_call_id(log)] forKey:@"callLog"];
-                notification.userInfo = @{@"callLog": [NSString stringWithUTF8String:linphone_call_log_get_call_id(log)], @"LinphoneCallState":[NSNumber numberWithInt:state] };
+                notification.userInfo = @{@"callLog": [NSString stringWithUTF8String:linphone_call_log_get_call_id(log)], @"LinphoneCallState":[NSNumber numberWithInt:state],@"displayName":displayName };
                 notification.applicationIconBadgeNumber = notification.applicationIconBadgeNumber + 1;
                 [self cancelLocalNotificationWithKey:@"LinphoneCallState"];
                 
@@ -1059,7 +1059,7 @@ static void linphone_iphone_registration_state(LinphoneCore *lc, LinphoneProxyCo
                            @"sipNumber" : [NSString stringWithFormat:@"%s",username]
                            };
     
-    [NSNotificationCenter.defaultCenter postNotificationName:kLinphoneMessageReceived object:self userInfo:dict];
+    [NSNotificationCenter.defaultCenter postNotificationName:@"getNewMessage" object:self userInfo:dict];
 }
 
 static void linphone_iphone_message_received(LinphoneCore *lc, LinphoneChatRoom *room, LinphoneChatMessage *message) {

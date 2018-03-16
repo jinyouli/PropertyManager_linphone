@@ -196,7 +196,7 @@
             NSString *callID = userInfo[@"callId"];
             NSNumber *linphoneCallState = userInfo[@"LinphoneCallState"];
             SYLinphoneCall *call = [[SYLinphoneManager instance] callByCallId:callID];
-            [self userInfo:userInfo type:linphoneCallState Call:call];
+            [self userInfo:userInfo type:linphoneCallState Call:call displayName:userInfo[@"displayName"]];
         }
         
         
@@ -216,7 +216,7 @@
 }
 
 //本地通知 点击通知
-- (void)userInfo:(NSDictionary *)userInfo type:(NSNumber *)type Call:(SYLinphoneCall *)call{
+- (void)userInfo:(NSDictionary *)userInfo type:(NSNumber *)type Call:(SYLinphoneCall *)call displayName:(NSString *)displayName{
     
     UIApplication * application = [UIApplication sharedApplication];
     application.applicationIconBadgeNumber = 0;
@@ -226,7 +226,7 @@
     if (state == SYLinphoneCallIncomingReceived) {
         
         UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-        VideoCallViewController *vc = [[VideoCallViewController alloc] initWithCall:call GuardInfo:nil InComingCall:YES];
+        VideoCallViewController *vc = [[VideoCallViewController alloc] initWithCall:call GuardInfo:nil InComingCall:YES isLanguage:NO otherName:displayName];
         //vc.sipNumber = [[SYLinphoneManager instance] getSipNumber:call];
         [viewController presentViewController:vc animated:YES completion:^{
             

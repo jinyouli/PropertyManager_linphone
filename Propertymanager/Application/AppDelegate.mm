@@ -108,7 +108,7 @@
     [self setupUM];
     
    // [self getDeviceInfo];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendLocalMessage:) name:kLinphoneMessageReceived object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendLocalMessage:) name:@"getNewMessage" object:nil];
     
     NSArray *userArray = [NSArray arrayWithObjects:@"user",@"time",@"message",@"state",@"myName",@"otherName", nil];
     [[MyFMDataBase shareMyFMDataBase] createDataBaseWithDataBaseName:@"PersonCall"];
@@ -314,6 +314,16 @@
     [[MyFMDataBase shareMyFMDataBase] insertDataWithTableName:@"PeopleCalled" insertDictionary:insertDict];
     [[NSNotificationCenter defaultCenter] postNotificationName:@"alreadyCalled" object:nil];
     
+    NSArray *arrayA_ZInfo = [[MyFMDataBase shareMyFMDataBase] selectDataWithTableName:A_ZInfo withDic:nil];
+    
+    BOOL hasUserdata = NO;
+    ContactModel *selectModel = [[ContactModel alloc] init];
+    for (ContactModel *model in arrayA_ZInfo) {
+        if ([model.user_sip isEqualToString:sipNumber]) {
+            selectModel = model;
+            hasUserdata = YES;
+        }
+    }
     
     //如果已经有来电呼叫，则把后面呼进来的都拒掉
     if (self.isCallComing) {
@@ -324,7 +334,7 @@
     if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
         
         UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-        VideoCallViewController *vc = [[VideoCallViewController alloc] initWithCall:call GuardInfo:nil InComingCall:YES];
+        VideoCallViewController *vc = [[VideoCallViewController alloc] initWithCall:call GuardInfo:nil InComingCall:YES isLanguage:NO otherName:selectModel.fworkername];
         //vc.sipNumber = [[SYLinphoneManager instance] getSipNumber:call];
         [viewController presentViewController:vc animated:YES completion:^{
             

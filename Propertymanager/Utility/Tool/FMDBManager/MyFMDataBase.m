@@ -276,6 +276,7 @@
             [mdic setObject:[result stringForColumn:@"worker_id"] forKey:@"worker_id"];
             [mdic setObject:[result stringForColumn:@"user_sip"] forKey:@"user_sip"];
             [mdic setObject:[result stringForColumn:@"fgroup_name"] forKey:@"fgroup_name"];
+            [mdic setObject:[result stringForColumn:@"id"] forKey:@"id"];
             [mArr addObject:mdic];
         }
         

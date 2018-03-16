@@ -176,14 +176,18 @@
                 // 联系人sip-语音
                 self.type = 1;
                 if (![PMTools isNullOrEmpty:self.contactModel.user_sip]) {
-                    if(![self cheakSip])
-                        return;
                     NSString * sipNum = [NSString stringWithFormat:@"%@",self.contactModel.user_sip];
+                    SYLockListModel *model = [[SYLockListModel alloc] init];
+                    model.sip_number = sipNum;
+                    
+                    VideoCallViewController *videoVC = [[VideoCallViewController alloc] initWithCall:nil GuardInfo:model InComingCall:NO isLanguage:YES otherName:self.contactModel.fworkername];
+                    
+                    AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate ;
+                    [delegate.window.rootViewController presentViewController:videoVC animated:YES completion:nil];
                 }
                 else{
                     [self createAlertWithMessage:@"未查询到该联系人相关信息"];
                 }
-                
             }
         }
             break;
@@ -202,7 +206,7 @@
                 SYLockListModel *model = [[SYLockListModel alloc] init];
                 model.sip_number = sipNum;
                 
-                VideoCallViewController *videoVC = [[VideoCallViewController alloc] initWithCall:nil GuardInfo:model InComingCall:NO];
+                VideoCallViewController *videoVC = [[VideoCallViewController alloc] initWithCall:nil GuardInfo:model InComingCall:NO isLanguage:NO otherName:self.contactModel.fworkername];
                 
                 AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate ;
                 [delegate.window.rootViewController presentViewController:videoVC animated:YES completion:nil];
