@@ -145,7 +145,7 @@ const NSInteger contactLabelTag = 6000;
         [self.contactArr insertObject:notimModel atIndex:0];
         // 在数据库中增加一个数据
         NSDictionary * dic = @{@"fusername":notimModel.fusername,
-                               @"first_py":notimModel.pingyin,
+                               @"first_py":notimModel.first_py,
                                @"fdepartmentname":notimModel.fdepartmentname,
                                @"fworkername":notimModel.fworkername,
                                @"worker_id":notimModel.worker_id,

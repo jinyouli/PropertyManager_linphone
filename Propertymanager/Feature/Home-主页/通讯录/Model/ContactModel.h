@@ -15,7 +15,7 @@
 }
 
 @property (nonatomic,strong) NSString *fusername;
-@property (nonatomic,strong) NSString *pingyin;
+@property (nonatomic,strong) NSString *first_py;
 @property (nonatomic,strong) NSString *fdepartmentname;
 @property (nonatomic,strong) NSString *fworkername;
 @property (nonatomic,strong) NSString *worker_id;

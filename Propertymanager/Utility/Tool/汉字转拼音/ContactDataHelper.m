@@ -16,8 +16,8 @@
     
     NSArray *serializeArray = [(NSArray *)array sortedArrayUsingComparator:^NSComparisonResult(id obj1, id obj2) {//排序
         int i;
-        NSString *strA = ((ContactModel *)obj1).pingyin;
-        NSString *strB = ((ContactModel *)obj2).pingyin;
+        NSString *strA = ((ContactModel *)obj1).first_py;
+        NSString *strB = ((ContactModel *)obj2).first_py;
         for (i = 0; i < strA.length && i < strB.length; i ++) {
             char a = [strA characterAtIndex:i];
             char b = [strB characterAtIndex:i];
@@ -42,10 +42,10 @@
     NSMutableArray *data;
     NSMutableArray *oth = [[NSMutableArray alloc] init];
     for (ContactModel *user in serializeArray) {
-        if (user.pingyin.length == 0) {
+        if (user.first_py.length == 0) {
             return @[];
         }
-        char c = [user.pingyin characterAtIndex:0];
+        char c = [user.first_py characterAtIndex:0];
         if (!isalpha(c)) {
             [oth addObject:user];
         }
@@ -68,6 +68,7 @@
     if (oth.count > 0) {
         [ans addObject:oth];
     }
+    
     return ans;
 }
 
@@ -76,7 +77,7 @@
     [section addObject:UITableViewIndexSearch];
     for (NSArray *item in array) {
         ContactModel *user = [item objectAtIndex:0];
-        char c = [user.pingyin characterAtIndex:0];
+        char c = [user.first_py characterAtIndex:0];
         if (!isalpha(c)) {
             c = '#';
         }

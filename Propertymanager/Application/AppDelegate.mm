@@ -129,27 +129,7 @@
     }
 }
 
-//- (void)getDeviceInfo
-//{
-//    
-//    Class cls = NSClassFromString(@"UMANUtil");
-//    SEL deviceIDSelector = @selector(openUDIDString);
-//    NSString *deviceID = nil;
-//    if(cls && [cls respondsToSelector:deviceIDSelector]){
-//        deviceID = [cls performSelector:deviceIDSelector];
-//    }
-//    NSData* jsonData = [NSJSONSerialization dataWithJSONObject:@{@"oid" : deviceID}
-//                                                       options:NSJSONWritingPrettyPrinted
-//                                                         error:nil];
-//    
-//    NSLog(@"测试===%@", [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding]);
-//    
-//}
 
-//- (void)applicationWillResignActive:(UIApplication *)application
-//{
-//    [MobClick profileSignOff];
-//}
 
 #pragma mark - 友盟
 - (void)setupUM
@@ -319,7 +299,7 @@
     NSLog(@"sipnum == %@",sipNumber);
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@"" forKey:@"fusername"];
-    [dict setObject:@"" forKey:@"pingyin"];
+    [dict setObject:@"" forKey:@"first_py"];
     [dict setObject:@"" forKey:@"fdepartmentname"];
     [dict setObject:@"" forKey:@"fworkername"];
     [dict setObject:@"" forKey:@"worker_id"];
@@ -355,6 +335,35 @@
 //    }
     self.isCallComing = YES;
 }
+
+//=呼叫失败
+- (void)onDialFailed:(SYLinphoneCallState)state withMessage:(NSDictionary *)message{
+    
+    self.currentCall = nil;
+    self.isCallComing = NO;
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
+        
+    }
+}
+
+//挂机
+- (void)onHangUp:(SYLinphoneCall *)call withState:(SYLinphoneCallState)state withMessage:(NSDictionary *)message{
+    self.isCallComing = NO;
+}
+
+//通话连接成功
+-(void)onAnswer:(SYLinphoneCall *)call withState:(SYLinphoneCallState)state withMessage:(NSDictionary *)message{
+    
+    if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
+        
+    }
+    self.currentCall = nil;
+}
+
+- (void)onPaused:(SYLinphoneCall *)call withState:(SYLinphoneCallState)state withMessage:(NSDictionary *)message{
+    
+}
+
 
 
 #pragma mark - 懒加载

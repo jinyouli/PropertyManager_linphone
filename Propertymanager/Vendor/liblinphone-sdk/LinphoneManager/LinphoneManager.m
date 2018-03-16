@@ -761,6 +761,8 @@ static void linphone_iphone_display_status(struct _LinphoneCore * lc, const char
     
     // Disable speaker when no more call
     if ((state == LinphoneCallEnd || state == LinphoneCallError)) {
+        
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"endVideoCall" object:nil];
         speaker_already_enabled = FALSE;
         self.isCallComing = NO;
         if(linphone_core_get_calls_nb(theLinphoneCore) == 0) {
@@ -810,7 +812,7 @@ static void linphone_iphone_display_status(struct _LinphoneCore * lc, const char
                 notification.applicationIconBadgeNumber = notification.applicationIconBadgeNumber + 1;
                 [self cancelLocalNotificationWithKey:@"LinphoneCallState"];
                 
-                [[UIApplication sharedApplication] presentLocalNotificationNow:notification];
+                //[[UIApplication sharedApplication] presentLocalNotificationNow:notification];
                 [notification release];
             }
             
@@ -1045,11 +1047,10 @@ static void linphone_iphone_registration_state(LinphoneCore *lc, LinphoneProxyCo
 
     NSString *content = [self TextMessageForChat:msg];
     NSString *time = [self timeToString:linphone_chat_message_get_time(msg)];
-    
-    //NSString *callID = [NSString stringWithUTF8String:linphone_chat_message_get_custom_header(msg, "Call-ID")];
 
-    
-    //NSString *sipNumber = [[SYLinphoneManager instance] getSipNumber:[[SYLinphoneManager instance] currentCall]];
+    const LinphoneAddress *peer = linphone_chat_room_get_peer_address(room);
+    const char *username = linphone_address_get_username(peer);
+    NSLog(@"用户名==%s",username);
     
     NSDictionary *dict = @{
                            @"user" : [self getSipAdress:linphone_chat_message_get_from_address(msg)],

@@ -88,13 +88,14 @@
 //     addObserver:self selector:@selector(onRegistrationEvent:) name:kNgnRegistrationEventArgs_Name object:nil];
     
     
+    NSLog(@"userSip用户名==%@",self.contactModel.user_sip);
 }
 
 - (void)insertPeoplecalled:(ContactModel *)model
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:model.fusername forKey:@"fusername"];
-    [dict setObject:model.pingyin forKey:@"pingyin"];
+    [dict setObject:model.first_py forKey:@"first_py"];
     [dict setObject:model.fdepartmentname forKey:@"fdepartmentname"];
     [dict setObject:model.fworkername forKey:@"fworkername"];
     [dict setObject:model.worker_id forKey:@"worker_id"];

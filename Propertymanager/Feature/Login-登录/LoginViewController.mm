@@ -176,7 +176,7 @@
     }];
     [alertController addTextFieldWithConfigurationHandler:^(UITextField *textField) {
         textField.placeholder = @"在此输入端口号";
-        textField.text = @"22013";
+        textField.text = @"28084";
     }];
     // Create the actions.
     UIAlertAction *cancelAction = [UIAlertAction actionWithTitle:@"取消" style:UIAlertActionStyleCancel handler:nil];

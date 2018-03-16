@@ -71,6 +71,7 @@
     [[NSNotificationCenter defaultCenter]
      addObserver:self selector:@selector(LineISBusy) name:@"LineISBusy" object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(linphoneCallUpdate:) name:kSYLinphoneCallUpdate object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(closeView) name:@"endVideoCall" object:nil];
     
     [self createDefaultSubviews];
     [self configData];
@@ -88,6 +89,7 @@
         }
         //扬声器
         [SYLinphoneManager instance].speakerEnabled = YES;
+        [[LinphoneManager instance] changeFrontCamera];
         linphone_core_set_native_preview_window_id(LC, (__bridge void *)(_viewLocalVideo));
     }
 }
@@ -287,7 +289,12 @@
 //        [videoSession acceptCall];
 //    }
     
-    [[SYLinphoneManager instance] acceptCall:self.call Video:self.glViewVideoRemote];
+    if (self.call) {
+         [[SYLinphoneManager instance] acceptCall:self.call Video:self.glViewVideoRemote];
+    }else{
+        [self closeView];
+    }
+   
 }
 
 //免提

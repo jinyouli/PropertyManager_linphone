@@ -20,6 +20,7 @@
 #import "SYLinphoneManager.h"
 #import "Common.h"
 #import "SYLockListModel.h"
+#import "SYLinphoneStatus.h"
 
 #define WEAK_SELF __weak __typeof(&*self)weakSelf = self
 

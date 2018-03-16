@@ -37,12 +37,12 @@
     self.dataArr = [NSMutableArray array];
     _searchArr = [NSArray arrayWithObjects:@"{search}",@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z", nil];
     [self resetMyNav];
-    
 
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self getDataFromDB];
     });
     
+    NSLog(@"排序==%@",[[MyFMDataBase shareMyFMDataBase] selectDataWithTableName:A_ZInfo withDic:nil]);
 }
 
 
@@ -75,7 +75,6 @@
         self.dataArr = [NSMutableArray arrayWithArray:replyArr];
         _rowArr=[ContactDataHelper getFriendListDataBy:self.dataArr];
         _sectionArr=[ContactDataHelper getFriendListSectionBy:[_rowArr mutableCopy]];
-        NSLog(@"数据==%@",_sectionArr);
         
         [self reloadView];
     }
@@ -100,7 +99,7 @@
         MyFMDataBase * database = [MyFMDataBase shareMyFMDataBase];
         [self.dataArr removeAllObjects];
         // 清空A_Z数据
-        [database deleteDataWithTableName:A_ZInfo delegeteDic:nil];
+        //[database deleteDataWithTableName:A_ZInfo delegeteDic:nil];
         NSArray * modelArr = [ContactModel mj_objectArrayWithKeyValuesArray:arr];
         
         for (int i = 0; i < modelArr.count; i ++) {
@@ -125,11 +124,10 @@
         _rowArr=[ContactDataHelper getFriendListDataBy:self.dataArr];
         _sectionArr=[ContactDataHelper getFriendListSectionBy:[_rowArr mutableCopy]];
         
-        if (_rowArr.count > 0 && _sectionArr.count > 1) {
+        if (_rowArr.count > 0 && _sectionArr.count > 0) {
             [self reloadView];
-        }else{
-            [self getDataFromDB];
         }
+        [self reloadView];
     } FailureBlock:^{
         [self cheakDataCount:self.dataArr];
         [self endRefresh];

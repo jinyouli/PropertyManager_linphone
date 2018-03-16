@@ -161,7 +161,13 @@
                 [[Routable sharedRouter] open:MYNEWSCHAT_VIEWCONTROLLER animated:YES extraParams:@{@"myRemoteParty":sipNumber,@"name":@""}];
             }
         }
-
+        else if ([[userInfo allKeys] containsObject:@"LinphoneCallState"]) {
+            NSString *callID = userInfo[@"callId"];
+            NSNumber *linphoneCallState = userInfo[@"LinphoneCallState"];
+            SYLinphoneCall *call = [[SYLinphoneManager instance] callByCallId:callID];
+            [self userInfo:userInfo type:linphoneCallState Call:call];
+        }
+        
         
         
         /**
@@ -176,7 +182,25 @@
     }
     
     completionHandler();  // 系统要求执行这个方法
+}
+
+//本地通知 点击通知
+- (void)userInfo:(NSDictionary *)userInfo type:(NSNumber *)type Call:(SYLinphoneCall *)call{
     
+    UIApplication * application = [UIApplication sharedApplication];
+    application.applicationIconBadgeNumber = 0;
+    
+    SYLinphoneCallState state = (SYLinphoneCallState)[type intValue];
+    
+    if (state == SYLinphoneCallIncomingReceived) {
+        
+        UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
+        VideoCallViewController *vc = [[VideoCallViewController alloc] initWithCall:call GuardInfo:nil InComingCall:YES];
+        //vc.sipNumber = [[SYLinphoneManager instance] getSipNumber:call];
+        [viewController presentViewController:vc animated:YES completion:^{
+            
+        }];
+    }
 }
 
 #pragma mark - 收到本地推送 有sip信息 语音 视频  和个推离线消息的推送形成的工单信息

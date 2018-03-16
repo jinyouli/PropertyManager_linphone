@@ -35,8 +35,7 @@
         [_manager createTableWithTableName:OrderInfo tableArray:OrderInfoInfoDic];
         // 回复列表
         [_manager createTableWithTableName:DetailInfo tableArray:DetailInfoDic];
-        // A_Z表单
-        [_manager createTableWithTableName:A_ZInfo tableArray:A_ZInfoDic];
+        
         // 分组表单
         [_manager createTableWithTableName:SortInfo tableArray:SortInfoDic];
         // 存储联系人表单
@@ -49,7 +48,11 @@
         [_manager createTableWithTableName:ListenHistoryInfo tableArray:ListenHistoryInfoDic];
     }
 
-    NSArray *userArray = [NSArray arrayWithObjects:@"fusername",@"pingyin",@"fdepartmentname",@"fworkername",@"worker_id",@"user_sip",@"fgroup_name", nil];
+    // A_Z表单
+    [_manager createDataBaseWithDataBaseName:A_ZInfo];
+    [_manager createTableWithTableName:A_ZInfo tableArray:A_ZInfoDic];
+    
+    NSArray *userArray = [NSArray arrayWithObjects:@"fusername",@"first_py",@"fdepartmentname",@"fworkername",@"worker_id",@"user_sip",@"fgroup_name", nil];
     [_manager createDataBaseWithDataBaseName:@"PeopleCalled"];
     [_manager createTableWithTableName:@"PeopleCalled" tableArray:userArray];
     
@@ -60,17 +63,22 @@
 -(BOOL)createDataBaseWithDataBaseName:(NSString *)dbName{
     @synchronized(self) {
     
+        NSFileManager *fileManager = [NSFileManager defaultManager];
         NSString *filePath = [NSString stringWithFormat:@"%@/Documents/%@.sqlite",NSHomeDirectory(),dbName];
         
-        self.dataBase = [[FMDatabase alloc]initWithPath:filePath];
-        
+        if ([fileManager fileExistsAtPath:filePath]) {
+            self.dataBase = [FMDatabase databaseWithPath:filePath];
+        }else{
+            self.dataBase = [[FMDatabase alloc]initWithPath:filePath];
+        }
+
         //把数据库打开
         if (self.dataBase.open) {
-            SYLog(@"自己建立的数据库打开成功  路径：%@",filePath);
+            //SYLog(@"自己建立的数据库打开成功  路径：%@",filePath);
             return YES;
         }
         else{
-            SYLog(@"自己建立的数据库打开失败  路径：%@",filePath);
+            //SYLog(@"自己建立的数据库打开失败  路径：%@",filePath);
             return NO;
         }
 
@@ -126,15 +134,15 @@
     
     NSString *sql = [NSString stringWithFormat:@"INSERT INTO %@(%@) VALUES(%@)",tableName,scutureString2,valueString2];
     
-    SYLog(@"插入语句 ===   %@",sql);
+    //SYLog(@"插入语句 ===   %@",sql);
     
     BOOL isInsert = [self.dataBase executeUpdate:sql];
     
     if (isInsert) {
-        SYLog(@"插入sql数据成功");
+        //SYLog(@"插入sql数据成功");
     }
     else{
-        SYLog(@"插入sql数据失败");
+        //SYLog(@"插入sql数据失败");
     }
 }
 
@@ -239,7 +247,7 @@
     }
     
     
-    SYLog(@"选择内容语句 === %@",sql);
+   // SYLog(@"选择内容语句 === %@",sql);
     @synchronized(self) {
     NSMutableArray * mArr = [NSMutableArray array];
     FMResultSet *result = [self.dataBase executeQuery:sql];
@@ -261,7 +269,7 @@
 
             NSMutableDictionary * mdic = [[NSMutableDictionary alloc]init];
             [mdic setObject:[result stringForColumn:@"fusername"] forKey:@"fusername"];
-            [mdic setObject:[result stringForColumn:@"pingyin"] forKey:@"pingyin"];
+            [mdic setObject:[result stringForColumn:@"first_py"] forKey:@"first_py"];
             [mdic setObject:[result stringForColumn:@"fdepartmentname"] forKey:@"fdepartmentname"];
             [mdic setObject:[result stringForColumn:@"fworkername"] forKey:@"fworkername"];
             [mdic setObject:[result stringForColumn:@"worker_id"] forKey:@"worker_id"];
@@ -366,7 +374,7 @@
         
             ContactModel * model = [[ContactModel alloc]init];
             model.fusername = [result stringForColumn:@"fusername"];
-            model.pingyin = [result stringForColumn:@"first_py"];
+            model.first_py = [result stringForColumn:@"first_py"];
             model.fdepartmentname = [result stringForColumn:@"fdepartmentname"];
             model.fworkername = [result stringForColumn:@"fworkername"];
             model.worker_id = [result stringForColumn:@"worker_id"];
@@ -383,12 +391,12 @@
             model.fdepartmentname = [result stringForColumn:@"fdepartmentname"];
             model.fworkername = [result stringForColumn:@"fworkername"];
             model.worker_id = [result stringForColumn:@"worker_id"];
-            model.pingyin = [result stringForColumn:@"first_py"];
+            model.first_py = [result stringForColumn:@"first_py"];
             model.fgroup_name = [result stringForColumn:@"fgroup_name"];
             model.user_sip = [result stringForColumn:@"user_sip"];
             [mArr addObject:model];
             
-            SYLog(@"分组联系人模型 %@",model);
+           // SYLog(@"分组联系人模型 %@",model);
         }
         
         //勿扰模式

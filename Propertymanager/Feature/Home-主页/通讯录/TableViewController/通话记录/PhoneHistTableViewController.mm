@@ -166,12 +166,11 @@
 {
     [self.arrayData removeAllObjects];
     NSArray *result = [[MyFMDataBase shareMyFMDataBase] selectDataWithTableName:@"PeopleCalled" withDic:nil];
-    NSLog(@"通话记录==%@",result);
     
     for (int i=0; i<result.count; i++) {
         ContactModel *model = [[ContactModel alloc] init];
         model.fusername = [result objectAtIndex:i][@"fusername"];
-        model.pingyin = [result objectAtIndex:i][@"pingyin"];
+        model.first_py = [result objectAtIndex:i][@"first_py"];
         model.fdepartmentname = [result objectAtIndex:i][@"fdepartmentname"];
         model.fworkername = [result objectAtIndex:i][@"fworkername"];
         model.worker_id = [result objectAtIndex:i][@"worker_id"];
@@ -376,7 +375,6 @@
         for (int i=0; i<self.secDataArr.count; i++) {
             
             ContactModel * personModel = (ContactModel *)[self.secDataArr objectAtIndex:i];
-            NSLog(@"检测1==%@,%@",personModel.user_sip,model.user_sip);
             if ([[NSString stringWithFormat:@"%@",personModel.user_sip] isEqualToString:[NSString stringWithFormat:@"%@",model.user_sip]]) {
                 hasModel = YES;
                 [[Routable sharedRouter] open:OWNER_VIEWCONTROLLER animated:YES extraParams:@{@"isOwner":@(NO),@"contactModel":personModel}];

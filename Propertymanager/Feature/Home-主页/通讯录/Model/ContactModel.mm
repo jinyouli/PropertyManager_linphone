@@ -11,7 +11,7 @@
 
 @implementation ContactModel
 
-@synthesize pingyin = _first_py;
+@synthesize first_py = _first_py;
 
 
 -(NSString *)fusername{
@@ -21,7 +21,7 @@
     return _fusername;
 }
 
--(NSString *)pingyin{
+-(NSString *)first_py{
     if (_first_py == nil) {
         _first_py = @"";
     }

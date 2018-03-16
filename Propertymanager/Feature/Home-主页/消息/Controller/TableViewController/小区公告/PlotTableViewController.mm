@@ -41,7 +41,6 @@
         
         UserManager * user = [UserManagerTool userManager];
         NSString * url = MyUrl(SYGet_notice_by_pager);
-        SYLog(@"小区公告列表 ==== %@",url);
         NSString * department_id = user.department_id;
         NSDictionary * paraDic = @{@"notice_type":@"2",@"department_id":department_id,@"current_page":@(self.page),@"page_size":@"100"};
         
@@ -50,7 +49,6 @@
             if (self.page == 1) {
                 [self.models removeAllObjects];
             }
-            NSLog(@"结果==%@",value);
             NSArray * modelArr = [PlotModel mj_objectArrayWithKeyValuesArray:value];
             
             for (PlotModel * model in modelArr) {
