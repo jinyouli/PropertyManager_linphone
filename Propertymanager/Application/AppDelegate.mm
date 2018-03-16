@@ -120,7 +120,6 @@
 
 - (void)sendLocalMessage:(NSNotification *)notif
 {
-    
     if (![[PMTools getCurrentVC] isKindOfClass:[MyNewsChatViewController class]]) {
         int state = [[notif userInfo][@"state"] intValue];
         if (state == 2) {

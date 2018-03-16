@@ -34,24 +34,24 @@
     @synchronized(messages){
         //[messages removeAllObjects];
         
-//        NSArray* events = [[[[NgnEngine sharedInstance].historyService events] allValues] sortedArrayUsingSelector:@selector(compareHistoryEventByDateDESC:)];
+        //        NSArray* events = [[[[NgnEngine sharedInstance].historyService events] allValues] sortedArrayUsingSelector:@selector(compareHistoryEventByDateDESC:)];
         
-//        for (int i = 0 ; i < events.count; i ++) {
-//            NgnHistoryEvent* event = events[i];
-//            if (!event) {
-//                continue;
-//            }
-//            if (!(event.mediaType & MediaType_SMS)) {
-//                continue;
-//            }
-//            if (![event.remoteParty isEqualToString: self.remoteParty]) {
-//                continue;
-//            }
-//            if(!event || !(event.mediaType & MediaType_SMS) || ![event.remoteParty isEqualToString: self.remoteParty]){
-//                continue;
-//            }
-//            [messages addObject:event];
-//        }
+        //        for (int i = 0 ; i < events.count; i ++) {
+        //            NgnHistoryEvent* event = events[i];
+        //            if (!event) {
+        //                continue;
+        //            }
+        //            if (!(event.mediaType & MediaType_SMS)) {
+        //                continue;
+        //            }
+        //            if (![event.remoteParty isEqualToString: self.remoteParty]) {
+        //                continue;
+        //            }
+        //            if(!event || !(event.mediaType & MediaType_SMS) || ![event.remoteParty isEqualToString: self.remoteParty]){
+        //                continue;
+        //            }
+        //            [messages addObject:event];
+        //        }
         
     }
 }
@@ -75,55 +75,55 @@
 }
 
 -(void) onHistoryEvent:(NSNotification*)notification{
-//    NgnHistoryEventArgs* eargs = [notification object];
-//
-//    switch (eargs.eventType) {
-//        case HISTORY_EVENT_ITEM_ADDED:
-//        {
-//            if((eargs.mediaType & MediaType_SMS)){
-//                NgnHistoryEvent* event = [[[NgnEngine sharedInstance].historyService events] objectForKey: [NSNumber numberWithLongLong: eargs.eventId]];
-//                NSInteger eventInt = [event.remoteParty integerValue];
-//                NSInteger remotInt = [self.remoteParty integerValue];
-//                if (event) {
-//                    if (eventInt == remotInt) {
-//                        [messages addObject: event];
-//                        [self reloadData];
-//                    }
-//                }
-//            }
-//            break;
-//        }
-//
-//        case HISTORY_EVENT_ITEM_MOVED:
-//        case HISTORY_EVENT_ITEM_UPDATED:
-//        {
-//            [self reloadData];
-//            break;
-//        }
-//
-//        case HISTORY_EVENT_ITEM_REMOVED:
-//        {
-//            if((eargs.mediaType & MediaType_SMS)){
-//                for (NgnHistoryEvent* event in messages) {
-//                    if(event.id == eargs.eventId){
-//                        [messages removeObject: event];
-//                        [tableView reloadData];
-//                        break;
-//                    }
-//                }
-//            }
-//            break;
-//        }
-//
-//        case HISTORY_EVENT_RESET:{
-//            [[NgnEngine sharedInstance].historyService deleteEventWithId:eargs.eventId];
-//        }
-//        default:
-//        {
-//            [self refreshDataAndReload];
-//            break;
-//        }
-//    }
+    //    NgnHistoryEventArgs* eargs = [notification object];
+    //
+    //    switch (eargs.eventType) {
+    //        case HISTORY_EVENT_ITEM_ADDED:
+    //        {
+    //            if((eargs.mediaType & MediaType_SMS)){
+    //                NgnHistoryEvent* event = [[[NgnEngine sharedInstance].historyService events] objectForKey: [NSNumber numberWithLongLong: eargs.eventId]];
+    //                NSInteger eventInt = [event.remoteParty integerValue];
+    //                NSInteger remotInt = [self.remoteParty integerValue];
+    //                if (event) {
+    //                    if (eventInt == remotInt) {
+    //                        [messages addObject: event];
+    //                        [self reloadData];
+    //                    }
+    //                }
+    //            }
+    //            break;
+    //        }
+    //
+    //        case HISTORY_EVENT_ITEM_MOVED:
+    //        case HISTORY_EVENT_ITEM_UPDATED:
+    //        {
+    //            [self reloadData];
+    //            break;
+    //        }
+    //
+    //        case HISTORY_EVENT_ITEM_REMOVED:
+    //        {
+    //            if((eargs.mediaType & MediaType_SMS)){
+    //                for (NgnHistoryEvent* event in messages) {
+    //                    if(event.id == eargs.eventId){
+    //                        [messages removeObject: event];
+    //                        [tableView reloadData];
+    //                        break;
+    //                    }
+    //                }
+    //            }
+    //            break;
+    //        }
+    //
+    //        case HISTORY_EVENT_RESET:{
+    //            [[NgnEngine sharedInstance].historyService deleteEventWithId:eargs.eventId];
+    //        }
+    //        default:
+    //        {
+    //            [self refreshDataAndReload];
+    //            break;
+    //        }
+    //    }
 }
 
 @end
@@ -147,8 +147,8 @@
         
         if (![PMTools isNullOrEmpty:params[@"myRemoteParty"]]) {
             self.remoteParty = params[@"myRemoteParty"];
-//            self.contact = [[NgnEngine sharedInstance].contactService getContactByPhoneNumber: self.remoteParty];
-//            self.remotePartyUri = [NgnUriUtils makeValidSipUri:self.remoteParty];
+            //            self.contact = [[NgnEngine sharedInstance].contactService getContactByPhoneNumber: self.remoteParty];
+            //            self.remotePartyUri = [NgnUriUtils makeValidSipUri:self.remoteParty];
             
         }
         if (![PMTools isNullOrEmpty:params[@"name"]]) {
@@ -209,12 +209,12 @@
     [self createRightBarButtonItemWithImage:nil WithTitle:@"发送" withMethod:@selector(sendMessageBtnClick)];
     [IQKeyboardManager sharedManager].enableAutoToolbar = NO;
     //[self refreshDataAndReload];
-
     
-//    [[NSNotificationCenter defaultCenter]    addObserver:self
-//                                             selector:@selector(onHistoryEvent:)
-//                                                 name:kNgnHistoryEventArgs_Name
-//                                               object:nil];
+    
+    //    [[NSNotificationCenter defaultCenter]    addObserver:self
+    //                                             selector:@selector(onHistoryEvent:)
+    //                                                 name:kNgnHistoryEventArgs_Name
+    //                                               object:nil];
     
     //注册键盘监听事件
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(keyboardUP:) name:UIKeyboardWillShowNotification object:nil];
@@ -235,7 +235,7 @@
     [self.bottomView myBtnClickBlock:^(NSInteger index, BOOL isUp, NSInteger volume, NSString *myVoiceStr) {
         [self bottomBtnClickWithIndex:index isUp:isUp withVolume:volume withMyVoiceStr:myVoiceStr];
     }];
-
+    
     [self.view addSubview:self.bottomView];
     
     [self getDataFromDataBase];
@@ -287,6 +287,16 @@
     
     [[MyFMDataBase shareMyFMDataBase] insertDataWithTableName:@"PersonCall" insertDictionary:[NSDictionary dictionaryWithDictionary:dict]];
     [self getDataFromDataBase];
+    
+    NSMutableDictionary *dictMessage;
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:@"myPersonMessage"]) {
+        dictMessage = [[NSMutableDictionary alloc] initWithDictionary:[[NSUserDefaults standardUserDefaults] objectForKey:@"myPersonMessage"]];
+    }else{
+        dictMessage = [NSMutableDictionary dictionary];
+    }
+    
+    [dictMessage setObject:[notif userInfo][@"message"] forKey:self.myNewsTitle];
+    [[NSUserDefaults standardUserDefaults] setObject:dictMessage forKey:@"myPersonMessage"];
 }
 
 -(void)bottomBtnClickWithIndex:(NSInteger)index isUp:(BOOL)isUp withVolume:(NSInteger)volume withMyVoiceStr:(NSString *)str{
@@ -332,7 +342,7 @@
                 self.bottomView.talkBtn.hidden = NO;
                 self.bottomView.voiceTextView.hidden = YES;
             }
-
+            
             
         }
             break;
@@ -419,15 +429,15 @@
             
             [[LinphoneManager instance] sendMessage:text withExterlBodyUrl:nil withInternalURL:nil Address:self.dictParams[@"myRemoteParty"]];
             
-//            NgnHistorySMSEvent* event = [NgnHistoryEvent createSMSEventWithStatus:HistoryEventStatus_Outgoing
-//                                                                   andRemoteParty: self.remoteParty
-//                                                                       andContent:[text dataUsingEncoding:NSUTF8StringEncoding]];
-//            NgnMessagingSession* session = [NgnMessagingSession createOutgoingSessionWithStack:[[NgnEngine sharedInstance].sipService getSipStack] andToUri: self.remotePartyUri];
-//            event.status = [session sendTextMessage:text contentType: kContentTypePlainText] ? HistoryEventStatus_Outgoing : HistoryEventStatus_Failed;
-//            [[NgnEngine sharedInstance].historyService addEvent: event];
-
+            //            NgnHistorySMSEvent* event = [NgnHistoryEvent createSMSEventWithStatus:HistoryEventStatus_Outgoing
+            //                                                                   andRemoteParty: self.remoteParty
+            //                                                                       andContent:[text dataUsingEncoding:NSUTF8StringEncoding]];
+            //            NgnMessagingSession* session = [NgnMessagingSession createOutgoingSessionWithStack:[[NgnEngine sharedInstance].sipService getSipStack] andToUri: self.remotePartyUri];
+            //            event.status = [session sendTextMessage:text contentType: kContentTypePlainText] ? HistoryEventStatus_Outgoing : HistoryEventStatus_Failed;
+            //            [[NgnEngine sharedInstance].historyService addEvent: event];
+            
         }
-
+        
     }
 }
 
@@ -475,7 +485,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)_tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-
+    
     BaloonChatCell *cell = [BaloonChatCell cellWithTableview:tableView];
     [cell setEvent:[messages objectAtIndex:indexPath.section] forTableView:_tableView withOtherName:self.myNewsTitle];
     
@@ -507,34 +517,34 @@
 
 - (void)tableView:(UITableView *)aTableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath{
     if (editingStyle == UITableViewCellEditingStyleDelete){
-//        NgnHistoryEvent* event = [messages objectAtIndex: indexPath.row];
-//        if (event) {
-//            [[NgnEngine sharedInstance].historyService deleteEvent: event];
-//        }
+        //        NgnHistoryEvent* event = [messages objectAtIndex: indexPath.row];
+        //        if (event) {
+        //            [[NgnEngine sharedInstance].historyService deleteEvent: event];
+        //        }
     }
 }
 
 
 -(BOOL)cheakSip{
     
-//    if ([[NgnEngine sharedInstance].sipService isRegistered]){
-//
-//        return YES;
-//    }
-//    else{
-//        [self.view endEditing:YES];
-//        [WJYAlertView showTwoButtonsWithTitle:@"提示" Message:@"网络不好，请稍后尝试！" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
-//
-//            [PMSipTools sipRegister];
-//
-//        } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"取消" Click:^{
-//
-//        }];
-//
-//
-//
-//        return NO;
-//    }
+    //    if ([[NgnEngine sharedInstance].sipService isRegistered]){
+    //
+    //        return YES;
+    //    }
+    //    else{
+    //        [self.view endEditing:YES];
+    //        [WJYAlertView showTwoButtonsWithTitle:@"提示" Message:@"网络不好，请稍后尝试！" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
+    //
+    //            [PMSipTools sipRegister];
+    //
+    //        } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"取消" Click:^{
+    //
+    //        }];
+    //
+    //
+    //
+    //        return NO;
+    //    }
     
     return NO;
 }

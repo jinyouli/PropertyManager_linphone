@@ -10,11 +10,7 @@
 
 @interface MyMessageTableViewCell()
 
-@property (nonatomic,strong) UIButton * photoBtn;
-@property (nonatomic,strong) UILabel * titleLabel;
-@property (nonatomic,strong) UILabel * timeLabel;
-@property (nonatomic,strong) UILabel * desLabel;
-@property (nonatomic,strong) UILabel * statusLabel;
+
 
 @end
 
@@ -150,6 +146,7 @@
 
         [self.photoBtn setTitle:[PMTools subStringFromString:contactModel.fworkername isFrom:NO] forState:UIControlStateNormal];
         self.titleLabel.text = contactModel.fworkername;
+        
     }
 
     

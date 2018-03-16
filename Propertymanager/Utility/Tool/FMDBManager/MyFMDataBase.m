@@ -261,6 +261,7 @@
             [mdic setObject:[result stringForColumn:@"user"] forKey:@"user"];
             [mdic setObject:[result stringForColumn:@"time"] forKey:@"time"];
             [mdic setObject:[result stringForColumn:@"message"] forKey:@"message"];
+            [mdic setObject:[result stringForColumn:@"otherName"] forKey:@"otherName"];
             [mdic setObject:[NSNumber numberWithInt:[result intForColumn:@"state"]] forKey:@"state"];
             [mdic setObject:[result stringForColumn:@"id"] forKey:@"id"];
             [mArr addObject:mdic];

@@ -160,6 +160,8 @@
 
 -(void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
+    
+    [self getDataFromDefault];
     [self cheakDataCount:messages];
 }
 
@@ -168,7 +170,7 @@
     //[[NgnEngine sharedInstance].historyService load];
     
     if(!self.messages){
-        self->messages = [[NSMutableArray alloc] init];
+        self->messages = [NSMutableArray array];
     }
     [self cheakDataCount:messages];
     self.tableView.mj_header.hidden = NO;
@@ -186,6 +188,33 @@
     if ([[[UIDevice currentDevice] systemVersion] doubleValue] >= 11.0) {
         self.tableView.contentInset = UIEdgeInsetsMake(45, 0, 0, 0);
     }
+}
+
+- (void)getDataFromDefault
+{
+    [self.messages removeAllObjects];
+    
+    UserManager * user = [UserManagerTool userManager];
+    NSDictionary *selectDic = [[NSDictionary alloc] initWithObjectsAndKeys:user.username,@"myName", nil];
+    NSArray *resultDatabase = [[MyFMDataBase shareMyFMDataBase] selectDataWithTableName:@"PersonCall" withDic:selectDic];
+
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    for (NSDictionary *dict in resultDatabase) {
+        [result setObject:dict[@"message"] forKey:dict[@"otherName"]];
+    }
+    
+    //NSDictionary *oldDict = [[NSUserDefaults standardUserDefaults] objectForKey:@"myPersonMessage"];
+    for (int i=0; i < [result allKeys].count; i++) {
+        NSString *otherName = [result allKeys][i];
+        NSString *message = result[otherName];
+        
+        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+        [dict setObject:otherName forKey:@"otherName"];
+        [dict setObject:message forKey:@"message"];
+        
+        [self.messages insertObject:dict atIndex:0];
+    }
+    [self.tableView reloadData];
 }
 
 -(void)pushChatVC:(NSNotification *)noti{
@@ -208,32 +237,46 @@
     MyMessageTableViewCell *cell = [MyMessageTableViewCell cellWithTableview:tableView];
     cell.selectionStyle = UITableViewCellSelectionStyleNone;
     
-    MyMessageHistoryEntry* entry = [messages objectAtIndex: indexPath.row];
-    if (entry) {
-        cell.entry = [messages objectAtIndex: indexPath.row];
-        ContactModel * model = [PMSipTools gainContactModelFromSipNum:entry.remoteParty];
-        if (model) {
-            cell.contactModel = model;
-        }
-        
-    }
+//    MyMessageHistoryEntry* entry = [messages objectAtIndex: indexPath.row];
+//    if (entry) {
+//        cell.entry = [messages objectAtIndex: indexPath.row];
+//        ContactModel * model = [PMSipTools gainContactModelFromSipNum:entry.remoteParty];
+//        if (model) {
+//            cell.contactModel = model;
+//        }
+//        cell.desLabel.text = @"";
+//    }
+    
+    NSMutableDictionary *dict = [messages objectAtIndex:indexPath.row];
+    NSString *otherName = dict[@"otherName"];
+    NSString *message = dict[@"message"];
+    
+    cell.titleLabel.text = otherName;
+    cell.desLabel.text = message;
+    
+    NSString * btnName = [PMTools subStringFromString:otherName isFrom:NO];
+    [cell.photoBtn setTitle:btnName forState:UIControlStateNormal];
+    
     return cell;
 }
 
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
-    MyMessageTableViewCell * cell = [tableView cellForRowAtIndexPath:indexPath];
-    if (cell.entry) {
-        NSString * name = cell.entry.remoteParty;
-        if (cell.contactModel) {
-            name = cell.contactModel.fworkername;
+    NSArray *arrayA_ZInfo = [[MyFMDataBase shareMyFMDataBase] selectDataWithTableName:A_ZInfo withDic:nil];
+    NSMutableDictionary *dict = [messages objectAtIndex:indexPath.row];
+    NSString *otherName = dict[@"otherName"];
+    
+    NSString * strSip = @"";
+    for (ContactModel *model in arrayA_ZInfo) {
+        if ([model.fworkername isEqualToString:otherName]) {
+            strSip = model.user_sip;
         }
-       // [[NgnEngine sharedInstance].historyService load];
-        NSString * strSip = [NSString stringWithFormat:@"%@",cell.entry.remoteParty];
-        [[Routable sharedRouter] open:MYNEWSCHAT_VIEWCONTROLLER animated:YES extraParams:@{@"myRemoteParty":strSip,@"name":name}];
     }
-
+    
+    if (![strSip isEqualToString:@""]) {
+        [[Routable sharedRouter] open:MYNEWSCHAT_VIEWCONTROLLER animated:YES extraParams:@{@"myRemoteParty":strSip,@"name":otherName}];
+    }
 }
 
 @end

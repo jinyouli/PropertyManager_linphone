@@ -16,6 +16,12 @@
 @property (nonatomic,strong) MyMessageHistoryEntry *entry;
 @property (nonatomic,strong) ContactModel * contactModel;
 
+@property (nonatomic,strong) UIButton * photoBtn;
+@property (nonatomic,strong) UILabel * titleLabel;
+@property (nonatomic,strong) UILabel * timeLabel;
+@property (nonatomic,strong) UILabel * desLabel;
+@property (nonatomic,strong) UILabel * statusLabel;
+
 -(instancetype)initWithTableview:(UITableView *)tableview;
 +(instancetype)cellWithTableview:(UITableView *)tableview;
 
