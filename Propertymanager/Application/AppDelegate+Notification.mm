@@ -155,10 +155,41 @@
         if ([[userInfo allKeys] containsObject:@"type"]) {
             NSString *type = [userInfo objectForKey:@"type"];
             NSString *sipNumber = [userInfo objectForKey:@"sipNumber"];
-            
+            NSString *message = [userInfo objectForKey:@"message"];
+
             if ([type isEqualToString:@"localMessage"]) {
                 
-                [[Routable sharedRouter] open:MYNEWSCHAT_VIEWCONTROLLER animated:YES extraParams:@{@"myRemoteParty":sipNumber,@"name":@""}];
+                NSArray *arrayA_ZInfo = [[MyFMDataBase shareMyFMDataBase] selectDataWithTableName:A_ZInfo withDic:nil];
+                
+                BOOL hasUserdata = NO;
+                ContactModel *selectModel = [[ContactModel alloc] init];
+                for (ContactModel *model in arrayA_ZInfo) {
+                    if ([model.user_sip isEqualToString:sipNumber]) {
+                        selectModel = model;
+                        hasUserdata = YES;
+                    }
+                }
+                
+                if (hasUserdata) {
+                    UserManager * user = [UserManagerTool userManager];
+                    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+                    
+                    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+                    [dateFormatter setDateFormat:@"HH:mm"];
+                    NSString *strDate = [dateFormatter stringFromDate:[NSDate date]];
+                    
+                    [dict setObject:message forKey:@"message"];
+                    [dict setObject:@2 forKey:@"state"];
+                    [dict setObject:strDate forKey:@"time"];
+                    [dict setObject:sipNumber forKey:@"user"];
+                    [dict setObject:user.username forKey:@"myName"];
+                    [dict setObject:selectModel.fworkername forKey:@"otherName"];
+                    
+                    [[MyFMDataBase shareMyFMDataBase] insertDataWithTableName:@"PersonCall" insertDictionary:[NSDictionary dictionaryWithDictionary:dict]];
+                    
+                    [[Routable sharedRouter] open:MYNEWSCHAT_VIEWCONTROLLER animated:YES extraParams:@{@"myRemoteParty":sipNumber,@"name":selectModel.fworkername}];
+                }
+                
             }
         }
         else if ([[userInfo allKeys] containsObject:@"LinphoneCallState"]) {

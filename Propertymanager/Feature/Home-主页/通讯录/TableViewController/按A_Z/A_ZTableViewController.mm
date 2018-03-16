@@ -38,14 +38,21 @@
     _searchArr = [NSArray arrayWithObjects:@"{search}",@"A",@"B",@"C",@"D",@"E",@"F",@"G",@"H",@"I",@"J",@"K",@"L",@"M",@"N",@"O",@"P",@"Q",@"R",@"S",@"T",@"U",@"V",@"W",@"X",@"Y",@"Z", nil];
     [self resetMyNav];
 
+    NSArray *userArray = [NSArray arrayWithObjects:@"fusername",@"first_py",@"fdepartmentname",@"fworkername",@"worker_id",@"user_sip", nil];
+    [[MyFMDataBase shareMyFMDataBase] createDataBaseWithDataBaseName:@"A_ZInfo"];
+    [[MyFMDataBase shareMyFMDataBase] createTableWithTableName:@"A_ZInfo" tableArray:userArray];
+    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self getDataFromDB];
     });
-    
-    NSLog(@"排序==%@",[[MyFMDataBase shareMyFMDataBase] selectDataWithTableName:A_ZInfo withDic:nil]);
 }
 
-
+// 下拉刷新实现
+-(void)getDataFromNetWork{
+    // refresh data
+    [self getDataFromDB];
+    [self endRefresh];
+}
 
 -(void)reloadView{
     
@@ -79,11 +86,11 @@
         [self reloadView];
     }
     else{
-        [self getDataFromNetWork];
+        [self getFromNetWork];
     }
 }
 
--(void)getDataFromNetWork{
+-(void)getFromNetWork{
     if (![self checkNetWork]) {
         [self endRefresh];
         return;

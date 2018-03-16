@@ -110,22 +110,28 @@
    // [self getDeviceInfo];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendLocalMessage:) name:kLinphoneMessageReceived object:nil];
     
+    NSArray *userArray = [NSArray arrayWithObjects:@"user",@"time",@"message",@"state",@"myName",@"otherName", nil];
+    [[MyFMDataBase shareMyFMDataBase] createDataBaseWithDataBaseName:@"PersonCall"];
+    [[MyFMDataBase shareMyFMDataBase] createTableWithTableName:@"PersonCall" tableArray:userArray];
+    
     //[DetailRequest loginBtnClickWithPhone:userLoginUsername password:userPassword isFirstLogin:NO];
     return YES;
 }
 
 - (void)sendLocalMessage:(NSNotification *)notif
 {
-    NSLog(@"通知==%@",[notif userInfo]);
-    int state = [[notif userInfo][@"state"] intValue];
-    if (state == 2) {
-        UILocalNotification *localNote = [[UILocalNotification alloc] init];
-        localNote.fireDate = [NSDate dateWithTimeIntervalSinceNow:1.0];
-        localNote.alertBody = [notif userInfo][@"message"];
-        localNote.soundName = UILocalNotificationDefaultSoundName;
-        localNote.applicationIconBadgeNumber = 1;
-        localNote.userInfo = @{@"type":@"localMessage",@"sipNumber":[notif userInfo][@"sipNumber"]};
-        [[UIApplication sharedApplication] scheduleLocalNotification:localNote];
+    
+    if (![[PMTools getCurrentVC] isKindOfClass:[MyNewsChatViewController class]]) {
+        int state = [[notif userInfo][@"state"] intValue];
+        if (state == 2) {
+            UILocalNotification *localNote = [[UILocalNotification alloc] init];
+            localNote.fireDate = [NSDate dateWithTimeIntervalSinceNow:1.0];
+            localNote.alertBody = [notif userInfo][@"message"];
+            localNote.soundName = UILocalNotificationDefaultSoundName;
+            localNote.applicationIconBadgeNumber = 1;
+            localNote.userInfo = @{@"type":@"localMessage",@"sipNumber":[notif userInfo][@"sipNumber"],@"message":[notif userInfo][@"message"]};
+            [[UIApplication sharedApplication] scheduleLocalNotification:localNote];
+        }
     }
 }
 

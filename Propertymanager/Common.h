@@ -29,6 +29,8 @@
 //保存用户绑定小区信息
 + (void)saveNeiBindingUser;
 + (BOOL)playRing;
+//获取Window当前显示的ViewController
++ (UIViewController*)currentViewController;
 
 //生成二维码
 + (UIImage *)encodeQRImageWithContent:(NSString *)content size:(CGSize)size;

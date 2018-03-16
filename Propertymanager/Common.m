@@ -146,35 +146,35 @@
 + (UIImage *)encodeQRImageWithContent:(NSString *)content size:(CGSize)size {
     UIImage *codeImage = nil;
     
-        NSData *stringData = [content dataUsingEncoding: NSUTF8StringEncoding];
-        
-        //生成
-        CIFilter *qrFilter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
-        [qrFilter setValue:stringData forKey:@"inputMessage"];
-        [qrFilter setValue:@"M" forKey:@"inputCorrectionLevel"];
-        
-        UIColor *onColor = [UIColor blackColor];
-        UIColor *offColor = [UIColor whiteColor];
-        
-        //上色
-        CIFilter *colorFilter = [CIFilter filterWithName:@"CIFalseColor"
-                                           keysAndValues:
-                                 @"inputImage",qrFilter.outputImage,
-                                 @"inputColor0",[CIColor colorWithCGColor:onColor.CGColor],
-                                 @"inputColor1",[CIColor colorWithCGColor:offColor.CGColor],
-                                 nil];
-        
-        CIImage *qrImage = colorFilter.outputImage;
-        CGImageRef cgImage = [[CIContext contextWithOptions:nil] createCGImage:qrImage fromRect:qrImage.extent];
-        UIGraphicsBeginImageContext(size);
-        CGContextRef context = UIGraphicsGetCurrentContext();
-        CGContextSetInterpolationQuality(context, kCGInterpolationNone);
-        CGContextScaleCTM(context, 1.0, -1.0);
-        CGContextDrawImage(context, CGContextGetClipBoundingBox(context), cgImage);
-        codeImage = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
-        
-        CGImageRelease(cgImage);
+    NSData *stringData = [content dataUsingEncoding: NSUTF8StringEncoding];
+    
+    //生成
+    CIFilter *qrFilter = [CIFilter filterWithName:@"CIQRCodeGenerator"];
+    [qrFilter setValue:stringData forKey:@"inputMessage"];
+    [qrFilter setValue:@"M" forKey:@"inputCorrectionLevel"];
+    
+    UIColor *onColor = [UIColor blackColor];
+    UIColor *offColor = [UIColor whiteColor];
+    
+    //上色
+    CIFilter *colorFilter = [CIFilter filterWithName:@"CIFalseColor"
+                                       keysAndValues:
+                             @"inputImage",qrFilter.outputImage,
+                             @"inputColor0",[CIColor colorWithCGColor:onColor.CGColor],
+                             @"inputColor1",[CIColor colorWithCGColor:offColor.CGColor],
+                             nil];
+    
+    CIImage *qrImage = colorFilter.outputImage;
+    CGImageRef cgImage = [[CIContext contextWithOptions:nil] createCGImage:qrImage fromRect:qrImage.extent];
+    UIGraphicsBeginImageContext(size);
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextSetInterpolationQuality(context, kCGInterpolationNone);
+    CGContextScaleCTM(context, 1.0, -1.0);
+    CGContextDrawImage(context, CGContextGetClipBoundingBox(context), cgImage);
+    codeImage = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+    
+    CGImageRelease(cgImage);
     
     return codeImage;
 }
@@ -185,7 +185,30 @@
         UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"提示" message:msg delegate:self cancelButtonTitle:@"确认" otherButtonTitles:nil, nil];
         [alert show];
     }
-    
+}
+
+//获取Window当前显示的ViewController
+
++ (UIViewController *)currentViewController {
+    UIWindow *window = [[UIApplication sharedApplication].windows firstObject];
+    if (!window) { return nil; }
+    UIView *tempView;
+    for (UIView *subview in window.subviews) {
+        if ([[subview.classForCoder description] isEqualToString:@"UILayoutContainerView"]) {
+            tempView = subview; break;
+        }
+    } if (!tempView) {
+        tempView = [window.subviews lastObject];
+    }
+    id nextResponder = [tempView nextResponder];
+    while (![nextResponder isKindOfClass:[UIViewController class]] || [nextResponder isKindOfClass:[UINavigationController class]] || [nextResponder isKindOfClass:[UITabBarController class]]) {
+        tempView = [tempView.subviews firstObject];
+        if (!tempView) {
+            return nil;
+            
+        } nextResponder = [tempView nextResponder];
+        
+    } return (UIViewController *)nextResponder;
 }
 
 + (UIViewController*)topViewController

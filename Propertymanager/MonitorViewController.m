@@ -17,14 +17,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view.
-    NSLog(@"1");
     self.view.backgroundColor = [UIColor whiteColor];
     
     UIView *myView = [[UIView alloc] initWithFrame:CGRectMake(10, 100, 300, 200)];
     myView.backgroundColor = [UIColor blackColor];
     [self.view addSubview:myView];
     
-    NSLog(@"数据==%@",self.model.sip_number);
     [[SYLinphoneManager instance] call:self.model.sip_number displayName:@"13632550150" transfer:NO Video:myView];
 }
 

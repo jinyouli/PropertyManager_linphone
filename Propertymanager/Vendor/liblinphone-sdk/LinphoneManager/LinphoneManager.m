@@ -1050,14 +1050,13 @@ static void linphone_iphone_registration_state(LinphoneCore *lc, LinphoneProxyCo
 
     const LinphoneAddress *peer = linphone_chat_room_get_peer_address(room);
     const char *username = linphone_address_get_username(peer);
-    NSLog(@"用户名==%s",username);
-    
+
     NSDictionary *dict = @{
                            @"user" : [self getSipAdress:linphone_chat_message_get_from_address(msg)],
                            @"time" : time,
                            @"message" : content,
                            @"state" : [NSNumber numberWithInt:2],
-                           @"sipNumber" : @"12"
+                           @"sipNumber" : [NSString stringWithFormat:@"%s",username]
                            };
     
     [NSNotificationCenter.defaultCenter postNotificationName:kLinphoneMessageReceived object:self userInfo:dict];

@@ -381,7 +381,7 @@
             model.user_sip = [result stringForColumn:@"user_sip"];
             [mArr addObject:model];
             
-            SYLog(@"A_Z联系人模型 %@",model);
+            //SYLog(@"A_Z联系人模型 %@",model);
         }
         
         if ([tableName isEqualToString:SortInfo]) {

@@ -224,6 +224,7 @@
                                            selector:@selector(textReceivedEvent:)
                                                name:kLinphoneMessageReceived
                                              object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(getDataFromDataBase) name:@"getChatMessage" object:nil];
     
     
     self.bottomView = [[BottomChatToolView alloc]initWithFrame:CGRectMake(0, ScreenHeight - 64 - 50, ScreenWidth, 50)];
@@ -236,10 +237,6 @@
     }];
 
     [self.view addSubview:self.bottomView];
-    
-    NSArray *userArray = [NSArray arrayWithObjects:@"user",@"time",@"message",@"state",@"myName",@"otherName", nil];
-    [[MyFMDataBase shareMyFMDataBase] createDataBaseWithDataBaseName:@"PersonCall"];
-    [[MyFMDataBase shareMyFMDataBase] createTableWithTableName:@"PersonCall" tableArray:userArray];
     
     [self getDataFromDataBase];
     
@@ -274,7 +271,6 @@
     
     messages = [[NSMutableArray alloc] initWithArray:result];
     [tableView reloadData];
-    NSLog(@"数据==%@",messages);
 }
 
 #pragma mark - Event Functions
