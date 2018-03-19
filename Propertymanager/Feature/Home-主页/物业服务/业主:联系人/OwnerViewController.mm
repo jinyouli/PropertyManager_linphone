@@ -180,7 +180,7 @@
                     SYLockListModel *model = [[SYLockListModel alloc] init];
                     model.sip_number = sipNum;
                     
-                    VideoCallViewController *videoVC = [[VideoCallViewController alloc] initWithCall:nil GuardInfo:model InComingCall:NO isLanguage:YES otherName:self.contactModel.fworkername];
+                    VideoCallViewController *videoVC = [[VideoCallViewController alloc] initWithCall:nil GuardInfo:model InComingCall:NO isLanguage:NO otherName:self.contactModel.fworkername];
                     
                     AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate ;
                     [delegate.window.rootViewController presentViewController:videoVC animated:YES completion:nil];
@@ -206,7 +206,7 @@
                 SYLockListModel *model = [[SYLockListModel alloc] init];
                 model.sip_number = sipNum;
                 
-                VideoCallViewController *videoVC = [[VideoCallViewController alloc] initWithCall:nil GuardInfo:model InComingCall:NO isLanguage:NO otherName:self.contactModel.fworkername];
+                VideoCallViewController *videoVC = [[VideoCallViewController alloc] initWithCall:nil GuardInfo:model InComingCall:NO isLanguage:YES otherName:self.contactModel.fworkername];
                 
                 AppDelegate *delegate = (AppDelegate *)[UIApplication sharedApplication].delegate ;
                 [delegate.window.rootViewController presentViewController:videoVC animated:YES completion:nil];

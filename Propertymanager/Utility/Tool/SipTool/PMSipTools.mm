@@ -115,7 +115,7 @@ dispatch_source_t source;
     NSString * currentTimeStr = [NSString stringWithFormat:@"%@%@",currentHour,currentMin];
     NSInteger currentTimeInt = [currentTimeStr integerValue];
     
-    NSLog(@"%ld",currentTimeInt);
+    NSLog(@"勿扰模式===%ld,%ld,%ld",startTimeInt,endTimeInt,currentTimeInt);
     if (startTimeInt > endTimeInt) {
         //dateStart 大于 dateEnd
         // 隔天
@@ -127,8 +127,6 @@ dispatch_source_t source;
             NSLog(@"该时间在 0000 - %ld 内！", endTimeInt);
             return YES;
         }
-        
-        
     }
     else if (startTimeInt ==  endTimeInt) {
         //dateStart 等于 dateEnd
@@ -147,8 +145,6 @@ dispatch_source_t source;
             return YES;
         }
     }
-    
-    
     return NO;
 }
 /**

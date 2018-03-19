@@ -113,7 +113,7 @@ UIKIT_EXTERN NSString* const StorageInfo;
 UIKIT_EXTERN NSArray * const StorageInfoDic;
 
 /** 勿扰模式*/
-UIKIT_EXTERN NSString* const DontDisturbInfo;
+UIKIT_EXTERN NSString * const DontDisturbInfo;
 
 /** 勿扰模式字段*/
 UIKIT_EXTERN NSArray * const DontDisturbInfoDic;

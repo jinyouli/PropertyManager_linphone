@@ -225,8 +225,12 @@
     
     if (state == SYLinphoneCallIncomingReceived) {
         
+        //是否是视频来电
+        const LinphoneCallParams *lcallParams = linphone_call_get_remote_params(call);
+        BOOL videoBool = linphone_call_params_video_enabled(lcallParams);
+        
         UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-        VideoCallViewController *vc = [[VideoCallViewController alloc] initWithCall:call GuardInfo:nil InComingCall:YES isLanguage:NO otherName:displayName];
+        VideoCallViewController *vc = [[VideoCallViewController alloc] initWithCall:call GuardInfo:nil InComingCall:YES isLanguage:videoBool otherName:displayName];
         //vc.sipNumber = [[SYLinphoneManager instance] getSipNumber:call];
         [viewController presentViewController:vc animated:YES completion:^{
             

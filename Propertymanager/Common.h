@@ -21,6 +21,7 @@
 + (NSString *)decryptWithText:(NSString *)sText;//解密
 
 + (NSInteger)getNowTimestamp;
++ (BOOL)isDisturbTime;
 
 //将16进制的字符串转换成NSData
 + (NSMutableData *)convertHexStrToData:(NSString *)str;

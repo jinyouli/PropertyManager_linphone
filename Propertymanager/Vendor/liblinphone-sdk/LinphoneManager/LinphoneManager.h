@@ -183,6 +183,8 @@ typedef struct _LinphoneManagerSounds {
 - (BOOL)lpConfigBoolForKey:(NSString*)key forSection:(NSString*)section;
 - (void)silentPushFailed:(NSTimer*)timer;
 
+- (void)setLinphoneVideoEnable:(BOOL)isEnabled;
+
 - (BOOL)sendMessage:(NSString *)message withExterlBodyUrl:(NSURL *)externalUrl withInternalURL:(NSURL *)internalUrl Address:(NSString *)sipNumber;
 
 - (void)changeFrontCamera;

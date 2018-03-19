@@ -35,6 +35,7 @@
 @property (nonatomic, strong) UIView *glViewVideoRemote;
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, copy) NSString *otherName;
+@property (nonatomic, assign) int count;
 
 -(void) showBottomView: (UIView*)view_ shouldRefresh:(BOOL)refresh;
 @end
@@ -81,34 +82,16 @@
     
     [self createDefaultSubviews];
     [self configData];
-    
-   // self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerSuicideTick:) userInfo:nil repeats:YES];
-   // [self timerSuicideTick];
 }
 
--(void)timerSuicideTick{
-    
-    WEAK_SELF;
-    __block int timeout = 0; //倒计时时间
-    
-    dispatch_queue_t queue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    videoTimer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, queue);
-    dispatch_source_set_timer(videoTimer,dispatch_walltime(NULL, 0), 1.0 * NSEC_PER_SEC, 0); //每秒执行
-    dispatch_source_set_event_handler(videoTimer, ^{
-        if(timeout >= 0){
-            dispatch_source_cancel(videoTimer);
-            dispatch_async(dispatch_get_main_queue(), ^{
-                int hours = timeout / 3600;
-                int minutes = (timeout - hours*3600) / 60;
-                int seconds = timeout % 60;
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    weakSelf.labelStatus.text = [NSString stringWithFormat:@"%d:%.2d", minutes, seconds];
-                timeout++;
-            });
-        });
-        }
-    });
-    dispatch_resume(videoTimer);
+- (void)addTimer{
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(timerSuicideTick:) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:self.timer forMode:NSRunLoopCommonModes];
+}
+
+- (void)timerSuicideTick:(NSTimer *)tempTimer {
+    self.count++;
+    _labelStatus.text = [NSString stringWithFormat:@"%02d:%02d",self.count/60,self.count%60];
 }
 
 #pragma mark - private
@@ -119,6 +102,8 @@
             
         }
         else {
+            
+            [[LinphoneManager instance] setVideoEnable:self.isLanguage];
             [[SYLinphoneManager instance] call:self.model.sip_number displayName:@"" transfer:NO Video:self.glViewVideoRemote];
         }
         //扬声器
@@ -145,12 +130,11 @@
    _myIconImageView.backgroundColor = [UIColor greenColor];
     [self.viewTop addSubview:_myIconImageView];
     
-    
-    _nameL = [[UILabel alloc]initWithFrame:CGRectMake(100, 100, 100, 50)];
+    _nameL = [[UILabel alloc]initWithFrame:_myIconImageView.bounds];
     _nameL.textAlignment = NSTextAlignmentCenter;
     _nameL.textColor = [UIColor whiteColor];
-    _nameL.text = self.otherName;
-  
+    [self.myIconImageView addSubview:_nameL];
+    
     _nameLabel = [[UILabel alloc]init];
     _nameLabel.frame = CGRectMake(0, CGRectGetMaxY(_myIconImageView.frame) + 20, ScreenWidth, 30);
     _nameLabel.textAlignment = NSTextAlignmentCenter;
@@ -259,7 +243,7 @@
     // GLView
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     self.glViewVideoRemote = [[UIView alloc] initWithFrame:screenBounds] ;
-    //[self.view insertSubview:self.glViewVideoRemote atIndex:0];
+    [self.view insertSubview:self.glViewVideoRemote atIndex:0];
     self.glViewVideoRemote.hidden = YES;
     [self.view addSubview:self.glViewVideoRemote];
     
@@ -269,8 +253,7 @@
     _viewLocalVideo = [[UIView alloc]initWithFrame:CGRectMake(ScreenWidth - 74, 20, 64, 86)];
     [self.view addSubview:_viewLocalVideo];
     _viewLocalVideo.hidden = YES;
-    _nameL.backgroundColor = [UIColor blackColor];
-    //[self.view addSubview:_nameL];
+    
 }
 
 -(void)btnToggleClick{
@@ -385,6 +368,17 @@
 - (void)viewWillAppear:(BOOL)animated{
     [super viewWillAppear:animated];
     self.isDail = YES;
+    self.count = 0;
+    
+    isOnLine = YES;
+    self.handsFreeBtn.selected = YES;
+    self.muteBtn.selected = NO;
+    self.buttonToolBarToggle.selected = NO;
+    self.buttonToolBarMute.selected = NO;
+    
+    self.nameLabel.text = self.otherName;
+    self.nameL.text = [PMTools subStringFromString:self.otherName isFrom:NO];
+    
 //    [videoSession release];
 //    videoSession = [[NgnAVSession getSessionWithId: self.sessionId] retain];
 //    if(videoSession){
@@ -401,34 +395,28 @@
 //    if (videoSession.historyEvent) {
 //        self.ContactModel = [PMSipTools gainContactModelFromSipNum:videoSession.historyEvent.remoteParty];
 //    }
-    isOnLine = YES;
-    self.handsFreeBtn.selected = YES;
-    self.muteBtn.selected = NO;
-    self.buttonToolBarToggle.selected = NO;
-    self.buttonToolBarMute.selected = NO;
     
-    self.nameLabel.text = _workname;
-    self.nameL.text = [PMTools subStringFromString:_workname isFrom:NO];
     
     // 勿扰模式
-    isOpenDnd = [[DontDisturbManager shareManager] getDisturbStatusWithUsername:[UserManagerTool userManager].username];
-    BOOL isOpen = isOpenDnd;
-    BOOL res = [PMSipTools isBetweenTime];
-    if (isOpen && res) {
-        
-        SYLog(@"开启勿扰模式 且 在时间范围内 不打扰");
-        [PMSipTools stopRing];
-        
-    }
-    else{
-        SYLog(@"没开启勿扰模式");
-        [PMSipTools playRing];
-        
-    }
+//    isOpenDnd = [[DontDisturbManager shareManager] getDisturbStatusWithUsername:[UserManagerTool userManager].username];
+//    BOOL isOpen = isOpenDnd;
+//    BOOL res = [PMSipTools isBetweenTime];
+//    if (isOpen && res) {
+//
+//        SYLog(@"开启勿扰模式 且 在时间范围内 不打扰");
+//        [PMSipTools stopRing];
+//
+//    }
+//    else{
+//        SYLog(@"没开启勿扰模式");
+//        [PMSipTools playRing];
+//    }
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
     [super viewWillDisappear:animated];
+    [self.timer invalidate];
+    self.timer = nil;
     
 //    if(videoSession && [videoSession isConnected]){
 //        [videoSession setRemoteVideoDisplay:nil];
@@ -533,24 +521,23 @@
     SYLinphoneCallState state = (SYLinphoneCallState)[[notif.userInfo objectForKey:@"state"] intValue];
     if (state == SYLinphoneCallConnected) {
         
-        self.glViewVideoRemote.hidden = NO;
         _viewLocalVideo.hidden = NO;
-        if (self.isInComingCall) {
+        _buttonAccept.hidden = YES;
+        
+        if (self.isLanguage) {
+            self.glViewVideoRemote.hidden = NO;
             _myIconImageView.hidden = YES;
-            _buttonAccept.hidden = YES;
+            self.nameLabel.hidden = YES;
             _labelStatus.hidden = YES;
+            _viewLocalVideo.hidden = NO;
+        }else{
+            self.glViewVideoRemote.hidden = YES;
+            _myIconImageView.hidden = NO;
+            self.nameLabel.hidden = NO;
+            _labelStatus.hidden = NO;
+            _viewLocalVideo.hidden = YES;
             
-        }else {
-            if (self.isLanguage) {
-                self.glViewVideoRemote.hidden = YES;
-                _viewLocalVideo.hidden = YES;
-                _labelStatus.text = @"正在通话中...";
-                _buttonAccept.hidden = YES;
-            }else{
-                _myIconImageView.hidden = YES;
-                _buttonAccept.hidden = YES;
-                _labelStatus.hidden = YES;
-            }
+            [self addTimer];
         }
     }
     else if (state == SYLinphoneCallOutgoingInit){

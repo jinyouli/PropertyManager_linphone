@@ -177,7 +177,7 @@
             [UserManagerTool saveUserManager:[UserManager manager]];
             [GeTuiSdk setPushModeForOff:YES];
             [[AppDelegate sharedInstance] setmanagerRootVC];
-
+            [[SYLinphoneManager instance] removeAccount];   //sip登出
             
         } ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"取消" Click:^{
             

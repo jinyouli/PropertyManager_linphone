@@ -110,12 +110,20 @@
    // [self getDeviceInfo];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendLocalMessage:) name:@"getNewMessage" object:nil];
     
+    [self createDataBase];
+    //[DetailRequest loginBtnClickWithPhone:userLoginUsername password:userPassword isFirstLogin:NO];
+    return YES;
+}
+
+- (void)createDataBase
+{
     NSArray *userArray = [NSArray arrayWithObjects:@"user",@"time",@"message",@"state",@"myName",@"otherName", nil];
     [[MyFMDataBase shareMyFMDataBase] createDataBaseWithDataBaseName:@"PersonCall"];
     [[MyFMDataBase shareMyFMDataBase] createTableWithTableName:@"PersonCall" tableArray:userArray];
     
-    //[DetailRequest loginBtnClickWithPhone:userLoginUsername password:userPassword isFirstLogin:NO];
-    return YES;
+    //勿扰模式列表
+    [[MyFMDataBase shareMyFMDataBase] createDataBaseWithDataBaseName:DontDisturbInfo];
+    [[MyFMDataBase shareMyFMDataBase] createTableWithTableName:DontDisturbInfo tableArray:DontDisturbInfoDic];
 }
 
 - (void)sendLocalMessage:(NSNotification *)notif
@@ -300,8 +308,8 @@
 //有来电
 - (void)onIncomingCall:(SYLinphoneCall *)call withState:(SYLinphoneCallState)state withMessage:(NSDictionary *)message withIsVideo:(BOOL)isVideo{
     
+    
     NSString *sipNumber = [[SYLinphoneManager instance] getSipNumber:call];
-    NSLog(@"sipnum == %@",sipNumber);
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
     [dict setObject:@"" forKey:@"fusername"];
     [dict setObject:@"" forKey:@"first_py"];
@@ -334,7 +342,7 @@
     if ([UIApplication sharedApplication].applicationState != UIApplicationStateBackground) {
         
         UIViewController *viewController = [UIApplication sharedApplication].keyWindow.rootViewController;
-        VideoCallViewController *vc = [[VideoCallViewController alloc] initWithCall:call GuardInfo:nil InComingCall:YES isLanguage:NO otherName:selectModel.fworkername];
+        VideoCallViewController *vc = [[VideoCallViewController alloc] initWithCall:call GuardInfo:nil InComingCall:YES isLanguage:isVideo otherName:selectModel.fworkername];
         //vc.sipNumber = [[SYLinphoneManager instance] getSipNumber:call];
         [viewController presentViewController:vc animated:YES completion:^{
             

@@ -119,19 +119,14 @@
         return;
     }
     
-    //检查是否有网络
-    if ([self checkNetWork]) {
+    UserManager * user = [UserManagerTool userManager];
+    NSDictionary * paraDic = @{@"username":user.username,@"old_password":[SYCommon md5:self.oldPsssTextField.contentTextField.text],@"new_password":[SYCommon md5:self.nowPassTextField1.contentTextField.text]};
     
-        UserManager * user = [UserManagerTool userManager];
-//        NSDictionary * paraDic = @{@"username":user.username,@"old_password":[MD5Util md5:self.oldPsssTextField.contentTextField.text],@"new_password":[MD5Util md5:self.nowPassTextField1.contentTextField.text]};
-//
-//        [DetailRequest SYChange_pwd_by_old_pwdWithParms:paraDic SuccessBlock:^{
-//             [self.navigationController popViewControllerAnimated:YES];
-//        } FailureBlock:^(NSString *msg) {
-//            [self createAlertWithMessage:msg];
-//        }];
-
-    }
+    [DetailRequest SYChange_pwd_by_old_pwdWithParms:paraDic SuccessBlock:^{
+        [self.navigationController popViewControllerAnimated:YES];
+    } FailureBlock:^(NSString *msg) {
+        [self createAlertWithMessage:msg];
+    }];
 }
 
 @end

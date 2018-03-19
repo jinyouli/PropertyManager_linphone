@@ -131,6 +131,7 @@ blue:((float)(rgbValue & 0xFF))/255.0 alpha:1.0]
 #include "linphone/linphonecore.h"
 #import <UIKit/UIKit.h>
 #import "linphonecore.h"
+#import "call_params.h"
 
 #ifdef DEBUG
 static const DDLogLevel ddLogLevel = LOG_LEVEL_VERBOSE;

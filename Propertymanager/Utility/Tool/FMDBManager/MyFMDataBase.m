@@ -40,14 +40,13 @@
         [_manager createTableWithTableName:SortInfo tableArray:SortInfoDic];
         // 存储联系人表单
         [_manager createTableWithTableName:StorageInfo tableArray:StorageInfoDic];
-        //勿扰模式列表
-        [_manager createTableWithTableName:DontDisturbInfo tableArray:DontDisturbInfoDic];
         //创建小区公告已读模式
         [_manager createTableWithTableName:PlotNewsInfo tableArray:PlotNewsInfoDic];
         //通话记录
         [_manager createTableWithTableName:ListenHistoryInfo tableArray:ListenHistoryInfoDic];
     }
-
+    
+    
     // A_Z表单
     [_manager createDataBaseWithDataBaseName:A_ZInfo];
     [_manager createTableWithTableName:A_ZInfo tableArray:A_ZInfoDic];
@@ -246,8 +245,7 @@
         sql = [NSString stringWithFormat:@"SELECT * FROM %@ ",tableName];
     }
     
-    
-   // SYLog(@"选择内容语句 === %@",sql);
+    //SYLog(@"选择内容语句 === %@",sql);
     @synchronized(self) {
     NSMutableArray * mArr = [NSMutableArray array];
     FMResultSet *result = [self.dataBase executeQuery:sql];

@@ -21,6 +21,25 @@
     return bounds.size.width > bounds.size.height;
 }
 
++ (BOOL)isDisturbTime
+{
+    // 勿扰模式
+    isOpenDnd = [[DontDisturbManager shareManager] getDisturbStatusWithUsername:[UserManagerTool userManager].username];
+    BOOL isOpen = isOpenDnd;
+    BOOL res = [PMSipTools isBetweenTime];
+    if (isOpen && res) {
+        
+        SYLog(@"开启勿扰模式 且 在时间范围内 不打扰");
+        return YES;
+        
+    }
+    else{
+        SYLog(@"没开启勿扰模式");
+        return NO;
+        
+    }
+}
+
 + (void)addAlertWithTitle:(NSString*)string
 {
     //[NSString stringWithFormat:@"%@",[error.userInfo objectForKey:NSLocalizedDescriptionKey]]

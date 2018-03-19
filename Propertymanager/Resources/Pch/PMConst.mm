@@ -111,7 +111,7 @@ NSString* const StorageInfo = @"StorageInfo";
 NSArray * const StorageInfoDic = @[@"fusername",@"first_py",@"fdepartmentname",@"fworkername",@"worker_id",@"user_sip",@"storageWorkerID"];
 
 /** 勿扰模式*/
-NSString* const DontDisturbInfo = @"DontDisturbInfo";
+NSString * const DontDisturbInfo = @"DontDisturbInfo";
 /** 勿扰模式字段*/
 NSArray * const DontDisturbInfoDic =  @[@"fusername",@"isDontDisturb",@"statTime",@"endTime"];
 

@@ -709,17 +709,16 @@ static void linphone_iphone_display_status(struct _LinphoneCore * lc, const char
                     // iOS8 doesn't need the timer trick for the local notification.
                     if( [[UIDevice currentDevice].systemVersion floatValue] >= 8){
                         
-//                        if ([Common playRing]) {
-//                            data->notification.soundName = @"ring.caf";
-//                        }
-                        data->notification.soundName = @"ring.caf";
+                        [[DontDisturbManager shareManager] getDisturbStatusWithUsername:[UserManagerTool userManager].username];
+                        if (![Common isDisturbTime]) {
+                            data->notification.soundName = @"ring.caf";
+                        }
                         data->notification.category = @"incoming_call";
                     } else {
                         
-//                        if ([Common playRing]) {
-//                            data->notification.soundName = @"shortring.caf";
-//                        }
-                        data->notification.soundName = @"shortring.caf";
+                        if (![Common isDisturbTime]) {
+                            data->notification.soundName = @"shortring.caf";
+                        }
                         data->timer = [NSTimer scheduledTimerWithTimeInterval:4.0 target:self selector:@selector(localNotifContinue:) userInfo:data->notification repeats:TRUE];
                     }
                     
@@ -749,9 +748,9 @@ static void linphone_iphone_display_status(struct _LinphoneCore * lc, const char
             }
         }
         else{
-//            if ([Common playRing]) {
-//                [self playMessageSound];
-//            }
+            if (![Common isDisturbTime]) {
+                [self playMessageSound];
+            }
         }
     }
 
@@ -2132,6 +2131,18 @@ static void audioRouteChangeListenerCallback (
     linphone_call_params_destroy(lcallParams);
 }
 
+- (void)setLinphoneVideoEnable:(BOOL)isEnabled
+{
+    LinphoneCall* currentCall = linphone_core_get_current_call(LC);
+    LinphoneCallParams *params = linphone_call_get_current_params(currentCall);
+    
+    if (isEnabled) {
+        linphone_call_params_enable_video(params, TRUE);
+    }else{
+        linphone_call_params_enable_video(params, FALSE);
+    }
+}
+
 - (void)changeVideoSize:(int)videoSize
 {
 //    // video section
@@ -2236,14 +2247,14 @@ static void audioRouteChangeListenerCallback (
     return;
     
     //linphone_core_enable_video_preview(LC, TRUE);
-    LinphoneCall* currentCall = linphone_core_get_current_call(theLinphoneCore);
+    //LinphoneCall* currentCall = linphone_core_get_current_call(theLinphoneCore);
     
     //linphone_core_pause_call(LC,currentCall);
 
     linphone_core_set_preferred_video_size(LC, vsize);
 
 
-    linphone_core_update_call(LC, currentCall, linphone_core_create_call_params(LC,currentCall));
+    //linphone_core_update_call(LC, currentCall, linphone_core_create_call_params(LC,currentCall));
     linphone_core_set_preferred_video_size(LC, vsize);
     
     
