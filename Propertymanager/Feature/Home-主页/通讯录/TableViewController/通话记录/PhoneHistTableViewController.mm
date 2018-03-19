@@ -173,8 +173,9 @@
         
         [WJYAlertView showTwoButtonsWithTitle:@"提示" Message:@"确定删除该聊天记录吗？" ButtonType:WJYAlertViewButtonTypeNone ButtonTitle:@"确定" Click:^{
             
+            UserManager * user = [UserManagerTool userManager];
             ContactModel *model = [self.arrayData objectAtIndex:indexPath.section];
-            NSDictionary *deleteDic = [[NSDictionary alloc] initWithObjectsAndKeys:model.id,@"id", nil];
+            NSDictionary *deleteDic = [[NSDictionary alloc] initWithObjectsAndKeys:model.id,@"id",user.username,@"fusername", nil];
             
             [[MyFMDataBase shareMyFMDataBase] deleteDataWithTableName:@"PeopleCalled" delegeteDic:deleteDic];
             [self getDataFromDB];
@@ -188,7 +189,10 @@
 - (void)getDataFromDB
 {
     [self.arrayData removeAllObjects];
-    NSArray *result = [[MyFMDataBase shareMyFMDataBase] selectDataWithTableName:@"PeopleCalled" withDic:nil];
+    
+    UserManager * user = [UserManagerTool userManager];
+    NSDictionary *selectDic = [[NSDictionary alloc] initWithObjectsAndKeys:user.username,@"fusername", nil];
+    NSArray *result = [[MyFMDataBase shareMyFMDataBase] selectDataWithTableName:@"PeopleCalled" withDic:selectDic];
     
     for (int i=0; i<result.count; i++) {
         ContactModel *model = [[ContactModel alloc] init];

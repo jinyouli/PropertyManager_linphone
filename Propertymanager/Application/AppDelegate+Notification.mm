@@ -132,9 +132,7 @@
 
 // 通知的点击事件
 - (void)userNotificationCenter:(UNUserNotificationCenter *)center didReceiveNotificationResponse:(UNNotificationResponse *)response withCompletionHandler:(void(^)())completionHandler{
-    
-    NSLog(@"通知的点击事件");
-    
+
     NSDictionary * userInfo = response.notification.request.content.userInfo;
     NSString * key = userInfo[@"key"];
     UNNotificationRequest *request = response.notification.request; // 收到推送的请求
@@ -193,6 +191,8 @@
             }
         }
         else if ([[userInfo allKeys] containsObject:@"LinphoneCallState"]) {
+            
+            NSLog(@"userInfo =1= %@",userInfo);
             NSString *callID = userInfo[@"callId"];
             NSNumber *linphoneCallState = userInfo[@"LinphoneCallState"];
             SYLinphoneCall *call = [[SYLinphoneManager instance] callByCallId:callID];

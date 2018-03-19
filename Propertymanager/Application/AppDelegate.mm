@@ -128,6 +128,7 @@
 
 - (void)sendLocalMessage:(NSNotification *)notif
 {
+    NSLog(@"[notif userInfo] == %@",[notif userInfo]);
     if (![[PMTools getCurrentVC] isKindOfClass:[MyNewsChatViewController class]]) {
         int state = [[notif userInfo][@"state"] intValue];
         if (state == 2) {
@@ -308,10 +309,10 @@
 //有来电
 - (void)onIncomingCall:(SYLinphoneCall *)call withState:(SYLinphoneCallState)state withMessage:(NSDictionary *)message withIsVideo:(BOOL)isVideo{
     
-    
+    UserManager * user = [UserManagerTool userManager];
     NSString *sipNumber = [[SYLinphoneManager instance] getSipNumber:call];
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-    [dict setObject:@"" forKey:@"fusername"];
+    [dict setObject:user.username forKey:@"fusername"];
     [dict setObject:@"" forKey:@"first_py"];
     [dict setObject:@"" forKey:@"fdepartmentname"];
     [dict setObject:@"" forKey:@"fworkername"];

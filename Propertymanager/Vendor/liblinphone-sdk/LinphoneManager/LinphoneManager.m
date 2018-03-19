@@ -728,7 +728,7 @@ static void linphone_iphone_display_status(struct _LinphoneCore * lc, const char
                     
                     data->notification.alertBody = [NSString stringWithFormat:@"%@ 视频来电",displayName];
                     data->notification.alertAction = NSLocalizedString(@"Answer", nil);
-                    data->notification.userInfo = @{@"callId": callId, @"timer":[NSNumber numberWithInt:1], @"LinphoneCallState":[NSNumber numberWithInt:state]};
+                    data->notification.userInfo = @{@"callId": callId, @"timer":[NSNumber numberWithInt:1], @"LinphoneCallState":[NSNumber numberWithInt:state],@"displayName":displayName};
                     data->notification.applicationIconBadgeNumber = data->notification.applicationIconBadgeNumber + 1;
                     
                     [[UIApplication sharedApplication] presentLocalNotificationNow:data->notification];
@@ -1752,15 +1752,13 @@ static int comp_call_id(const LinphoneCall* call , const char *callid) {
 //    }
     
     //调用AudioServicePlaySystemSound函数或者AudioServicePlayAlertSound（调用系统振动功能）。
-    return;
-    NSURL *voiceURL = [[NSBundle mainBundle] URLForResource:@"notes_of_the_optimistic" withExtension:@"caf"];
+    NSURL *voiceURL = [[NSBundle mainBundle] URLForResource:@"ring" withExtension:@"caf"];
     // 2. 注册音频文件（第一个参数是音频文件的URL 第二个参数是音频文件的SystemSoundID）
     AudioServicesCreateSystemSoundID((__bridge CFURLRef)(voiceURL),&sounds);
     AudioServicesPlaySystemSound([LinphoneManager instance].sounds.vibrate);
 }
 
 -(void)stopMessageSound {
-    return;
     AudioServicesDisposeSystemSoundID(kSystemSoundID_Vibrate);
     AudioServicesDisposeSystemSoundID([LinphoneManager instance].sounds.vibrate);
     AudioServicesRemoveSystemSoundCompletion([LinphoneManager instance].sounds.vibrate);
